@@ -1,0 +1,53 @@
+@import './variables'
+
+
+html,
+body
+  height: 100%
+
+body
+  display: flex
+  flex-direction: column
+  font-family: $font-family-base
+  font-size: $font-size-base
+  margin: 0
+
+main
+  flex: 1 0 0
+
+footer
+  flex: 0 0 0
+
+h1,
+h2,
+h3,
+p,
+a
+  margin: 0
+
+ul,
+ol
+  list-style: none
+  margin: 0
+  padding: 0
+
+button
+  background: none
+  border: 0
+  font-family: $font-family-base
+  font-size: $font-size-base
+  padding: 0
+
+.screen-reader
+  height: 1px
+  left: -100%
+  overflow: hidden
+  position: absolute
+  top: auto
+  width: 1px
+
+
+@media only screen and (min-width: $media-desktop-breakpoint)
+
+
+@media only screen and (max-width: $media-mobile-breakpoint)
