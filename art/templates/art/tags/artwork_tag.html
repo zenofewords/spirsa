@@ -1,0 +1,25 @@
+{% load static %}
+
+<div class="artwork">
+  <picture class="artwork-picture">
+    <source
+      srcset="{{ webp_mobile }}"
+      type="image/webp"
+      media="(max-width: 813px)"
+    >
+    <source
+      srcset="{{ jpeg_mobile }}"
+      media="(max-width: 813px)"
+    >
+    <img
+      src="{{ artwork.image.url }}"
+      alt="{{ artwork.title }}"
+    >
+  </picture>
+  <h2 class="artwork-title">
+    {{ artwork.title }}
+  </h2>
+  <p class="artwork-short-description">
+    {{ artwork.short_description }}
+  </p>
+</div>

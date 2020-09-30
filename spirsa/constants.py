@@ -1,0 +1,11 @@
+IMAGE_BREAKPOINT_WIDTH = 1200
+IMAGE_MAX_WIDTH = 2400
+IMAGE_MIN_WIDTH = 400
+IMAGE_QUALITY = 70
+IMAGE_VARIATION_WIDTHS = [
+    IMAGE_MIN_WIDTH, 800, IMAGE_BREAKPOINT_WIDTH, IMAGE_MAX_WIDTH
+]
+SRCSET_TYPE = [
+    'webp_desktop', 'webp_mobile', 'jpeg_desktop', 'jpeg_mobile'
+]
+SRCSET_MAPPING = {srcset_type: [] for srcset_type in SRCSET_TYPE}

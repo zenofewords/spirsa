@@ -6,6 +6,7 @@ body
   height: 100%
 
 body
+  background: $color-white
   display: flex
   flex-direction: column
   font-family: $font-family-base
@@ -13,7 +14,7 @@ body
   margin: 0
 
 main
-  flex: 1 0 0
+  flex: 1 0 auto
 
 footer
   flex: 0 0 0
@@ -24,6 +25,9 @@ h3,
 p,
 a
   margin: 0
+
+a
+  color: $color-white
 
 ul,
 ol
@@ -51,3 +55,28 @@ button
 
 
 @media only screen and (max-width: $media-mobile-breakpoint)
+  .nav
+    background: $color-black
+    height: 30px
+    left: 0
+    position: fixed
+    top: 0
+    width: 100%
+
+  .main
+    display: flex
+    flex-direction: column
+    margin: 50px 0 0
+
+  .footer
+    background: $color-black
+    padding: 6px 0
+    width: 100%
+
+
+@media only screen and (orientation: landscape) and (max-width: $media-mobile-breakpoint)
+  .main
+    display: grid
+    grid-gap: 0 30px
+    grid-template-columns: repeat(auto-fit, 340px)
+    justify-content: center

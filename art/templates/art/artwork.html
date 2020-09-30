@@ -1,0 +1,15 @@
+{% extends 'spirsa/base.html' %}
+{% load art_tags %}
+{% load render_bundle from webpack_loader %}
+
+{% block scripts %}
+  {% render_bundle 'art' 'css' %}
+{% endblock scripts %}
+
+{% block main %}
+  {% for artwork in artworks %}
+    {% artwork_tag artwork %}
+  {% empty %}
+    No art here.
+  {% endfor %}
+{% endblock main %}

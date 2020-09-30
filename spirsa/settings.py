@@ -27,6 +27,7 @@ INSTALLED_APPS = [
 
     'webpack_loader',
     'spirsa.apps.SpirsaConfig',
+    'art.apps.ArtConfig',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
