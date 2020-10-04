@@ -1,0 +1,24 @@
+<picture class="artwork-picture">
+  <source
+    srcset="{{ webp_desktop }}"
+    type="image/webp"
+    media="(min-width: 900px)"
+  >
+  <source
+    srcset="{{ webp_mobile }}"
+    type="image/webp"
+    media="(max-width: 899px)"
+  >
+  <source
+    srcset="{{ jpeg_desktop }}"
+    media="(min-width: 900px)"
+  >
+  <source
+    srcset="{{ jpeg_mobile }}"
+    media="(max-width: 899px)"
+  >
+  <img
+    src="{{ artwork.image.url }}"
+    alt="{{ artwork.title }}"
+  >
+</picture>

@@ -1,4 +1,5 @@
 {% load static %}
+{% load spirsa_tags %}
 {% load render_bundle from webpack_loader %}
 
 <!DOCTYPE html>
@@ -6,7 +7,7 @@
   <head>
     {% block head %}
       <title>
-        {% block title %}{% endblock title %}
+        {% block title %}Štefica Pirša | Art{% endblock title %}
       </title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,7 +55,44 @@
     <header>
       <nav class="nav">
         {% block nav %}
-          <a href="/">spirsa</a>
+          <a href="/" class="nav-link-home">
+            ŠP Art
+          </a>
+          <div class="mobile-menu">
+            <label for="mobile-menu-toggle" class="screen-reader">
+              Menu toggle
+            </label>
+            <input id="mobile-menu-toggle" class="mobile-menu-toggle" type="checkbox" autocomplete="off" />
+            <span class="mobile-menu-element"></span>
+
+            <ul style="opacity: 0;" class="mobile-menu-list">
+              <li>
+                {% mobile_menu_link_tag 'digital' request.path 'art' %}
+              </li>
+              <li>
+                {% mobile_menu_link_tag 'traditional' request.path 'art' %}
+              </li>
+              <li>
+                {% mobile_menu_link_tag 'contact' request.path %}
+              </li>
+              <li class="menu-item-follow">
+                <a
+                  class="menu-item-link-deviant-art"
+                  href="https://www.deviantart.com/spirsa"
+                  aria-label="Štefica Pirša deviant art"
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  D
+                </a>
+                <a
+                  class="menu-item-link-instagram"
+                  href="https://www.instagram.com/steficapirsa/"
+                  aria-label="Štefica Pirša instagram"
+                  target="_blank" rel="noopener noreferrer"
+                ></a>
+              </li>
+            </ul>
+          </div>
         {% endblock nav %}
       </nav>
     </header>
@@ -66,11 +104,14 @@
 
     <footer class="footer">
       {% block footer %}
-        <a href="/">spirsa</a>
+        <a href="/" class="nav-link-home">
+          ŠP Art
+        </a>
       {% endblock footer %}
     </footer>
 
     {% block body_scripts %}
+      {% render_bundle 'base' 'js' %}
     {% endblock body_scripts %}
   </body>
 </html>

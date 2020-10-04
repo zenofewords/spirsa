@@ -1,25 +1,22 @@
 {% load static %}
+{% load art_tags %}
 
 <div class="artwork">
-  <picture class="artwork-picture">
-    <source
-      srcset="{{ webp_mobile }}"
-      type="image/webp"
-      media="(max-width: 813px)"
-    >
-    <source
-      srcset="{{ jpeg_mobile }}"
-      media="(max-width: 813px)"
-    >
-    <img
-      src="{{ artwork.image.url }}"
-      alt="{{ artwork.title }}"
-    >
-  </picture>
-  <h2 class="artwork-title">
-    {{ artwork.title }}
-  </h2>
-  <p class="artwork-short-description">
-    {{ artwork.short_description }}
-  </p>
+  {% if link_to_detail %}
+    <a href="{% url 'art:artwork-detail' artwork.slug %}">
+      {% include 'art/tags/artwork_picture_tag.html' %}
+    </a>
+  {% else %}
+    {% include 'art/tags/artwork_picture_tag.html' %}
+  {% endif %}
+
+  <div class="artwork-info">
+    {% include 'art/tags/artwork_share_tag.html' %}
+    <h1 class="artwork-title">
+      {{ artwork.title }}
+    </h1>
+    <p class="artwork-short-description">
+      {{ artwork.short_description|linebreaksbr }}
+    </p>
+  </div>
 </div>

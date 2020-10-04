@@ -1,6 +1,26 @@
 @import './variables'
 
 
+.artwork-breadcrumb
+  display: flex
+  margin: 0 0 10px 15px
+
+  a
+    color: $color-black
+    padding: 0 20px 0 0
+    position: relative
+
+    &::after
+      background-color: $color-white
+      border: 1px solid $color-black-70
+      border-radius: 50%
+      content: ''
+      height: 5px
+      position: absolute
+      right: 6px
+      top: 7px
+      width: 5px
+
 
 @media only screen and (min-width: $media-desktop-breakpoint)
 
@@ -11,11 +31,15 @@
     flex-direction: column
     margin: 0 0 30px
 
+    & > a
+      display: flex
+
   .artwork-picture
-    margin: 0 0 15px
+    margin: 0 0 5px
 
     img
       height: auto
+      object-fit: cover
       width: 100%
 
   .artwork-title
@@ -23,3 +47,11 @@
 
   .artwork-short-description
     margin: 0 15px 10px
+
+
+@media only screen and (orientation: landscape) and (max-width: $media-mobile-breakpoint)
+  .artwork-title
+    margin: 0 0 15px
+
+  .artwork-short-description
+    margin: 0 0 10px

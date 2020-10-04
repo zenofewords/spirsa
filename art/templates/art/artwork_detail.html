@@ -1,0 +1,7 @@
+{% extends 'art/artwork_list.html' %}
+{% load art_tags %}
+
+{% block main %}
+  {% artwork_breadcrumb artwork %}
+  {% artwork_tag artwork False %}
+{% endblock main %}

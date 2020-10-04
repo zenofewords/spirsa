@@ -1,4 +1,4 @@
-@import './variables'
+@import './mixins'
 
 
 html,
@@ -13,11 +13,18 @@ body
   font-size: $font-size-base
   margin: 0
 
+  &.scroll-lock
+    overflow: hidden
+
 main
   flex: 1 0 auto
 
 footer
-  flex: 0 0 0
+  background: $color-black-70
+  display: flex
+  flex: 0 0 auto
+  justify-content: space-between
+  width: 100%
 
 h1,
 h2,
@@ -26,8 +33,16 @@ p,
 a
   margin: 0
 
+h1
+  font-size: $font-size-title
+
 a
   color: $color-white
+  text-decoration: none
+  transition: color $transition-duration-short
+
+  &:hover
+    color: $color-white
 
 ul,
 ol
@@ -50,33 +65,184 @@ button
   top: auto
   width: 1px
 
+.nav
+  background: $color-black-70
+  box-shadow: 0 1px 2px $color-black-70
+  display: flex
+  height: $header-mobile-height
+  justify-content: space-between
+  left: 0
+  position: fixed
+  top: 0
+  width: 100%
+  z-index: 3
+
+.nav-link-home
+  display: block
+  margin: 0 auto 0 0
+  padding: 6px 15px
+
+.menu-item-link-deviant-art
+  @include share-icon
+
+.menu-item-link-instagram
+  @include share-icon
+
+  &::after
+    border: 2px solid $color-white
+    border-radius: 50%
+    content: ''
+    height: 8px
+    left: 4px
+    position: absolute
+    top: 4px
+    width: 8px
+
+  &::before
+    background-color: $color-white
+    border-radius: 50%
+    content: ''
+    height: 3px
+    position: absolute
+    right: 2px
+    top: 2px
+    width: 3px
+
+.artwork-info
+  display: flex
+  flex-direction: column
+
+.share-link-wrapper
+  display: flex
+  justify-content: flex-end
+  margin: 0 15px
+
+.share-link
+  @include share-icon($border-color: $color-black, $margin: 0 0 5px 10px)
+  color: $color-black
+
 
 @media only screen and (min-width: $media-desktop-breakpoint)
+  .nav
+    height: $header-desktop-height
+
+  .nav-link-home
+    padding: 16px 30px
 
 
 @media only screen and (max-width: $media-mobile-breakpoint)
-  .nav
-    background: $color-black
-    height: 30px
-    left: 0
-    position: fixed
-    top: 0
-    width: 100%
+  h1,
+  h2,
+  h3,
+  p
+    margin: 0 15px
 
   .main
     display: flex
     flex-direction: column
-    margin: 50px 0 0
+    margin: 40px 0 0
 
-  .footer
-    background: $color-black
-    padding: 6px 0
+  .mobile-menu
+    display: flex
+    flex-direction: column
+    padding: 6px 15px 0 0
+
+  .mobile-menu-list
+    background-color: $color-black-70
+    height: calc(100vh - #{$header-mobile-height})
+    left: 0
+    list-style: none
+    margin: 0
+    padding: 0
+    position: absolute
+    text-align: center
+    top: $header-mobile-height
+    transform: translate(-150%, 0)
+    transform-origin: 0% 0%
+    transition-duration: $transition-duration-short
+    transition-property: opacity, transform
     width: 100%
+
+    &::after
+      border-bottom: 1px solid $color-black
+      bottom: 0
+      content: ''
+      left: 0
+      position: absolute
+      width: 100%
+
+    li
+      font-size: $font-size-menu-item
+      margin: 0 0 35px
+
+      &:first-of-type
+        margin: 10vh 0 35px
+
+    a
+      margin: 0
+      padding: 10px
+      text-transform: capitalize
+
+  .menu-item-follow
+    color: $color-white
+    display: flex
+    justify-content: center
+
+    a
+      margin: 0 10px
+      padding: 0
+
+  .mobile-menu-toggle
+    height: 26px
+    opacity: 0
+    position: absolute
+    right: 8px
+    top: 0
+    width: 26px
+    z-index: 5
+
+    &:checked ~
+      .mobile-menu-list
+        opacity: 1 !important // sass-lint:disable-line no-important
+        transform: translate(0, 0)
+
+      .mobile-menu-element
+        border-radius: 50%
+
+        &::after
+          border-radius: 50%
+          transform: scaleX(.2) scaleY(2)
+
+  .mobile-menu-element
+    border: 2px solid $color-white
+    border-left: 0
+    border-radius: 20%
+    border-right: 0
+    height: 14px
+    position: relative
+    transform-origin: 50% 50%
+    transition-duration: $transition-duration-short
+    transition-property: border-radius
+    width: 20px
+    z-index: 4
+
+    &::after
+      background-color: $color-white
+      border-radius: 15%
+      content: ''
+      height: 2px
+      left: 0
+      position: absolute
+      top: 6px
+      transform-origin: 50% 50%
+      transition-duration: $transition-duration-short
+      transition-property: transform
+      width: 20px
 
 
 @media only screen and (orientation: landscape) and (max-width: $media-mobile-breakpoint)
   .main
     display: grid
-    grid-gap: 0 30px
-    grid-template-columns: repeat(auto-fit, 340px)
+    grid-gap: 0 14px
+    grid-template-columns: repeat(auto-fit, calc(50vw - 23px))
     justify-content: center

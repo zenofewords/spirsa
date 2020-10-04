@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 from PIL import Image
 
+from django.contrib.sites.shortcuts import get_current_site
 from django.utils.safestring import mark_safe
 
 from spirsa.constants import (
@@ -76,7 +77,7 @@ def create_image(resized_image, path, new_width, extension, kwarg):
 
 
 def update_srcset_mapping(srcset_mapping, relative_path, width, extension):
-    if width <= IMAGE_BREAKPOINT_WIDTH:
+    if width < IMAGE_BREAKPOINT_WIDTH:
         srcset_mapping['{}_{}'.format(extension, 'mobile')].append(
             '{} {}x'.format(
                 get_new_path(relative_path, width, extension),
@@ -113,3 +114,7 @@ def get_preview_image(image, max_width):
         )
     except FileNotFoundError:  # noqa
         return ''
+
+
+def get_site_url(request):
+    return '{}://{}'.format(request.scheme, get_current_site(request))

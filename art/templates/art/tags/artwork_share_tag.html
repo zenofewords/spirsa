@@ -1,0 +1,45 @@
+<div class="share-link-wrapper">
+  {% if facebook_share_url %}
+    <a
+      class="share-link"
+      href={{ facebook_share_url }}
+      aria-label="share to facebook"
+      target="_blank" rel="noopener noreferrer"
+    >
+      F
+    </a>
+  {% endif %}
+
+  {% if twitter_share_url %}
+    <a
+      class="share-link"
+      href={{ twitter_share_url }}
+      aria-label="share to twitter"
+      target="_blank" rel="noopener noreferrer"
+    >
+      T
+    </a>
+  {% endif %}
+
+  {% if linkedin_share_url %}
+    <a
+      class="share-link"
+      href={{ linkedin_share_url }}
+      aria-label="share to linkedin"
+      target="_blank" rel="noopener noreferrer"
+    >
+      L
+    </a>
+  {% endif %}
+
+  {% if pinterest_share_url %}
+    <a
+      class="share-link"
+      href={{ pinterest_share_url }}
+      aria-label="share to pinterest"
+      target="_blank" rel="noopener noreferrer"
+    >
+      P
+    </a>
+  {% endif %}
+</div>
