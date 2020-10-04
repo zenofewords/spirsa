@@ -16,15 +16,17 @@ def artwork_tag(context, obj, link_to_detail=True):
     li_share_url = 'https://www.linkedin.com/sharing/share-offsite/?url='
     pt_share_url = 'https://pinterest.com/pin/create/button/?url='
 
-    return {
+    data = {
         'artwork': obj,
-        **{key: ', '.join(srcsets) for key, srcsets in obj.srcsets.items()},
         'facebook_share_url': '{}{}/artwork/{}'.format(fb_share_url, site_url, obj.slug),
         'twitter_share_url': '{}{}/artwork/{}'.format(tt_share_url, site_url, obj.slug),
         'linkedin_share_url': '{}{}/artwork/{}'.format(li_share_url, site_url, obj.slug),
         'pinterest_share_url': '{}{}/artwork/{}'.format(pt_share_url, site_url, obj.slug),
         'link_to_detail': link_to_detail,
     }
+    if obj.srcsets:
+        data.update(**{key: ', '.join(srcsets) for key, srcsets in obj.srcsets.items()})
+    return data
 
 
 @register.inclusion_tag('art/tags/artwork_breadcrumb.html')
