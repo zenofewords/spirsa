@@ -7,6 +7,7 @@
       {% include 'art/tags/artwork_picture_tag.html' %}
     </a>
   {% else %}
+    {% artwork_breadcrumb artwork %}
     {% include 'art/tags/artwork_picture_tag.html' %}
   {% endif %}
 

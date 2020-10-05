@@ -10,3 +10,14 @@
   position: relative
   text-align: center
   width: 20px
+
+
+@mixin transparent-background($height: $header-mobile-height)
+  background: $color-black-trans
+  box-shadow: 0 1px 2px $color-black-trans
+  content: ''
+  height: $height
+  left: 0
+  position: absolute
+  top: 0
+  width: 100%
