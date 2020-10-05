@@ -8,3 +8,12 @@ flush:
 restart:
 	sudo systemctl restart spirsa
 	sudo systemctl restart nginx
+
+deploy:
+	git pull origin master
+	pip install --upgrade -r requirements.txt
+	./manage.py migrate
+	./manage.py collectstatic
+	yarn install
+	yarn build
+	make restart
