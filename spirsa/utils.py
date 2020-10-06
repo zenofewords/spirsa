@@ -8,7 +8,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.safestring import mark_safe
 
 from spirsa.constants import (
-    IMAGE_BREAKPOINT_WIDTH,
+    IMAGE_LARGE_WIDTH,
+    IMAGE_MEDIUM_WIDTH,
     IMAGE_MAX_WIDTH,
     IMAGE_MIN_WIDTH,
     IMAGE_QUALITY,
@@ -24,13 +25,10 @@ def create_image_variations(instance):
 
     path = instance.image.path
     with Image.open(path) as original:
-        # adjust width/height
-        if original.width > IMAGE_MAX_WIDTH:
-            new_height = get_new_height(original, IMAGE_MAX_WIDTH)
-            original = original.resize((IMAGE_MAX_WIDTH, new_height), resample=Image.BICUBIC)
-
         instance.srcsets = create_srcsets(path, instance.image.url, original)
-        instance.image = get_new_path(instance.image.name, '800', 'jpeg')
+        instance.image = get_new_path(
+            instance.image.name, str(IMAGE_MEDIUM_WIDTH), 'jpeg'
+        )
         instance.image_timestamp = os.path.getmtime(instance.image.file.name)
         instance.save()
         # remove original image
@@ -64,7 +62,7 @@ def create_srcsets(path, relative_path, image):
         update_srcset_mapping(
             srcset_mapping,
             relative_path,
-            *create_image(resized_image, path, new_width, 'webp', {'method': 3}),
+            *create_image(resized_image, path, new_width, 'webp', {'method': 0}),
         )
     return srcset_mapping
 
@@ -77,18 +75,25 @@ def create_image(resized_image, path, new_width, extension, kwarg):
 
 
 def update_srcset_mapping(srcset_mapping, relative_path, width, extension):
-    if width < IMAGE_BREAKPOINT_WIDTH:
-        srcset_mapping['{}_{}'.format(extension, 'mobile')].append(
+    if width < IMAGE_MEDIUM_WIDTH:
+        srcset_mapping['{}_{}'.format(extension, 'small')].append(
             '{} {}x'.format(
                 get_new_path(relative_path, width, extension),
                 width // IMAGE_MIN_WIDTH
             )
         )
-    if width >= IMAGE_BREAKPOINT_WIDTH:
-        srcset_mapping['{}_{}'.format(extension, 'desktop')].append(
+    elif width >= IMAGE_MEDIUM_WIDTH and width < IMAGE_LARGE_WIDTH:
+        srcset_mapping['{}_{}'.format(extension, 'medium')].append(
             '{} {}x'.format(
                 get_new_path(relative_path, width, extension),
-                width // IMAGE_BREAKPOINT_WIDTH
+                width // IMAGE_MEDIUM_WIDTH
+            )
+        )
+    else:
+        srcset_mapping['{}_{}'.format(extension, 'large')].append(
+            '{} {}x'.format(
+                get_new_path(relative_path, width, extension),
+                width // IMAGE_LARGE_WIDTH
             )
         )
 

@@ -2,13 +2,13 @@
 {% load art_tags %}
 
 <div class="artwork">
-  {% if link_to_detail %}
+  {% if detail %}
+    {% artwork_breadcrumb artwork %}
+    {% include 'art/tags/artwork_picture_tag.html' %}
+  {% else %}
     <a href="{% url 'art:artwork-detail' artwork.slug %}">
       {% include 'art/tags/artwork_picture_tag.html' %}
     </a>
-  {% else %}
-    {% artwork_breadcrumb artwork %}
-    {% include 'art/tags/artwork_picture_tag.html' %}
   {% endif %}
 
   <div class="artwork-info">
