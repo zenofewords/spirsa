@@ -8,13 +8,12 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.safestring import mark_safe
 
 from spirsa.constants import (
-    IMAGE_LARGE_WIDTH,
-    IMAGE_MEDIUM_WIDTH,
-    IMAGE_MAX_WIDTH,
-    IMAGE_MIN_WIDTH,
-    IMAGE_QUALITY,
-    IMAGE_VARIATION_WIDTHS,
+    DEFAULT_QUALITY,
+    DEFAULT_SIZE,
+    DEFAULT_TYPE,
     SRCSET_MAPPING,
+    SRCSET_TYPES,
+    VARIATION_SETS,
 )
 
 
@@ -26,9 +25,7 @@ def create_image_variations(instance):
     path = instance.image.path
     with Image.open(path) as original:
         instance.srcsets = create_srcsets(path, instance.image.url, original)
-        instance.image = get_new_path(
-            instance.image.name, str(IMAGE_MEDIUM_WIDTH), 'jpeg'
-        )
+        instance.image = get_new_path(instance.image.name, DEFAULT_SIZE, DEFAULT_TYPE)
         instance.image_timestamp = os.path.getmtime(instance.image.file.name)
         instance.save()
         # remove original image
@@ -49,53 +46,36 @@ def get_new_path(path, width, extension):
 def create_srcsets(path, relative_path, image):
     srcset_mapping = copy.deepcopy(SRCSET_MAPPING)
 
-    for new_width in IMAGE_VARIATION_WIDTHS:
+    for variation_set in VARIATION_SETS:
+        new_width = variation_set[2]
+
         new_height = get_new_height(image, new_width)
         resized_image = image.resize((new_width, new_height), resample=Image.BICUBIC)
-        # create jpg variation
-        update_srcset_mapping(
-            srcset_mapping,
-            relative_path,
-            *create_image(resized_image, path, new_width, 'jpeg', {'optimize': True}),
-        )
-        # create webp variation
-        update_srcset_mapping(
-            srcset_mapping,
-            relative_path,
-            *create_image(resized_image, path, new_width, 'webp', {'method': 0}),
-        )
+
+        for srcset_type in SRCSET_TYPES:
+            update_srcset_mapping(
+                srcset_mapping,
+                relative_path,
+                variation_set,
+                *create_image(resized_image, path, new_width, srcset_type),
+            )
     return srcset_mapping
 
 
-def create_image(resized_image, path, new_width, extension, kwarg):
+def create_image(resized_image, path, new_width, extension):
     new_path = get_new_path(path, new_width, extension)
-    resized_image.save(new_path, extension, **kwarg, quality=IMAGE_QUALITY)
+    resized_image.save(new_path, extension, quality=DEFAULT_QUALITY)
 
     return new_width, extension
 
 
-def update_srcset_mapping(srcset_mapping, relative_path, width, extension):
-    if width < IMAGE_MEDIUM_WIDTH:
-        srcset_mapping['{}_{}'.format(extension, 'small')].append(
-            '{} {}x'.format(
-                get_new_path(relative_path, width, extension),
-                width // IMAGE_MIN_WIDTH
-            )
+def update_srcset_mapping(srcset_mapping, relative_path, variation_set, width, extension):
+    srcset_mapping['{}_{}'.format(extension, variation_set[0])].append(
+        '{} {}x'.format(
+            get_new_path(relative_path, width, extension),
+            width // variation_set[1]
         )
-    elif width >= IMAGE_MEDIUM_WIDTH and width < IMAGE_LARGE_WIDTH:
-        srcset_mapping['{}_{}'.format(extension, 'medium')].append(
-            '{} {}x'.format(
-                get_new_path(relative_path, width, extension),
-                width // IMAGE_MEDIUM_WIDTH
-            )
-        )
-    else:
-        srcset_mapping['{}_{}'.format(extension, 'large')].append(
-            '{} {}x'.format(
-                get_new_path(relative_path, width, extension),
-                width // IMAGE_LARGE_WIDTH
-            )
-        )
+    )
 
 
 def get_preview_image(image, max_width):

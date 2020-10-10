@@ -1,18 +1,19 @@
 HOME_URL_NAME = 'digital'
-IMAGE_MAX_WIDTH = 5000
-IMAGE_LARGE_WIDTH = 2500
-IMAGE_MEDIUM_WIDTH = 1200
-IMAGE_MIN_WIDTH = 500
-IMAGE_QUALITY = 80
-IMAGE_VARIATION_WIDTHS = [
-    IMAGE_MIN_WIDTH,
-    1000,
-    IMAGE_MEDIUM_WIDTH,
-    2400,
-    IMAGE_LARGE_WIDTH,
-    IMAGE_MAX_WIDTH
-]
-SRCSET_TYPE = [
-    'webp_large', 'webp_medium', 'webp_small', 'jpeg_large', 'jpeg_medium', 'jpeg_small'
-]
-SRCSET_MAPPING = {srcset_type: [] for srcset_type in SRCSET_TYPE}
+DEFAULT_QUALITY = 75
+DEFAULT_SIZE = 2400
+DEFAULT_TYPE = 'jpeg'
+LARGE = 'large'
+MEDIUM = 'medium'
+SMALL = 'small'
+SRCSET_TYPES = ('webp', DEFAULT_TYPE, )
+SRCSET_MAPPING = {srcset: [] for srcset in [
+    '{}_{}'.format(t, s) for t in SRCSET_TYPES for s in (LARGE, MEDIUM, SMALL, )]
+}
+VARIATION_SETS = (
+    (LARGE, 2500, 5000),
+    (LARGE, 2500, 2500),
+    (MEDIUM, 1200, DEFAULT_SIZE),
+    (MEDIUM, 1200, 1200),
+    (SMALL, 500, 1000),
+    (SMALL, 500, 500),
+)
