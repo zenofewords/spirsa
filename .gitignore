@@ -103,7 +103,7 @@ server.js
 *.flake8
 
 # OSX
-.DS_store
+.DS_Store
 
 # code
 .vscode/

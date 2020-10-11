@@ -1,16 +1,20 @@
 @import './variables'
 
 
-@mixin share-icon($border-color: $color-white, $margin: 3px 15px)
-  border: 1px solid $border-color
+@mixin menu-icon
+  background-size: contain
+  border: 1px solid $color-white
   border-radius: 25%
-  height: 20px
-  line-height: 20px
-  margin: $margin
+  height: 28px
+  margin: 3px 15px
   position: relative
-  text-align: center
-  width: 20px
+  width: 28px
 
+@mixin share-icon
+  background-size: contain
+  height: 34px
+  margin: 8px
+  width: 34px
 
 @mixin transparent-background($height: $header-mobile-height)
   background: $color-black-trans

@@ -12,7 +12,7 @@
   {% endif %}
 
   <div class="artwork-info">
-    {% include 'art/tags/artwork_share_tag.html' %}
+    {% include 'art/tags/artwork_share_tag.html' with id=artwork.pk %}
     <h1 class="artwork-title">
       {{ artwork.title }}
     </h1>
