@@ -15,16 +15,6 @@
     </a>
   {% endif %}
 
-  {% if linkedin_share_url %}
-    <a
-      class="share-link share-link-linkedin"
-      href={{ linkedin_share_url }}
-      aria-label="share on linkedin"
-      target="_blank" rel="noopener noreferrer"
-    >
-    </a>
-  {% endif %}
-
   {% if pinterest_share_url %}
     <a
       class="share-link share-link-pinterest"
@@ -40,6 +30,16 @@
       class="share-link share-link-twitter"
       href={{ twitter_share_url }}
       aria-label="share on twitter"
+      target="_blank" rel="noopener noreferrer"
+    >
+    </a>
+  {% endif %}
+
+  {% if linkedin_share_url %}
+    <a
+      class="share-link share-link-linkedin"
+      href={{ linkedin_share_url }}
+      aria-label="share on linkedin"
       target="_blank" rel="noopener noreferrer"
     >
     </a>

@@ -90,7 +90,7 @@ button
   background-size: contain
   display: block
   height: 32px
-  margin: 0 auto 0 12px
+  margin: 0 0 0 12px
   max-height: $header-mobile-height
   pointer-events: all
   width: 32px
@@ -157,7 +157,7 @@ button
   opacity: 0
   pointer-events: none
   position: absolute
-  right: 5px
+  right: 6px
   top: -55px
   transition-duration: $transition-duration-short
   transition-property: opacity
@@ -202,7 +202,7 @@ button
     display: flex
     flex-direction: column
     height: $header-mobile-height
-    margin: 7px 15px 0 0
+    margin: 7px 16px 0 0
     pointer-events: all
 
   .mobile-menu-list
@@ -274,10 +274,9 @@ button
   .mobile-menu-button
     border: 2px solid $color-white
     border-left: 0
-    border-radius: 20%
+    border-radius: 2px
     border-right: 0
     height: 14px
-    margin: 0 0 0 auto
     position: relative
     transform-origin: 50% 50%
     transition-duration: $transition-duration-short
@@ -287,7 +286,7 @@ button
 
     &::after
       background-color: $color-white
-      border-radius: 15%
+      border-radius: 10px
       content: ''
       height: 2px
       left: 0
@@ -302,6 +301,11 @@ button
 @media only screen and (orientation: landscape) and (max-width: $media-mobile-breakpoint)
   .main
     display: grid
-    grid-gap: 0 14px
-    grid-template-columns: repeat(auto-fit, calc(50vw - 23px))
+    grid-gap: 0 15px
+    grid-template-columns: repeat(auto-fit, minmax(45vw, 1fr))
     justify-content: center
+    margin: 45px 15px 0
+
+  .share-toggle,
+  .share-button
+    right: 0

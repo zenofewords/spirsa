@@ -11,15 +11,14 @@
     position: relative
 
     &::after
-      background-color: $color-white
-      border: 1px solid $color-black-trans
+      background-color: $color-black
       border-radius: 50%
       content: ''
-      height: 5px
+      height: 6px
       position: absolute
-      right: 6px
+      right: 7px
       top: 7px
-      width: 5px
+      width: 6px
       z-index: -1
 
 
@@ -49,8 +48,11 @@
 
 
 @media only screen and (orientation: landscape) and (max-width: $media-mobile-breakpoint)
+  .artwork-breadcrumb
+    margin: 0 0 10px
+
   .artwork-title
-    margin: 0 0 15px
+    margin: 15px 0
 
   .artwork-short-description
     margin: 0 0 10px
