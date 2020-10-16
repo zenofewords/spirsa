@@ -20,48 +20,40 @@ body
 
 main
   flex: 1 0 auto
+  padding: 60px 0
 
 nav
   display: flex
   height: 100%
   justify-content: space-between
   left: 0
-  pointer-events: none
   position: fixed
   top: 0
   width: 100%
   z-index: 1
 
-  &::after
-    @include transparent-background
-
 footer
   display: flex
   flex: 0 0 auto
-  justify-content: space-between
+  justify-content: center
+  padding: 0 0 10px
   position: relative
   width: 100%
-
-  &::after
-    @include transparent-background
 
 h1,
 h2,
 h3,
 p,
 a
+  color: $color-black
   margin: 0
 
 h1
   font-size: $font-size-title
+  margin: 0 0 30px
 
 a
-  color: $color-white
   text-decoration: none
-  transition: color $transition-duration-short
-
-  &:hover
-    color: $color-white
 
 ul,
 ol
@@ -84,17 +76,34 @@ button
   top: auto
   width: 1px
 
-.nav-link-home
-  background: center no-repeat
-  background-image: url('data:image/svg+xml;base64,#{$sp-white-icon}')
-  background-size: contain
-  display: block
-  height: 32px
-  margin: 0 0 0 12px
-  max-height: $header-mobile-height
-  pointer-events: all
-  width: 32px
+.desktop-nav
+  display: flex
+  height: $header-height
+  justify-content: center
+  width: 100%
   z-index: 1
+
+.sp-link
+  color: $color-black
+  display: block
+  font-family: 'Poiret One', Helvetica, Tahoma, sans-serif
+  font-size: 24px
+  letter-spacing: 1px
+  padding: 6px 6px 0 50px
+  pointer-events: all
+  position: relative
+  width: 150px
+  z-index: 1
+
+  &::before
+    @include sp-icon
+
+.menu-link
+  font-size: $font-size-menu-item
+  margin: 0
+  padding: 6px 10px
+  position: relative
+  text-transform: capitalize
 
 .menu-item-link-deviant-art
   @include menu-icon
@@ -108,9 +117,9 @@ button
     border-radius: 50%
     content: ''
     height: 13px
-    left: 5px
+    left: 4px
     position: absolute
-    top: 6px
+    top: 4px
     width: 13px
 
   &::before
@@ -119,21 +128,21 @@ button
     content: ''
     height: 4px
     position: absolute
-    right: 3px
-    top: 3px
+    right: 2px
+    top: 2px
     width: 4px
 
-.artwork-info
-  display: flex
-  flex-direction: column
-  position: relative
+.menu-item-link-deviant-art,
+.menu-item-link-instagram
+  &.footer
+    filter: invert(1)
 
 .share-toggle
   height: 34px
   margin: 0
   opacity: 0
   position: absolute
-  right: 10px
+  right: 12px
   top: 10px
   width: 34px
 
@@ -148,7 +157,7 @@ button
   margin: 0
   pointer-events: none
   position: absolute
-  right: 10px
+  right: 12px
   top: 10px
 
 .share-link-wrapper
@@ -157,7 +166,7 @@ button
   opacity: 0
   pointer-events: none
   position: absolute
-  right: 6px
+  right: 7px
   top: -55px
   transition-duration: $transition-duration-short
   transition-property: opacity
@@ -177,44 +186,46 @@ button
 .share-link-pinterest
   background-image: url('data:image/svg+xml;base64,#{$pinterest-icon}')
 
-
-@media only screen and (min-width: $media-desktop-breakpoint)
-  .nav
-    height: $header-desktop-height
-
-  .nav-link-home
-    padding: 16px 30px
+.footer-wrapper
+  display: flex
 
 
-@media only screen and (max-width: $media-mobile-breakpoint)
-  h1,
-  h2,
-  h3,
-  p
-    margin: 0 15px
+@media only screen and (max-width: $media-breakpoint-medium)
+  nav
+    pointer-events: none
 
-  .main
+    &::after
+      @include transparent-background
+
+  .sp-link
+    height: 26px
+
+  .sp-link-footer
+    display: none
+
+  .menu-link
+    color: $color-white
+    font-weight: 700
+
+  .desktop-nav
+    display: none
+
+  .mobile-nav
     display: flex
-    flex-direction: column
-    margin: 45px 0 0
-
-  .mobile-menu
-    display: flex
-    flex-direction: column
-    height: $header-mobile-height
+    height: $header-height
     margin: 7px 16px 0 0
     pointer-events: all
 
-  .mobile-menu-list
+  .mobile-nav-list
     background-color: $color-black-trans
-    height: calc(100vh - #{$header-mobile-height})
+    height: calc(100vh - #{$header-height})
     left: 0
     list-style: none
     margin: 0
     padding: 0
     position: absolute
     text-align: center
-    top: $header-mobile-height
+    top: $header-height
     transform: translate(-150%, 0)
     transform-origin: 0% 0%
     transition-duration: $transition-duration-short
@@ -236,10 +247,16 @@ button
       &:first-of-type
         margin: 10vh 0 35px
 
-    a
-      margin: 0
-      padding: 10px
-      text-transform: capitalize
+  .link-current
+    &::before
+      background-color: $color-white
+      border-radius: 50%
+      content: ''
+      height: 6px
+      position: absolute
+      right: -5px
+      top: 17px
+      width: 6px
 
   .menu-item-follow
     color: $color-white
@@ -250,7 +267,7 @@ button
       margin: 0 10px
       padding: 0
 
-  .mobile-menu-toggle
+  .mobile-nav-toggle
     height: 33px
     opacity: 0
     position: absolute
@@ -260,23 +277,24 @@ button
     z-index: 2
 
     &:checked ~
-      .mobile-menu-list
+      .mobile-nav-list
         opacity: 1 !important // sass-lint:disable-line no-important
         transform: translate(0, 0)
 
-      .mobile-menu-button
+      .mobile-nav-button
         border-radius: 50%
 
         &::after
           border-radius: 50%
           transform: scaleX(.2) scaleY(2)
 
-  .mobile-menu-button
-    border: 2px solid $color-white
+  .mobile-nav-button
+    border: 2px solid $color-black
     border-left: 0
     border-radius: 2px
     border-right: 0
     height: 14px
+    margin: 3px 0 0
     position: relative
     transform-origin: 50% 50%
     transition-duration: $transition-duration-short
@@ -285,7 +303,7 @@ button
     z-index: 1
 
     &::after
-      background-color: $color-white
+      background-color: $color-purple
       border-radius: 10px
       content: ''
       height: 2px
@@ -297,15 +315,52 @@ button
       transition-property: transform
       width: 20px
 
+  .contact-wrapper
+    margin: 0 15px
 
-@media only screen and (orientation: landscape) and (max-width: $media-mobile-breakpoint)
-  .main
-    display: grid
-    grid-gap: 0 15px
-    grid-template-columns: repeat(auto-fit, minmax(45vw, 1fr))
-    justify-content: center
-    margin: 45px 15px 0
+@media only screen and (min-width: $media-breakpoint-large)
+  nav
+    align-items: center
+    flex-direction: column
+    height: 100px
+    margin: 30px 0 50px
+    position: relative
 
-  .share-toggle,
-  .share-button
-    right: 0
+  main
+    margin: 0 auto
+    padding: 0 50px 50px
+
+  footer
+    padding: 0 0 30px
+
+  .mobile-nav
+    display: none
+
+  .sp-link
+    margin: 0 auto
+
+  .link-current
+    border-bottom: 2px solid $color-purple
+    margin: 2px 8px
+    padding: 4px 2px
+
+  .sp-link-footer
+    display: block
+    margin: 1px 0 0
+    position: relative
+    width: 53px
+    z-index: 1
+
+    &::before
+      @include sp-icon($size: 28px)
+
+
+@media only screen and (min-width: $media-breakpoint-extra-large)
+  main
+    max-width: 2000px
+
+  .desktop-nav,
+  .footer-wrapper
+    margin: 0 auto
+    max-width: 2000px
+    width: 100%

@@ -7,11 +7,13 @@
 {% endblock scripts %}
 
 {% block main %}
-  {% for artwork in artworks %}
-    {% artwork_tag artwork %}
-  {% empty %}
-    <p>
-      No art here.
-    </p>
-  {% endfor %}
+  <div class="artwork-list">
+    {% for artwork in artworks %}
+      {% artwork_tag artwork %}
+    {% empty %}
+      <p class="artwork-short-description">
+        No art here.
+      </p>
+    {% endfor %}
+  </div>
 {% endblock main %}
