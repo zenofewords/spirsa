@@ -27,18 +27,3 @@ def artwork_tag(context, obj, detail=False):
     if obj.srcsets:
         data.update(**{key: ', '.join(srcsets) for key, srcsets in obj.srcsets.items()})
     return data
-
-
-@register.inclusion_tag('art/tags/artwork_breadcrumb.html')
-def artwork_breadcrumb(obj):
-    if obj.is_traditional:
-        base_url = reverse_lazy('art:traditional')
-        label = 'traditional art'
-    else:
-        base_url = reverse_lazy('art:{}'.format(HOME_URL_NAME))
-        label = 'digital art'
-
-    return {
-        'base_url': base_url,
-        'label': label,
-    }

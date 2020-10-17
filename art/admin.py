@@ -5,7 +5,6 @@ from art.models import (
     Color,
     Tag,
 )
-from spirsa.constants import DEFAULT_SIZE
 from spirsa.mixins import AutoSlugAdminMixin
 from spirsa.utils import get_preview_image
 
@@ -23,10 +22,10 @@ class ArtworkAdmin(AutoSlugAdminMixin):
     readonly_fields = ('image_preview', )
 
     def image_preview(self, obj):
-        return get_preview_image(obj.image, DEFAULT_SIZE // 4)
+        return get_preview_image(obj.image, 500)
 
     def image_preview_thumb(self, obj):
-        return get_preview_image(obj.image, DEFAULT_SIZE // 24)
+        return get_preview_image(obj.image, 100)
 
 
 class ColorAdmin(admin.ModelAdmin):

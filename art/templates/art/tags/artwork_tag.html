@@ -3,7 +3,6 @@
 
 <div class="artwork">
   {% if detail %}
-    {% artwork_breadcrumb artwork %}
     {% include 'art/tags/artwork_picture_tag.html' %}
   {% else %}
     <a href="{% url 'art:artwork-detail' artwork.slug %}">

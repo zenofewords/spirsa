@@ -1,6 +1,6 @@
 HOME_URL_NAME = 'digital'
 DEFAULT_QUALITY = 75
-DEFAULT_SIZE = 1600
+DEFAULT_SIZE = 1000
 DEFAULT_TYPE = 'jpeg'
 LARGE = 'large'
 MEDIUM = 'medium'
@@ -12,8 +12,8 @@ SRCSET_MAPPING = {srcset: [] for srcset in [
 VARIATION_SETS = (
     (LARGE, 1400, 2800),
     (LARGE, 1400, 1400),
-    (MEDIUM, 800, DEFAULT_SIZE),
+    (MEDIUM, 800, 1600),
     (MEDIUM, 800, 800),
-    (SMALL, 500, 1000),
+    (SMALL, 500, DEFAULT_SIZE),
     (SMALL, 500, 500),
 )
