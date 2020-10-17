@@ -1,3 +1,4 @@
+from django.apps import apps
 from django.contrib import admin
 from django.db import models
 from django.views.generic import TemplateView
@@ -16,12 +17,20 @@ class AutoSlugAdminMixin(admin.ModelAdmin):
 class MetaViewMixin(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        MetaInformation = apps.get_model('spirsa', 'MetaInformation')
+        info = MetaInformation.objects.last()
+
         data = {
             'meta_url': get_site_url(self.request),
-            'meta_title': '',
-            'meta_description': '',
-            'meta_image_alt': '',
         }
+        if info:
+            data.update({
+                'meta_title': info.meta_title,
+                'meta_description': info.meta_description,
+                'meta_keywords': info.meta_keywords,
+                'meta_image_url': info.meta_image.url,
+                'meta_image_title': info.meta_image_title,
+            })
         context.update(data)
         return context
 

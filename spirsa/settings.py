@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 
 load_dotenv()
+
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 DEBUG = bool(os.getenv('DEBUG', False))
 DEBUG_TOOLBAR = bool(os.getenv('DEBUG_TOOLBAR', False) and DEBUG)
