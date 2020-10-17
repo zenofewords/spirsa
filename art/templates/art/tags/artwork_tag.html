@@ -15,8 +15,11 @@
     <h1 class="artwork-title">
       {{ artwork.title }}
     </h1>
-    <p class="artwork-short-description">
-      {{ artwork.short_description|linebreaksbr }}
-    </p>
+
+    {% if detail %}
+      <p class="artwork-short-description">
+        {{ artwork.short_description|linebreaksbr }}
+      </p>
+    {% endif %}
   </div>
 </div>
