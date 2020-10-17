@@ -1,1 +1,1 @@
-Art portfolio for spirsa.
+Art portfolio for Štefica Pirša.
