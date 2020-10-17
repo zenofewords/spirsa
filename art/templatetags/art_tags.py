@@ -33,13 +33,12 @@ def artwork_tag(context, obj, detail=False):
 def artwork_breadcrumb(obj):
     if obj.is_traditional:
         base_url = reverse_lazy('art:traditional')
-        label = 'Traditional art'
+        label = 'traditional art'
     else:
         base_url = reverse_lazy('art:{}'.format(HOME_URL_NAME))
-        label = 'Digital art'
+        label = 'digital art'
 
     return {
-        'artwork_title': obj.title,
         'base_url': base_url,
         'label': label,
     }
