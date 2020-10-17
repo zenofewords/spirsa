@@ -162,7 +162,6 @@ button
 
 .share-link-wrapper
   display: flex
-  justify-content: flex-end
   left: 50%
   opacity: 0
   pointer-events: none
@@ -338,7 +337,14 @@ button
     display: none
 
   .sp-link
+    font-size: 32px
     margin: 0 auto
+    padding: 6px 6px 0 60px
+    white-space: nowrap
+    width: 180px
+
+    &::before
+      @include sp-icon($size: 40px)
 
   .link-current
     border-bottom: 2px solid $color-purple
@@ -364,4 +370,3 @@ button
   .footer-wrapper
     margin: 0 auto
     max-width: 2000px
-    width: 100%

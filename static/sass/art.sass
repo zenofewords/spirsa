@@ -66,34 +66,72 @@
 
 
 @media only screen and (min-width: $media-breakpoint-large)
-  .artwork-list
-    flex-wrap: wrap
-    justify-content: center
+  .artwork-picture
+    img
+      border-radius: 5px
 
-  .artwork
-    border-radius: 10px
-    margin: 10px 12px
-    position: relative
-
-    &:hover
-      .share-link-wrapper
-        opacity: 1
-        pointer-events: all
-
-  .artwork-title,
   .share-button,
   .share-toggle
     display: none
 
-  .artwork-picture
-    img
-      border-radius: 5px
-      height: 100%
-      max-height: 30vw
-      width: auto
+  .artwork-list
+    flex-wrap: wrap
+    justify-content: center
+
+    .artwork-title
+      display: none
+
+    .artwork
+      border-radius: 10px
+      margin: 10px 12px
+      position: relative
+
+      &:hover
+        .share-link-wrapper
+          opacity: 1
+          pointer-events: all
+
+    .artwork-picture
+      img
+        height: 100%
+        max-height: 30vw
+        width: auto
+
+  .artwork-detail
+    .artwork
+      display: flex
+      flex-direction: row
+      justify-content: center
+
+    .artwork-info
+      flex: 2 0 0
+      padding: 0 0 0 30px
+
+    .artwork-title
+      margin: 0 0 15px
+
+    .artwork-picture
+      flex: 5 0 0
+
+      img
+        height: auto
+        width: 100%
+
+    .share-link-wrapper
+      left: 0
+      opacity: 1
+      pointer-events: all
+      position: relative
+      top: 20px
+      transform: translate(0, 0)
+
+      .share-link
+        margin-left: 0
+        margin-right: 16px
 
 
 @media only screen and (min-width: $media-breakpoint-extra-large)
-  .artwork-picture
-    img
-      max-height: 600px
+  .artwork-list
+    .artwork-picture
+      img
+        max-height: 600px

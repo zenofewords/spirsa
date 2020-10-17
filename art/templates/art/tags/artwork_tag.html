@@ -11,7 +11,6 @@
   {% endif %}
 
   <div class="artwork-info">
-    {% include 'art/tags/artwork_share_tag.html' with id=artwork.pk %}
     <h1 class="artwork-title">
       {{ artwork.title }}
     </h1>
@@ -21,5 +20,6 @@
         {{ artwork.short_description|linebreaksbr }}
       </p>
     {% endif %}
+    {% include 'art/tags/artwork_share_tag.html' with id=artwork.pk %}
   </div>
 </div>
