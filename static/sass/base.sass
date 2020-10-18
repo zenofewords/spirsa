@@ -1,6 +1,4 @@
-@import './icons'
-@import './share-icons'
-@import './mixins'
+@import './variables'
 
 
 html,
@@ -24,21 +22,14 @@ main
 
 nav
   display: flex
-  height: 100%
-  justify-content: space-between
-  left: 0
-  position: fixed
-  top: 0
-  width: 100%
-  z-index: 1
 
 footer
   display: flex
-  flex: 0 0 auto
+  height: 25px
   justify-content: center
-  padding: 0 0 10px
-  position: relative
-  width: 100%
+
+  .link
+    margin: 0 10px
 
 h1,
 h2,
@@ -78,73 +69,56 @@ button
 
 .desktop-nav
   display: flex
-  height: $header-height
   justify-content: center
   width: 100%
   z-index: 1
 
 .sp-link
-  color: $color-black
-  display: block
   font-family: $font-family-logo
-  font-size: 24px
   letter-spacing: 1px
-  padding: 6px 6px 0 50px
-  pointer-events: all
-  position: relative
-  width: 150px
-  z-index: 1
-
-  &::before
-    @include sp-icon
 
 .menu-link
   font-size: $font-size-menu-item
   margin: 0
-  padding: 6px 10px
+  padding: 5px 10px
   position: relative
   text-transform: capitalize
 
-.menu-item-link-deviant-art
-  @include menu-icon
-  background-image: url('data:image/svg+xml;base64,#{$deviant-art-icon}')
-
-.menu-item-link-instagram
-  @include menu-icon
+.link-instagram
+  border: 2px solid $color-black
+  border-radius: 25%
+  height: 21px
+  position: relative
+  width: 21px
 
   &::after
-    border: 2px solid $color-white
+    border: 2px solid $color-black
     border-radius: 50%
     content: ''
-    height: 13px
+    height: 9px
     left: 4px
     position: absolute
     top: 4px
-    width: 13px
+    width: 9px
 
   &::before
-    background-color: $color-white
+    background-color: $color-black
     border-radius: 50%
     content: ''
-    height: 4px
+    height: 3px
     position: absolute
     right: 2px
     top: 2px
-    width: 4px
-
-.menu-item-link-deviant-art,
-.menu-item-link-instagram
-  &.footer
-    filter: invert(1)
+    width: 3px
 
 .share-toggle
-  height: 34px
+  height: 36px
   margin: 0
   opacity: 0
   position: absolute
-  right: 12px
-  top: 10px
-  width: 34px
+  right: 10px
+  top: 8px
+  width: 36px
 
   &:checked ~
     .share-link-wrapper
@@ -152,13 +126,13 @@ button
       pointer-events: all
 
 .share-button
-  @include share-icon
-  background-image: url('data:image/svg+xml;base64,#{$share-on-icon}')
+  height: 26px
   margin: 0
   pointer-events: none
   position: absolute
-  right: 12px
-  top: 10px
+  right: 15px
+  top: 13px
+  width: 26px
 
 .share-link-wrapper
   display: flex
@@ -167,40 +141,54 @@ button
   pointer-events: none
   position: absolute
   top: 0
-  transform: translate(-50%, -125%)
+  transform: translate(-50%, -150%)
   transition-duration: $transition-duration-short
   transition-property: opacity
 
 .share-link
-  @include share-icon
-
-.share-link-facebook
-  background-image: url('data:image/svg+xml;base64,#{$facebook-icon}')
-
-.share-link-linkedin
-  background-image: url('data:image/svg+xml;base64,#{$linkedin-icon}')
-
-.share-link-twitter
-  background-image: url('data:image/svg+xml;base64,#{$twitter-icon}')
-
-.share-link-pinterest
-  background-image: url('data:image/svg+xml;base64,#{$pinterest-icon}')
-
-.footer-wrapper
-  display: flex
+  margin: 0 10px
 
 
 @media only screen and (max-width: $media-breakpoint-medium)
   nav
+    height: 100%
+    justify-content: space-between
+    left: 0
     pointer-events: none
+    position: fixed
+    top: 0
+    width: 100%
+    z-index: 1
 
     &::after
-      @include transparent-background
+      background: $color-white
+      border-bottom: 1px solid $color-black-20
+      content: ''
+      height: $header-height
+      left: 0
+      pointer-events: all
+      position: absolute
+      top: 0
+      width: 100%
+
+
+  footer
+    margin: 0 0 20px
 
   .sp-link
-    height: 26px
+    align-items: center
+    display: flex
+    font-size: 24px
+    height: 40px
+    pointer-events: all
+    z-index: 1
 
-  .sp-link-footer
+    img
+      height: 26px
+      margin: 0 10px 2px 15px
+      width: 26px
+
+  .link-sp-footer
     display: none
 
   .menu-link
@@ -261,11 +249,12 @@ button
   .menu-item-follow
     color: $color-white
     display: flex
+    height: 25px
     justify-content: center
 
-    a
+    .link
+      filter: invert(1)
       margin: 0 10px
-      padding: 0
 
   .mobile-nav-toggle
     height: 33px
@@ -320,53 +309,25 @@ button
 
 @media only screen and (min-width: $media-breakpoint-large)
   nav
-    align-items: center
     flex-direction: column
-    height: 100px
     margin: 30px 0 50px
-    position: relative
 
   main
     margin: 0 auto
-    padding: 0 50px 50px
+    max-width: 1600px
+    padding: 0 50px 100px
 
   footer
-    padding: 0 0 30px
+    margin: 0 0 30px
 
   .mobile-nav
     display: none
 
   .sp-link
-    font-size: 32px
-    margin: 0 auto
-    padding: 6px 6px 0 60px
-    white-space: nowrap
-    width: 180px
-
-    &::before
-      @include sp-icon($size: 40px)
+    font-size: 34px
+    margin: 0 auto 20px
 
   .link-current
     border-bottom: 2px solid $color-purple
-    margin: 2px 8px
-    padding: 4px 2px
-
-  .sp-link-footer
-    display: block
-    margin: 1px 0 0
-    position: relative
-    width: 53px
-    z-index: 1
-
-    &::before
-      @include sp-icon($size: 28px)
-
-
-@media only screen and (min-width: $media-breakpoint-extra-large)
-  main
-    max-width: 2000px
-
-  .desktop-nav,
-  .footer-wrapper
-    margin: 0 auto
-    max-width: 2000px
+    margin: 3px 9px
+    padding: 2px 1px

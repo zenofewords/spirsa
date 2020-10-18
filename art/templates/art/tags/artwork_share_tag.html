@@ -1,8 +1,12 @@
+{% load static %}
+
 <label for="share-toggle-{{ id }}" class="screen-reader">
   Share toggle
 </label>
 <input id="share-toggle-{{ id }}" class="share-toggle" type="checkbox" autocomplete="off" />
-<span class="share-button"></span>
+<span class="share-button">
+  <img width="25px" height="25px" src="{% static 'images/share_icon.svg' %}" alt="Social share icon" />
+</span>
 
 <div class="share-link-wrapper">
   {% if facebook_share_url %}
@@ -12,6 +16,7 @@
       aria-label="share on facebook"
       target="_blank" rel="noopener noreferrer"
     >
+      <img width="25px" height="25px" src="{% static 'images/fb_share_icon.svg' %}" alt="Facebook share icon" />
     </a>
   {% endif %}
 
@@ -22,6 +27,7 @@
       aria-label="share on pinterest"
       target="_blank" rel="noopener noreferrer"
     >
+      <img width="25px" height="25px" src="{% static 'images/pin_share_icon.svg' %}" alt="Pinterest share icon" />
     </a>
   {% endif %}
 
@@ -32,6 +38,7 @@
       aria-label="share on twitter"
       target="_blank" rel="noopener noreferrer"
     >
+      <img width="25px" height="25px" src="{% static 'images/twit_share_icon.svg' %}" alt="Twitter share icon" />
     </a>
   {% endif %}
 
@@ -42,6 +49,7 @@
       aria-label="share on linkedin"
       target="_blank" rel="noopener noreferrer"
     >
+      <img width="25px" height="25px" src="{% static 'images/in_share_icon.svg' %}" alt="Linkedin share icon" />
     </a>
   {% endif %}
 </div>

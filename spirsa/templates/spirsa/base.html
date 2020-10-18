@@ -55,7 +55,10 @@
   <body>
     <header>
       <nav>
-        <a href="/" class="sp-link">Štefica Pirša</a>
+        <a href="/" class="sp-link">
+          {% include 'spirsa/includes/sp_logo.html' with size='32px' %}
+          Štefica Pirša
+        </a>
         <div class="desktop-nav">
           {% menu_link_tag 'digital' request.path 'art' %}
           {% menu_link_tag 'traditional' request.path 'art' %}
@@ -79,8 +82,8 @@
               {% menu_link_tag 'contact' request.path %}
             </li>
             <li class="menu-item-follow">
-              {% include 'spirsa/includes/deviant_art_share_link.html' %}
-              {% include 'spirsa/includes/instagram_share_link.html' %}
+              {% include 'spirsa/includes/deviant_art_link.html' %}
+              {% include 'spirsa/includes/instagram_link.html' %}
             </li>
           </ul>
         </div>
@@ -93,11 +96,11 @@
     </main>
 
     <footer>
-      <div class="footer-wrapper">
-        <a href="/" class="sp-link-footer" aria-label="Štefica Pirša"></a>
-        {% include 'spirsa/includes/deviant_art_share_link.html' with class='footer' %}
-        {% include 'spirsa/includes/instagram_share_link.html' with class='footer' %}
-      </div>
+      <a href="/" class="link link-sp-footer" aria-label="Štefica Pirša">
+        {% include 'spirsa/includes/sp_logo.html' with size='25px' %}
+      </a>
+      {% include 'spirsa/includes/deviant_art_link.html' %}
+      {% include 'spirsa/includes/instagram_link.html' %}
     </footer>
 
     {% block body_scripts %}

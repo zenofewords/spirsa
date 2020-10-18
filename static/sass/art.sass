@@ -29,8 +29,8 @@
 
 .artwork-picture
   img
+    background-color: $color-purple
     height: auto
-    object-fit: cover
     width: 100%
 
 
@@ -65,11 +65,13 @@
     flex-direction: column
 
 
-@media only screen and (min-width: $media-breakpoint-large)
+@media only screen and (min-width: $media-breakpoint-small)
   .artwork-picture
     img
       border-radius: 5px
 
+
+@media only screen and (min-width: $media-breakpoint-large)
   .share-button,
   .share-toggle
     display: none
@@ -92,9 +94,10 @@
           pointer-events: all
 
     .artwork-picture
+      height: 400px
+
       img
-        height: 100%
-        max-height: 30vw
+        height: 400px
         width: auto
 
   .artwork-detail
@@ -126,12 +129,6 @@
       transform: translate(0, 0)
 
       .share-link
+        filter: invert(1)
         margin-left: 0
         margin-right: 16px
-
-
-@media only screen and (min-width: $media-breakpoint-extra-large)
-  .artwork-list
-    .artwork-picture
-      img
-        max-height: 600px
