@@ -4,28 +4,14 @@
 .artwork-list
   display: flex
 
-.artwork-detail
-  margin: 0 15px
-
 .artwork
   display: flex
   flex-direction: column
-  margin: 0 auto 30px
-
-  & > a
-    display: flex
 
 .artwork-info
   display: flex
   flex-direction: column
   position: relative
-  width: 100%
-
-.artwork-title
-  margin: 15px 0
-
-.artwork-short-description
-  margin: 0 0 10px
 
 .artwork-picture
   img
@@ -43,13 +29,16 @@
     margin-right: 15px
 
   .artwork-title
-    margin: 15px 0
+    margin: 12px 15px 15px
 
   .artwork-short-description
-    margin: 0 0 10px
+    margin: 0 15px 10px
 
 
 @media only screen and (max-width: $media-breakpoint-small)
+  .artwork
+    margin: 0 0 30px
+
   .artwork-detail
     margin: 0
 
@@ -85,22 +74,24 @@
 
     .artwork
       border-radius: 10px
-      margin: 10px 12px
-      position: relative
+      margin: 0 10px 20px
 
       &:hover
         .share-link-wrapper
           opacity: 1
           pointer-events: all
 
-    .artwork-picture
+    .artwork-detail-link
       height: 400px
 
+    .artwork-picture
       img
         height: 400px
         width: auto
 
   .artwork-detail
+    margin: 10px 0 0
+
     .artwork
       display: flex
       flex-direction: row
@@ -123,12 +114,10 @@
     .share-link-wrapper
       left: 0
       opacity: 1
-      pointer-events: all
       position: relative
       top: 20px
       transform: translate(0, 0)
 
       .share-link
         filter: invert(1)
-        margin-left: 0
-        margin-right: 16px
+        margin: 0 16px 0 0

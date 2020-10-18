@@ -5,7 +5,7 @@
   {% if detail %}
     {% include 'art/tags/artwork_picture_tag.html' %}
   {% else %}
-    <a href="{% url 'art:artwork-detail' artwork.slug %}">
+    <a class="artwork-detail-link" href="{% url 'art:artwork-detail' artwork.slug %}">
       {% include 'art/tags/artwork_picture_tag.html' %}
     </a>
   {% endif %}
