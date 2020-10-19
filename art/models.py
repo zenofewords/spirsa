@@ -27,9 +27,7 @@ class Artwork(PublishedModelMixin, SlugModelMixin, TimeStampModelMixin):
     ordering = models.IntegerField(
         default=0, help_text='Higher number equals higher position. Leave 0 for default.'
     )
-    tag = models.ForeignKey(
-        'art.Tag', blank=True, null=True, on_delete=models.deletion.CASCADE
-    )
+    keywords = models.ManyToManyField('art.Keyword', blank=True)
 
     objects = ArtworkManager.from_queryset(PublishedQuerySet)()
 
@@ -48,25 +46,12 @@ class Artwork(PublishedModelMixin, SlugModelMixin, TimeStampModelMixin):
             create_image_variations(self)
 
 
-class Color(PublishedModelMixin):
+class Keyword(PublishedModelMixin, SlugModelMixin):
     name = models.CharField(max_length=50)
-    hex_value = models.CharField(max_length=7)
 
     class Meta:
-        verbose_name = 'Color'
-        verbose_name_plural = 'Colors'
-
-    def __str__(self):
-        return self.name
-
-
-class Tag(PublishedModelMixin, SlugModelMixin):
-    name = models.CharField(max_length=50)
-    color = models.ForeignKey('art.Color', on_delete=models.deletion.CASCADE)
-
-    class Meta:
-        verbose_name = 'Tag'
-        verbose_name_plural = 'Tags'
+        verbose_name = 'Keyword'
+        verbose_name_plural = 'Keywords'
         ordering = ('name', )
 
     def __str__(self):

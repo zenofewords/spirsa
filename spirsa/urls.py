@@ -4,13 +4,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from spirsa.views import ContactView
+from spirsa.views import AboutContactView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('art.urls', 'art'), namespace='art')),
-    path('contact/', ContactView.as_view(), name='contact'),
+    path('about-contact/', AboutContactView.as_view(), name='about-contact'),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

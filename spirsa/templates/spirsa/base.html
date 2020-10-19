@@ -17,10 +17,6 @@
       <meta name="theme-color" content="#fdfdfd">
 
       <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&amp;family=Poiret+One&amp;display=swap" rel="stylesheet">
-      <!--
-      <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&amp;display=swap" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css2?family=Poiret+One&amp;text='ŠPšteficar'&amp;display=swap" rel="stylesheet">
-      -->
       <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
       <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
       <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
@@ -37,13 +33,13 @@
         <meta property="og:title" content="{{ meta_title }}" />
         <meta property="og:description" content="{{ meta_description }}" />
 
-        <meta property="og:image" content="{{ meta_url }}{{ meta_image_url }}" />
+        <meta property="og:image" content="{{ meta_url }}{{ meta_image.url }}" />
         <meta property="og:image:alt" content="{{ meta_image_title }}" />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
 
-        <meta name="twitter:image" content="{{ meta_url }}{{ meta_image_url }}" />
+        <meta name="twitter:image" content="{{ meta_url }}{{ meta_image.url }}" />
         <meta name="twitter:image:alt" content="{{ meta_image_title }}" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:description" content="{{ meta_description }}" />
@@ -65,7 +61,7 @@
         <div class="desktop-nav">
           {% menu_link_tag 'digital' request.path 'art' %}
           {% menu_link_tag 'traditional' request.path 'art' %}
-          {% menu_link_tag 'contact' request.path %}
+          {% menu_link_tag 'about/contact' request.path %}
         </div>
         <div class="mobile-nav">
           <label for="mobile-nav-toggle" class="screen-reader">
@@ -82,7 +78,7 @@
               {% menu_link_tag 'traditional' request.path 'art' %}
             </li>
             <li>
-              {% menu_link_tag 'contact' request.path %}
+              {% menu_link_tag 'about/contact' request.path %}
             </li>
             <li class="menu-item-follow">
               {% include 'spirsa/includes/instagram_link.html' %}

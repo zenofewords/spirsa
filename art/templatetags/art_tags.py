@@ -1,7 +1,11 @@
 from django import template
-from django.urls import reverse_lazy
 
-from spirsa.constants import HOME_URL_NAME
+from spirsa.constants import (
+    FB_SHARE_URL,
+    TT_SHARE_URL,
+    IN_SHARE_URL,
+    PT_SHARE_URL,
+)
 from spirsa.utils import get_site_url
 
 register = template.Library()
@@ -11,17 +15,13 @@ register = template.Library()
 def artwork_tag(context, obj, detail=False):
     request = context.get('request')
     site_url = get_site_url(request)
-    fb_share_url = 'https://www.facebook.com/sharer.php?u='
-    tt_share_url = 'https://twitter.com/intent/tweet?url='
-    li_share_url = 'https://www.linkedin.com/sharing/share-offsite/?url='
-    pt_share_url = 'https://pinterest.com/pin/create/button/?url='
 
     data = {
         'artwork': obj,
-        'facebook_share_url': '{}{}/artwork/{}'.format(fb_share_url, site_url, obj.slug),
-        'twitter_share_url': '{}{}/artwork/{}'.format(tt_share_url, site_url, obj.slug),
-        'linkedin_share_url': '{}{}/artwork/{}'.format(li_share_url, site_url, obj.slug),
-        'pinterest_share_url': '{}{}/artwork/{}'.format(pt_share_url, site_url, obj.slug),
+        'facebook_share_url': '{}{}/artwork/{}'.format(FB_SHARE_URL, site_url, obj.slug),
+        'twitter_share_url': '{}{}/artwork/{}'.format(TT_SHARE_URL, site_url, obj.slug),
+        'linkedin_share_url': '{}{}/artwork/{}'.format(IN_SHARE_URL, site_url, obj.slug),
+        'pinterest_share_url': '{}{}/artwork/{}'.format(PT_SHARE_URL, site_url, obj.slug),
         'detail': detail,
     }
     if obj.srcsets:

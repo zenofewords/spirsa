@@ -2,8 +2,7 @@ from django.contrib import admin
 
 from art.models import (
     Artwork,
-    Color,
-    Tag,
+    Keyword,
 )
 from spirsa.mixins import AutoSlugAdminMixin
 from spirsa.utils import get_preview_image
@@ -17,7 +16,7 @@ class ArtworkAdmin(AutoSlugAdminMixin):
     list_editable = ('is_traditional', 'is_published', 'ordering', )
     fields = (
         'title', 'slug', 'is_traditional', 'is_published', 'ordering', 'short_description',
-        'tag', 'image', 'image_preview',
+        'keywords', 'image', 'image_preview',
     )
     readonly_fields = ('image_preview', )
 
@@ -28,36 +27,20 @@ class ArtworkAdmin(AutoSlugAdminMixin):
         return get_preview_image(obj.image, 100)
 
 
-class ColorAdmin(admin.ModelAdmin):
+class KeywordAdmin(AutoSlugAdminMixin):
     list_display_links = (
         '__str__',
     )
     list_display = (
-        '__str__', 'is_published', 'name', 'hex_value',
+        '__str__', 'is_published', 'name', 'slug',
     )
     list_editable = (
-        'is_published', 'name', 'hex_value',
+        'is_published', 'name', 'slug',
     )
     fields = (
-        'name', 'is_published', 'hex_value',
-    )
-
-
-class TagAdmin(AutoSlugAdminMixin):
-    list_display_links = (
-        '__str__',
-    )
-    list_display = (
-        '__str__', 'is_published', 'name', 'slug', 'color',
-    )
-    list_editable = (
-        'is_published', 'name', 'slug', 'color',
-    )
-    fields = (
-        'name', 'is_published', 'slug', 'color',
+        'name', 'is_published', 'slug',
     )
 
 
 admin.site.register(Artwork, ArtworkAdmin)
-admin.site.register(Color, ColorAdmin)
-admin.site.register(Tag, TagAdmin)
+admin.site.register(Keyword, KeywordAdmin)

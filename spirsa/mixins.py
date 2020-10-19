@@ -17,21 +17,20 @@ class AutoSlugAdminMixin(admin.ModelAdmin):
 class MetaViewMixin(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context.update({
+            'meta_url': get_site_url(self.request),
+        })
+
         MetaInformation = apps.get_model('spirsa', 'MetaInformation')
         info = MetaInformation.objects.last()
-
-        data = {
-            'meta_url': get_site_url(self.request),
-        }
         if info:
-            data.update({
+            context.update({
                 'meta_title': info.meta_title,
                 'meta_description': info.meta_description,
                 'meta_keywords': info.meta_keywords,
-                'meta_image_url': info.meta_image.url,
+                'meta_image': info.meta_image,
                 'meta_image_title': info.meta_image_title,
             })
-        context.update(data)
         return context
 
 

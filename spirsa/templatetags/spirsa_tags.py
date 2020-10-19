@@ -19,8 +19,9 @@ def menu_link_tag(name, path, base=''):
         if artwork and name == 'traditional':
             detail = artwork.is_traditional
 
+    url = name.replace('/', '-')
     return {
         'name': name,
-        'reverse_url': '{}:{}'.format(base, name) if base else name,
-        'current': name in path or detail or name == HOME_URL_NAME and '/' == path,
+        'reverse_url': '{}:{}'.format(base, url) if base else url,
+        'current': url in path or detail or url == HOME_URL_NAME and '/' == path,
     }

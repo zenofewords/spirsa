@@ -1,4 +1,5 @@
 HOME_URL_NAME = 'digital'
+
 DEFAULT_QUALITY = 75
 DEFAULT_SIZE = 1000
 DEFAULT_TYPE = 'jpeg'
@@ -17,3 +18,8 @@ VARIATION_SETS = (
     (SMALL, 500, DEFAULT_SIZE),
     (SMALL, 500, 500),
 )
+
+FB_SHARE_URL = 'https://www.facebook.com/sharer.php?u='
+TT_SHARE_URL = 'https://twitter.com/intent/tweet?url='
+IN_SHARE_URL = 'https://www.linkedin.com/sharing/share-offsite/?url='
+PT_SHARE_URL = 'https://pinterest.com/pin/create/button/?url='
