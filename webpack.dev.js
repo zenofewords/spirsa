@@ -6,6 +6,7 @@ module.exports = {
   mode: 'development',
   entry: {
     base: './static/javascript/base',
+    font: './static/javascript/font',
     art: './static/javascript/art',
   },
   output: {
@@ -15,6 +16,9 @@ module.exports = {
   },
   devtool: 'eval-source-map',
   devServer: {
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
     compress: true,
     hot: true,
   },
@@ -45,6 +49,18 @@ module.exports = {
               implementation: require('sass'),
             }
           },
+        ]
+      },
+      {
+        test: /\.(woff(2)?)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/'
+            }
+          }
         ]
       },
     ]

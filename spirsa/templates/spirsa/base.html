@@ -5,6 +5,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    {% render_bundle 'font' 'css' %}
+
     {% block head %}
       <title>
         {% block title %}Štefica Pirša | Art{% endblock title %}
@@ -16,7 +18,6 @@
       <meta name="msapplication-config" content="{% static 'favicon/browserconfig.xml' %}" />
       <meta name="theme-color" content="#660080">
 
-      <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&amp;family=Poiret+One&amp;display=swap" rel="stylesheet">
       <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
       <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
       <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
