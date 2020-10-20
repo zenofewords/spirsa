@@ -16,7 +16,7 @@ class ArtworkAdmin(AutoSlugAdminMixin):
     list_editable = ('is_traditional', 'is_published', 'ordering', )
     fields = (
         'title', 'slug', 'is_traditional', 'is_published', 'ordering', 'short_description',
-        'keywords', 'image', 'image_preview',
+        'image', 'image_preview', 'keywords',
     )
     readonly_fields = ('image_preview', )
 

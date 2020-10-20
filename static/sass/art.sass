@@ -19,7 +19,7 @@
 
 .artwork-picture
   img
-    background-color: $color-black-20
+    background-color: $color-purple
     border-radius: 5px
     height: auto
     width: 100%
@@ -54,6 +54,7 @@
   .artwork-list
     flex-wrap: wrap
     justify-content: center
+    margin: 0 50px
 
     .artwork-title
       display: none
@@ -78,16 +79,19 @@
     .artwork
       display: flex
       flex-direction: row
+      flex-wrap: wrap
       justify-content: center
 
     .artwork-info
       padding: 0 0 0 30px
-      width: 30%
+      width: 200px
 
     .artwork-title
       margin: 0 0 15px
 
     .artwork-picture
+      margin: 0 0 30px
+
       img
         height: auto
         width: 100%
@@ -96,7 +100,7 @@
       left: -15px
       opacity: 1
       position: relative
-      top: 10px
+      top: 20px
       transform: translate(0, 0)
 
       .share-link

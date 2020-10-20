@@ -39,8 +39,8 @@
       <img
         src="{{ artwork.image.url }}"
         alt="{{ artwork.title }}"
-        height="{{ artwork.cls_detail_height }}"
-        width="{{ artwork.cls_detail_width }}"
+        height="{{ artwork.cls_dimension.detail_height }}"
+        width="{{ artwork.cls_dimension.detail_width }}"
       >
     {% else %}
       <source
@@ -53,8 +53,8 @@
       <img
         src="{{ artwork.image.url }}"
         alt="{{ artwork.title }}"
-        height="{{ artwork.cls_list_height }}"
-        width="{{ artwork.cls_list_width }}"
+        height="{{ artwork.cls_dimension.list_height }}"
+        width="{{ artwork.cls_dimension.list_width }}"
       >
     {% endif %}
   </picture>

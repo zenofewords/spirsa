@@ -1,4 +1,5 @@
 import copy
+import math
 import os
 
 from pathlib import Path
@@ -8,6 +9,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.safestring import mark_safe
 
 from spirsa.constants import (
+    BASE_HEIGHT,
     DEFAULT_QUALITY,
     DEFAULT_TYPE,
     DEFAULT_WIDTH,
@@ -26,7 +28,7 @@ def create_image_variations(instance):
 
     path = instance.image.path
     with Image.open(path) as original:
-        instance.srcsets = create_srcsets(path, instance.image.url, original)
+        instance.srcsets = create_srcsets(path, instance, original)
         instance.image = get_new_path(instance.image.name, DEFAULT_WIDTH, DEFAULT_TYPE)
         instance.image_timestamp = os.path.getmtime(instance.image.file.name)
         instance.save()
@@ -40,10 +42,12 @@ def get_new_path(path, width, extension):
     )
 
 
-def create_srcsets(path, relative_path, image):
+def create_srcsets(path, instance, image):
     srcset_mapping = copy.deepcopy(SRCSET_MAPPING)
     ratio = image.width / image.height
     VARIATIONS = LANDSCAPE_VARIATION_SETS if ratio > RATIO_THRESHOLD else VARIATION_SETS
+
+    set_cls_dimension(instance.cls_dimension, ratio, VARIATIONS[1][1])
 
     for variation_set in VARIATIONS:
         new_width = variation_set[2]
@@ -54,11 +58,19 @@ def create_srcsets(path, relative_path, image):
         for srcset_type in SRCSET_TYPES:
             update_srcset_mapping(
                 srcset_mapping,
-                relative_path,
+                instance.image.url,
                 variation_set,
                 *create_image(resized_image, path, new_width, srcset_type),
             )
     return srcset_mapping
+
+
+def set_cls_dimension(cls_dimension, ratio, detail_width):
+    cls_dimension.list_height = BASE_HEIGHT
+    cls_dimension.list_width = math.ceil(BASE_HEIGHT * ratio)
+    cls_dimension.detail_height = detail_width / ratio
+    cls_dimension.detail_width = detail_width
+    cls_dimension.save()
 
 
 def create_image(resized_image, path, new_width, extension):
