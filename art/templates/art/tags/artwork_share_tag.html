@@ -5,7 +5,12 @@
 </label>
 <input id="share-toggle-{{ id }}" class="share-toggle" type="checkbox" autocomplete="off" />
 <span class="share-button">
-  <img width="25px" height="25px" src="{% static 'images/share_icon.svg' %}" alt="Social share icon" />
+  <img
+    width="25"
+    height="25"
+    src="{% static 'images/share_icon.svg' %}"
+    alt="Social share icon"
+  />
 </span>
 
 <div class="share-link-wrapper">
@@ -16,7 +21,14 @@
       aria-label="share on facebook"
       target="_blank" rel="noopener noreferrer"
     >
-      <img width="30px" height="30px" src="{% static 'images/facebook_share_icon.svg' %}" alt="Facebook share icon" />
+      <img
+        width="30"
+        height="30"
+        src="{% static 'images/facebook_share_icon.svg' %}"
+        alt="Facebook share icon"
+        decoding="async"
+        loading="lazy"
+      />
     </a>
   {% endif %}
 
@@ -27,7 +39,14 @@
       aria-label="share on pinterest"
       target="_blank" rel="noopener noreferrer"
     >
-      <img width="30px" height="30px" src="{% static 'images/pinterest_share_icon.svg' %}" alt="Pinterest share icon" />
+      <img
+        width="30"
+        height="30"
+        src="{% static 'images/pinterest_share_icon.svg' %}"
+        alt="Pinterest share icon"
+        decoding="async"
+        loading="lazy"
+      />
     </a>
   {% endif %}
 
@@ -38,7 +57,14 @@
       aria-label="share on twitter"
       target="_blank" rel="noopener noreferrer"
     >
-      <img width="30px" height="30px" src="{% static 'images/twitter_share_icon.svg' %}" alt="Twitter share icon" />
+      <img
+        width="30"
+        height="30"
+        src="{% static 'images/twitter_share_icon.svg' %}"
+        alt="Twitter share icon"
+        decoding="async"
+        loading="lazy"
+      />
     </a>
   {% endif %}
 
@@ -49,7 +75,14 @@
       aria-label="share on linkedin"
       target="_blank" rel="noopener noreferrer"
     >
-      <img width="30px" height="30px" src="{% static 'images/linkedin_share_icon.svg' %}" alt="Linkedin share icon" />
+      <img
+        width="30"
+        height="30"
+        src="{% static 'images/linkedin_share_icon.svg' %}"
+        alt="Linkedin share icon"
+        decoding="async"
+        loading="lazy"
+      />
     </a>
   {% endif %}
 </div>
