@@ -1,1 +1,0 @@
-import '../sass/font.sass'

@@ -21,6 +21,7 @@ main
 
 nav
   display: flex
+  margin: 30px 0 60px
 
 footer
   display: flex
@@ -36,13 +37,19 @@ h3,
 p,
 a
   color: $color-black
+  font-weight: 300
   margin: 0
 
 h1
   font-size: $font-size-title
+  line-height: 30px
   margin: 0 0 30px
 
+p
+  line-height: 22px
+
 a
+  line-height: 22px
   text-decoration: none
 
 ul,
@@ -76,6 +83,7 @@ button
 
 .menu-link
   font-size: $font-size-menu-item
+  line-height: 28px
   margin: 0
   padding: 5px 10px
   text-transform: capitalize
@@ -146,11 +154,26 @@ button
   padding: 15px
   width: 25px
 
+@font-face
+  font-display: swap
+  font-family: 'Poiret One'
+  font-style: normal
+  font-weight: 400
+  src: url('../fonts/poiret_one.woff2') format('woff2')
+
+@font-face
+  font-display: swap
+  font-family: 'Quicksand'
+  font-style: normal
+  font-weight: 300
+  src: url('../fonts/quicksand.woff2') format('woff2')
+
 
 @media only screen and (max-width: $media-breakpoint-medium)
   nav
     justify-content: space-between
     left: 0
+    margin: 0
     position: fixed
     top: 0
     width: 100%
@@ -291,7 +314,6 @@ button
 @media only screen and (min-width: $media-breakpoint-large)
   nav
     flex-direction: column
-    margin: 30px 0 60px
 
   main
     margin: 0 auto
@@ -309,7 +331,11 @@ button
 
   .sp-link
     font-size: 34px
+    height: 40px
+    line-height: 40px
     margin: 0 auto 20px
+    white-space: nowrap
+    width: 225px
 
   .link-current
     border-bottom: 2px solid $color-purple

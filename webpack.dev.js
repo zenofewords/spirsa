@@ -6,7 +6,6 @@ module.exports = {
   mode: 'development',
   entry: {
     base: './static/javascript/base',
-    font: './static/javascript/font',
     art: './static/javascript/art',
   },
   output: {
