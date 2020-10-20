@@ -21,8 +21,6 @@
   img
     background-color: $color-purple
     border-radius: 5px
-    height: auto
-    width: 100%
 
 
 @media only screen and (min-width: $media-breakpoint-small) and (max-width: $media-breakpoint-medium)
@@ -44,6 +42,11 @@
 @media only screen and (max-width: $media-breakpoint-medium)
   .artwork-list
     flex-direction: column
+
+  .artwork-picture
+    img
+      height: auto
+      width: 100%
 
 
 @media only screen and (min-width: $media-breakpoint-large)
@@ -94,11 +97,12 @@
 
       img
         height: auto
-        width: 100%
+        max-width: 100%
 
     .share-link-wrapper
       left: -15px
       opacity: 1
+      pointer-events: all
       position: relative
       top: 20px
       transform: translate(0, 0)
