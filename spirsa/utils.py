@@ -9,8 +9,10 @@ from django.utils.safestring import mark_safe
 
 from spirsa.constants import (
     DEFAULT_QUALITY,
-    DEFAULT_SIZE,
     DEFAULT_TYPE,
+    DEFAULT_WIDTH,
+    LANDSCAPE_VARIATION_SETS,
+    RATIO_THRESHOLD,
     SRCSET_MAPPING,
     SRCSET_TYPES,
     VARIATION_SETS,
@@ -25,16 +27,11 @@ def create_image_variations(instance):
     path = instance.image.path
     with Image.open(path) as original:
         instance.srcsets = create_srcsets(path, instance.image.url, original)
-        instance.image = get_new_path(instance.image.name, DEFAULT_SIZE, DEFAULT_TYPE)
+        instance.image = get_new_path(instance.image.name, DEFAULT_WIDTH, DEFAULT_TYPE)
         instance.image_timestamp = os.path.getmtime(instance.image.file.name)
         instance.save()
         # remove original image
         os.remove(path)
-
-
-def get_new_height(image, new_width):
-    ratio = image.width / image.height
-    return int(new_width / ratio)
 
 
 def get_new_path(path, width, extension):
@@ -45,11 +42,13 @@ def get_new_path(path, width, extension):
 
 def create_srcsets(path, relative_path, image):
     srcset_mapping = copy.deepcopy(SRCSET_MAPPING)
+    ratio = image.width / image.height
+    VARIATIONS = LANDSCAPE_VARIATION_SETS if ratio > RATIO_THRESHOLD else VARIATION_SETS
 
-    for variation_set in VARIATION_SETS:
+    for variation_set in VARIATIONS:
         new_width = variation_set[2]
 
-        new_height = get_new_height(image, new_width)
+        new_height = int(new_width / ratio)
         resized_image = image.resize((new_width, new_height), resample=Image.BICUBIC)
 
         for srcset_type in SRCSET_TYPES:

@@ -29,6 +29,11 @@ class Artwork(PublishedModelMixin, SlugModelMixin, TimeStampModelMixin):
     )
     keywords = models.ManyToManyField('art.Keyword', blank=True)
 
+    cls_list_width = models.IntegerField(blank=True, null=True)
+    cls_list_height = models.IntegerField(blank=True, null=True)
+    cls_detail_width = models.IntegerField(blank=True, null=True)
+    cls_detail_height = models.IntegerField(blank=True, null=True)
+
     objects = ArtworkManager.from_queryset(PublishedQuerySet)()
 
     class Meta:

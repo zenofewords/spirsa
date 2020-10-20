@@ -1,8 +1,6 @@
 {
   "name": "spirsa",
   "version": "1.0.0",
-  "description": "",
-  "base": "server.js",
   "scripts": {
     "dev": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js"

@@ -1,47 +1,61 @@
 {% if artwork.image %}
   <picture class="artwork-picture">
     {% if detail %}
-      <source
-        srcset="{{ webp_large }}"
-        type="image/webp"
-        media="(min-width: 1301px)"
-      >
-      <source
-        srcset="{{ webp_medium }}"
-        type="image/webp"
-        media="(max-width: 1300px)"
-      >
-      <source
-        srcset="{{ jpeg_large }}"
-        media="(min-width: 1301px)"
-      >
-      <source
-        srcset="{{ jpeg_medium }}"
-        media="(max-width: 1300px)"
-      >
-    {% else %}
-      <source
-        srcset="{{ webp_medium }}"
-        type="image/webp"
-        media="(min-width: 1301px)"
-      >
+      {% if webp_large %}
+        <source
+          srcset="{{ webp_large }}"
+          type="image/webp"
+          media="(min-width: 501px)"
+        >
+      {% else %}
+        <source
+          srcset="{{ webp_medium }}"
+          type="image/webp"
+          media="(min-width: 501px)"
+        >
+      {% endif %}
       <source
         srcset="{{ webp_small }}"
         type="image/webp"
-        media="(max-width: 1300px)"
+        media="(max-width: 500px)"
       >
+
+      {% if jpeg_large %}
+        <source
+          srcset="{{ jpeg_large }}"
+          media="(min-width: 501px)"
+        >
+      {% else %}
+        <source
+          srcset="{{ jpeg_medium }}"
+          media="(min-width: 501px)"
+        >
+      {% endif %}
       <source
-        srcset="{{ jpeg_medium }}"
-        media="(min-width: 1301px)"
+        srcset="{{ jpeg_small }}"
+        media="(max-width: 500px)"
+      >
+
+      <img
+        src="{{ artwork.image.url }}"
+        alt="{{ artwork.title }}"
+        height="{{ artwork.cls_detail_height }}"
+        width="{{ artwork.cls_detail_width }}"
+      >
+    {% else %}
+      <source
+        srcset="{{ webp_small }}"
+        type="image/webp"
       >
       <source
         srcset="{{ jpeg_small }}"
-        media="(max-width: 1300px)"
+      >
+      <img
+        src="{{ artwork.image.url }}"
+        alt="{{ artwork.title }}"
+        height="{{ artwork.cls_list_height }}"
+        width="{{ artwork.cls_list_width }}"
       >
     {% endif %}
-    <img
-      src="{{ artwork.image.url }}"
-      alt="{{ artwork.title }}"
-    >
   </picture>
 {% endif %}
