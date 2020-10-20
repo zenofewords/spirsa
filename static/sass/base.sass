@@ -112,27 +112,29 @@ button
   margin: 0
   opacity: 0
   position: absolute
-  right: 10px
-  top: 10px
+  right: 0
+  top: 7px
   width: 36px
 
   &:checked ~
     .share-link-wrapper
       opacity: 1
+      pointer-events: all
 
 .share-button
   height: 26px
   margin: 0
   pointer-events: none
   position: absolute
-  right: 15px
-  top: 15px
+  right: 0
+  top: 12px
   width: 26px
 
 .share-link-wrapper
   display: flex
   left: 50%
   opacity: 0
+  pointer-events: none
   position: absolute
   top: 0
   transform: translate(-50%, -110%)
@@ -165,7 +167,7 @@ button
       width: 100%
 
   main
-    padding: 50px 0 100px
+    padding: 60px 0 100px
 
   footer
     padding: 0 0 20px
@@ -293,8 +295,8 @@ button
 
   main
     margin: 0 auto
-    max-width: 1600px
-    padding: 0 50px 100px
+    max-width: 1500px
+    padding: 0 0 100px
 
   footer
     padding: 0 0 30px
