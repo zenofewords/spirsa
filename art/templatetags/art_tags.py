@@ -12,7 +12,7 @@ register = template.Library()
 
 
 @register.inclusion_tag('art/tags/artwork_tag.html', takes_context=True)
-def artwork_tag(context, obj, decoding='async', detail=False):
+def artwork_tag(context, obj, decoding=None, detail=False):
     request = context.get('request')
     site_url = get_site_url(request)
 
