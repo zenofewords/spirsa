@@ -9,7 +9,13 @@
 {% block main %}
   <div class="artwork-list">
     {% for artwork in artworks %}
-      {% artwork_tag artwork %}
+
+      {% if forloop.counter < 4 %}
+        {% artwork_tag artwork decoding='sync' %}
+      {% else %}
+        {% artwork_tag artwork %}
+      {% endif %}
+
     {% empty %}
       <p class="artwork-list-no-art">
         No art here.

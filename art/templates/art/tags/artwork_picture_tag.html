@@ -41,7 +41,7 @@
         alt="{{ artwork.title }}"
         height="{{ artwork.cls_dimension.detail_height }}"
         width="{{ artwork.cls_dimension.detail_width }}"
-        decoding="sync"
+        decoding="{{ decoding }}"
       >
     {% else %}
       <source
@@ -56,7 +56,7 @@
         alt="{{ artwork.title }}"
         height="{{ artwork.cls_dimension.list_height }}"
         width="{{ artwork.cls_dimension.list_width }}"
-        decoding="sync"
+        decoding="{{ decoding }}"
       >
     {% endif %}
   </picture>

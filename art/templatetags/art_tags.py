@@ -12,7 +12,7 @@ register = template.Library()
 
 
 @register.inclusion_tag('art/tags/artwork_tag.html', takes_context=True)
-def artwork_tag(context, obj, detail=False):
+def artwork_tag(context, obj, decoding='async', detail=False):
     request = context.get('request')
     site_url = get_site_url(request)
 
@@ -22,6 +22,7 @@ def artwork_tag(context, obj, detail=False):
         'twitter_share_url': '{}{}/artwork/{}'.format(TT_SHARE_URL, site_url, obj.slug),
         'linkedin_share_url': '{}{}/artwork/{}'.format(IN_SHARE_URL, site_url, obj.slug),
         'pinterest_share_url': '{}{}/artwork/{}'.format(PT_SHARE_URL, site_url, obj.slug),
+        'decoding': decoding,
         'detail': detail,
     }
     if obj.srcsets:
