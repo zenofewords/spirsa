@@ -6,6 +6,7 @@ module.exports = {
   mode: 'development',
   entry: {
     base: './static/javascript/base',
+    contact: './static/javascript/contact',
     art: './static/javascript/art',
   },
   output: {

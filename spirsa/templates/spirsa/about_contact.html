@@ -1,10 +1,53 @@
 {% extends 'spirsa/base.html' %}
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
+{% block scripts %}
+  {% render_bundle 'contact' 'css' %}
+{% endblock scripts %}
 
 {% block main %}
   <div class="about-contact-wrapper">
-    <h1>
-      We need a title here
-    </h1>
-    <a href="mailto:todo.add@real.email">todo.add@real.email</a>
+    <div class="left-column">
+      <picture class="about-contact-picture">
+        <source
+          srcset="{% static 'images/wes_large.webp' %} 2x, {% static 'images/wes.webp' %} 1x"
+          type="image/webp"
+        >
+        <source
+          srcset="{% static 'images/wes_large.jpg' %} 2x, {% static 'images/wes.jpg' %} 1x"
+        >
+        <img
+          width="330"
+          height="330"
+          src="{% static 'images/wes.jpg' %}"
+          alt="todo: add alt for real image"
+        />
+      </picture>
+      <div class="contact-wrapper">
+        <a
+          class="contact-email"
+          href="mailto:todo.add@real.email"
+        >
+          todo.add@real.email
+        </a>
+
+        <div class="contact-social">
+          {% include 'spirsa/includes/instagram_link.html' %}
+          {% include 'spirsa/includes/deviant_art_link.html' %}
+        </div>
+      </div>
+    </div>
+    <div class="right-column">
+      <h1>About</h1>
+      <p>
+        Maecenas felis augue, iaculis eu neque eu, ultricies posuere mi. Sed non iaculis felis, id maximus diam. In hac habitasse platea dictumst. Maecenas vel massa eros. Suspendisse sit amet augue eget lacus pharetra faucibus. Integer ac commodo quam.
+      </p>
+
+      <h1>Tools</h1>
+      <p>
+        Quisque viverra tempus porta. Nunc tincidunt, arcu aliquet sollicitudin mollis, nisl nulla convallis leo, in viverra orci purus a purus. Cras condimentum congue accumsan.
+      </p>
+    </div>
   </div>
 {% endblock main %}

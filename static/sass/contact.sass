@@ -1,0 +1,63 @@
+@import './variables'
+
+
+.about-contact-wrapper
+  display: flex
+  margin: 0 15px
+
+.left-column,
+.right-column
+  display: flex
+  flex-direction: column
+  max-width: 350px
+
+.left-column
+  align-items: center
+  width: 100%
+
+.about-contact-picture
+  display: flex
+
+  img
+    background-color: $color-purple
+    border-radius: 5px
+    height: auto
+    margin: 0 0 30px
+    width: 300px
+
+.contact-wrapper
+  align-items: center
+  display: flex
+  flex-direction: column
+  margin: 0 0 30px
+
+.contact-email
+  font-size: 26px
+  line-height: 33px
+  margin: 0 15px 30px
+
+.contact-social
+  display: flex
+
+  a
+    margin: 0 15px
+
+
+@media only screen and (max-width: $media-breakpoint-medium)
+  .about-contact-wrapper
+    align-items: center
+    flex-direction: column
+
+  .about-contact-picture
+    img
+      width: 100%
+
+
+@media only screen and (min-width: $media-breakpoint-large)
+  .about-contact-wrapper
+    justify-content: center
+    max-width: 900px
+
+  .left-column,
+  .right-column
+    padding: 0 30px
