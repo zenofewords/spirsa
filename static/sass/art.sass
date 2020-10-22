@@ -9,6 +9,13 @@
   flex-direction: column
   margin: 0 15px 15px
 
+.artwork-detail-link
+  position: relative
+
+.artwork-anchor
+  position: absolute
+  top: -58px
+
 .artwork-picture-wrapper
   position: relative
 
@@ -71,14 +78,24 @@
   .artwork-detail
     margin: 0
 
-  .artwork-link-previous,
-  .artwork-link-next
-    display: none
+    .artwork
+      margin: 0
+
+    .artwork-picture
+      img
+        border-radius: 0
+
+    .artwork-info
+      margin: 0 15px
 
 
 @media only screen and (max-width: $media-breakpoint-medium)
   .artwork-list
     flex-direction: column
+
+  .artwork-link-previous,
+  .artwork-link-next
+    display: none
 
   .artwork-picture
     img
@@ -154,11 +171,6 @@
   .artwork-link-previous,
   .artwork-link-next
     padding: 10px
-    transition-duration: $transition-duration-short
-    transition-property: background-color
-
-    &:hover
-      background-color: $color-purple
 
     &::before
       left: 13px

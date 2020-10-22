@@ -8,6 +8,7 @@
     </div>
   {% else %}
     <a class="artwork-detail-link" href="{% url 'art:artwork-detail' artwork.slug %}">
+      <span id="{{ artwork.slug }}" class="artwork-anchor"></span>
       {% include 'art/tags/artwork_picture_tag.html' %}
     </a>
   {% endif %}
