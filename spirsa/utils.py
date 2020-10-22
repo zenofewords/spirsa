@@ -5,7 +5,9 @@ import os
 from pathlib import Path
 from PIL import Image
 
+from django.apps import apps
 from django.contrib.sites.shortcuts import get_current_site
+from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 
 from spirsa.constants import (
@@ -13,6 +15,7 @@ from spirsa.constants import (
     DEFAULT_QUALITY,
     DEFAULT_TYPE,
     DEFAULT_WIDTH,
+    HOME_URL_NAME,
     LANDSCAPE_VARIATION_SETS,
     RATIO_THRESHOLD,
     SRCSET_MAPPING,
@@ -114,3 +117,31 @@ def get_preview_image(image, max_width):
 
 def get_site_url(request):
     return '{}://{}'.format(request.scheme, get_current_site(request))
+
+
+def get_artwork_navigation_urls(data, obj):
+    home = reverse_lazy('art:{}'.format(HOME_URL_NAME))
+    data.update({
+        'back_url': reverse_lazy('art:traditional') if obj.is_traditional else home
+    })
+
+    Artwork = apps.get_model('art.Artwork')
+    next_artwork = Artwork.objects.filter(
+        is_traditional=obj.is_traditional,
+        ordering__lte=obj.ordering, created_at__lte=obj.created_at
+    ).exclude(id=obj.pk).first()
+
+    previous = Artwork.objects.filter(
+        is_traditional=obj.is_traditional,
+        ordering__gte=obj.ordering, created_at__gte=obj.created_at
+    ).exclude(id=obj.pk).last()
+
+    if next_artwork:
+        data.update({
+            'next_url': reverse_lazy('art:artwork-detail', kwargs={'slug': next_artwork.slug})
+        })
+    if previous:
+        data.update({
+            'previous_url': reverse_lazy('art:artwork-detail', kwargs={'slug': previous.slug})
+        })
+    return data

@@ -1,4 +1,4 @@
-@import './variables'
+@import './mixins'
 
 
 .artwork-list
@@ -8,6 +8,39 @@
   display: flex
   flex-direction: column
   margin: 0 15px 15px
+
+.artwork-picture-wrapper
+  position: relative
+
+.artwork-link-back,
+.artwork-link-previous,
+.artwork-link-next
+  border-radius: 50%
+  box-shadow: 1px 1px 3px $color-black-70
+  height: 30px
+  margin: 10px
+  padding: 5px
+  position: absolute
+  width: 30px
+
+  &::before
+    @include arrow(12px, $rotate: -45deg)
+
+  &::after
+    @include arrow(24px, $rotate: 45deg)
+
+
+.artwork-link-previous,
+.artwork-link-next
+  top: 350px
+
+.artwork-link-previous
+  left: 0
+
+.artwork-link-next
+  box-shadow: -1px -1px 3px $color-black-70
+  right: 0
+  transform: rotate(180deg)
 
 .artwork-info
   display: flex
@@ -37,6 +70,10 @@
 @media only screen and (max-width: $media-breakpoint-small)
   .artwork-detail
     margin: 0
+
+  .artwork-link-previous,
+  .artwork-link-next
+    display: none
 
 
 @media only screen and (max-width: $media-breakpoint-medium)
@@ -86,15 +123,16 @@
       justify-content: center
 
     .artwork-info
-      padding: 0 0 0 30px
+      padding: 0 30px
       width: 200px
 
     .artwork-title
       margin: 0 0 15px
 
-    .artwork-picture
+    .artwork-picture-wrapper
       margin: 0 0 30px
 
+    .artwork-picture
       img
         height: auto
         max-width: 100%
@@ -109,3 +147,23 @@
 
       .share-link
         filter: invert(1)
+
+  .artwork-link-back
+    display: none
+
+  .artwork-link-previous,
+  .artwork-link-next
+    padding: 10px
+    transition-duration: $transition-duration-short
+    transition-property: background-color
+
+    &:hover
+      background-color: $color-purple
+
+    &::before
+      left: 13px
+      top: 17px
+
+    &::after
+      left: 13px
+      top: 29px

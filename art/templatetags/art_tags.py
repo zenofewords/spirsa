@@ -2,11 +2,14 @@ from django import template
 
 from spirsa.constants import (
     FB_SHARE_URL,
-    TT_SHARE_URL,
     IN_SHARE_URL,
     PT_SHARE_URL,
+    TT_SHARE_URL,
 )
-from spirsa.utils import get_site_url
+from spirsa.utils import (
+    get_site_url,
+    get_artwork_navigation_urls,
+)
 
 register = template.Library()
 
@@ -27,4 +30,7 @@ def artwork_tag(context, obj, decoding=None, detail=False):
     }
     if obj.srcsets:
         data.update(**{key: ', '.join(srcsets) for key, srcsets in obj.srcsets.items()})
+
+    if detail:
+        data = get_artwork_navigation_urls(data, obj)
     return data

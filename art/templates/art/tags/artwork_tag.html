@@ -2,7 +2,10 @@
 
 <div class="artwork">
   {% if detail %}
-    {% include 'art/tags/artwork_picture_tag.html' %}
+    <div class="artwork-picture-wrapper">
+      {% include 'art/tags/artwork_navigation_tag.html' %}
+      {% include 'art/tags/artwork_picture_tag.html' %}
+    </div>
   {% else %}
     <a class="artwork-detail-link" href="{% url 'art:artwork-detail' artwork.slug %}">
       {% include 'art/tags/artwork_picture_tag.html' %}

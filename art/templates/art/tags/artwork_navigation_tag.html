@@ -1,0 +1,24 @@
+{% if back_url %}
+  <a
+    class="artwork-link-back"
+    href="{{ back_url }}"
+    aria-label="back to artwork list"
+  >
+  </a>
+{% endif %}
+{% if previous_url %}
+  <a
+    class="artwork-link-previous"
+    href="{{ previous_url }}"
+    aria-label="previous artwork"
+  >
+  </a>
+{% endif %}
+{% if next_url %}
+  <a
+    class="artwork-link-next"
+    href="{{ next_url }}"
+    aria-label="next artwork"
+  >
+  </a>
+{% endif %}
