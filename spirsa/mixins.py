@@ -50,7 +50,7 @@ class PublishedModelMixin(models.Model):
 
 class SlugModelMixin(models.Model):
     slug = models.SlugField(
-        max_length=50, blank=True,
+        max_length=50, blank=True, unique=True,
         help_text='Leave empty to use title or name'
     )
 

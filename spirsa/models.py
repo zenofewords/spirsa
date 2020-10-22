@@ -11,7 +11,7 @@ class MetaInformation(TimeStampModelMixin):
     )
     meta_image = models.ImageField(
         upload_to='spirsa/%Y/%m/', blank=True, null=True,
-        help_text='1200x630 or larger with simiar aspect ratio.'
+        help_text='Use a jpeg or png image (1200x630 or larger).'
     )
     meta_image_title = models.CharField(max_length=100, blank=True, null=True)
 
