@@ -19,9 +19,15 @@
 .artwork-picture-wrapper
   position: relative
 
-.artwork-link-back,
 .artwork-link-previous,
 .artwork-link-next
+  height: 100%
+  position: absolute
+  width: 50%
+
+.artwork-link-back,
+.artwork-link-previous-button,
+.artwork-link-next-button
   border-radius: 50%
   box-shadow: 1px 1px 3px $color-black-70
   height: 30px
@@ -36,18 +42,23 @@
   &::after
     @include arrow(24px, $rotate: 45deg)
 
-
-.artwork-link-previous,
-.artwork-link-next
-  top: 350px
+.artwork-link-previous-button,
+.artwork-link-next-button
+  top: calc(50% - 12px)
 
 .artwork-link-previous
   left: 0
 
 .artwork-link-next
+  right: 0
+
+.artwork-link-previous-button
+  transform: translate(0, -50%)
+
+.artwork-link-next-button
   box-shadow: -1px -1px 3px $color-black-70
   right: 0
-  transform: rotate(180deg)
+  transform: rotate(180deg) translate(0, 50%)
 
 .artwork-info
   display: flex
@@ -93,8 +104,11 @@
   .artwork-list
     flex-direction: column
 
-  .artwork-link-previous,
-  .artwork-link-next
+  .artwork-link-back
+    z-index: 1
+
+  .artwork-link-previous-button,
+  .artwork-link-next-button
     display: none
 
   .artwork-picture
@@ -149,13 +163,20 @@
     .artwork-picture-wrapper
       margin: 0 0 30px
 
+    .artwork-link-previous,
+    .artwork-link-next
+      &:hover
+        .artwork-link-previous-button,
+        .artwork-link-next-button
+          opacity: 1
+
     .artwork-picture
       img
         height: auto
         max-width: 100%
 
     .share-link-wrapper
-      left: -15px
+      left: -10px
       opacity: 1
       pointer-events: all
       position: relative
@@ -168,9 +189,12 @@
   .artwork-link-back
     display: none
 
-  .artwork-link-previous,
-  .artwork-link-next
+  .artwork-link-previous-button,
+  .artwork-link-next-button
+    opacity: 0
     padding: 10px
+    transition-duration: $transition-duration-short
+    transition-property: opacity
 
     &::before
       left: 13px
