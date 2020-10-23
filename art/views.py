@@ -29,6 +29,7 @@ class ArtworkListView(MetaViewMixin):
         context = super().get_context_data(**kwargs)
         context.update({
             'artworks': Artwork.objects.digital().published(),
+            'meta_title': 'Digital Art',
         })
         return context
 
@@ -40,5 +41,6 @@ class ArtworTraditionalkListView(MetaViewMixin):
         context = super().get_context_data(**kwargs)
         context.update({
             'artworks': Artwork.objects.traditional().published(),
+            'meta_title': 'Traditional Art',
         })
         return context

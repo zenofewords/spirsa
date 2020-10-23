@@ -25,10 +25,10 @@ class MetaViewMixin(TemplateView):
         info = MetaInformation.objects.last()
         if info:
             context.update({
-                'meta_title': info.meta_title,
+                'meta_title_base': info.meta_title,
                 'meta_description': info.meta_description,
                 'meta_keywords': info.meta_keywords,
-                'meta_image': info.meta_image,
+                'meta_image': info.meta_image if info.meta_image else None,
                 'meta_image_title': info.meta_image_title,
             })
         return context

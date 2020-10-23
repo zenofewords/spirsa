@@ -7,7 +7,7 @@
   <head>
     {% block head %}
       <title>
-        {% block title %}Štefica Pirša | Art{% endblock title %}
+        {% block title %}{{ meta_title_base }} | {{ meta_title }}{% endblock title %}
       </title>
 
       <meta charset="utf-8">
@@ -23,13 +23,13 @@
       <link rel="mask-icon" href="{% static 'favicon/safari-pinned-tab.svg' %}" color="#00aba9">
 
       {% block meta_tags %}
-        <meta name="title" content="{{ meta_title }}" />
+        <meta name="title" content="{{ meta_title_base }} | {{ meta_title }}" />
         <meta name="description" content="{{ meta_description }}" />
         <meta name="keywords" content="{{ meta_keywords }}" />
 
         <meta property="og:url" content="{{ meta_url }}/" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="{{ meta_title }}" />
+        <meta property="og:title" content="{{ meta_title_base }} | {{ meta_title }}" />
         <meta property="og:description" content="{{ meta_description }}" />
 
         <meta property="og:image" content="{{ meta_url }}{{ meta_image.url }}" />
