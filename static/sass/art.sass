@@ -7,7 +7,7 @@
 .artwork
   display: flex
   flex-direction: column
-  margin: 0 15px 15px
+  margin: 0 15px 20px
 
 .artwork-detail-link
   position: relative
@@ -86,6 +86,10 @@
 
 
 @media only screen and (max-width: $media-breakpoint-small)
+  .artwork-list
+    .artwork
+      border-bottom: 1px solid $color-black-10
+
   .artwork-detail
     margin: 0
 
@@ -136,10 +140,18 @@
     .artwork
       margin: 0 10px 20px
 
+      img
+        transition-duration: $transition-duration-short
+        transition-property: box-shadow
+
       &:hover
         .share-link-wrapper
           opacity: 1
           pointer-events: all
+
+        .artwork-picture
+          img
+            box-shadow: 0 0 3px $color-purple
 
     .artwork-detail-link
       height: 400px
@@ -182,7 +194,9 @@
         max-width: 100%
 
     .share-label
-      margin: 0 0 5px
+      font-size: 12px
+      margin: 0
+      text-transform: uppercase
 
     .share-link-wrapper
       left: -10px
