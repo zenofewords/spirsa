@@ -5,6 +5,7 @@ from spirsa.mixins import (
     SlugModelMixin,
     TimeStampModelMixin,
 )
+from spirsa.constants import DEFAULT_WIDTH
 from spirsa.utils import create_image_variations
 
 
@@ -48,7 +49,7 @@ class Artwork(PublishedModelMixin, SlugModelMixin, TimeStampModelMixin):
         super().save(args, kwargs)
 
         if self.image:
-            create_image_variations(self)
+            create_image_variations(self, DEFAULT_WIDTH)
 
 
 class Keyword(PublishedModelMixin, SlugModelMixin):

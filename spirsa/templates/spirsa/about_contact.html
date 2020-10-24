@@ -13,15 +13,15 @@
       <div class="left-column">
         <picture class="about-contact-picture">
           <source
-            srcset="{% static 'images/wes_large.webp' %} 2x, {% static 'images/wes.webp' %} 1x"
+            srcset="{{ webp_small }}"
             type="image/webp"
           >
           <source
-            srcset="{% static 'images/wes_large.jpg' %} 2x, {% static 'images/wes.jpg' %} 1x"
+            srcset="{{ jpeg_small }}"
           >
           <img
-            src="{% static 'images/wes_large.jpg' %}"
-            alt="todo: add alt for real image"
+            src="{{ about_contact_information.image.url }}"
+            alt="{{ about_contact_information.image_title }}"
             height="350"
             width="350"
           />
@@ -29,9 +29,9 @@
         <div class="contact-wrapper">
           <a
             class="contact-email"
-            href="mailto:todo.add@real.email"
+            href="mailto:{{ about_contact_information.contact_email }}"
           >
-            todo.add@real.email
+            {{ about_contact_information.contact_email }}
           </a>
 
           <div class="contact-social">
@@ -41,14 +41,14 @@
         </div>
       </div>
       <div class="right-column">
-        <h1>About</h1>
+        <h1>{{ about_contact_information.top_section_title }}</h1>
         <p>
-          Maecenas felis augue, iaculis eu neque eu, ultricies posuere mi. Sed non iaculis felis, id maximus diam. In hac habitasse platea dictumst. Maecenas vel massa eros. Suspendisse sit amet augue eget lacus pharetra faucibus. Integer ac commodo quam.
+          {{ about_contact_information.top_section_text|linebreaksbr }}
         </p>
 
-        <h1>Tools</h1>
+        <h1>{{ about_contact_information.bottom_section_title }}</h1>
         <p>
-          Quisque viverra tempus porta. Nunc tincidunt, arcu aliquet sollicitudin mollis, nisl nulla convallis leo, in viverra orci purus a purus. Cras condimentum congue accumsan.
+          {{ about_contact_information.bottom_section_text }}
         </p>
       </div>
     </div>

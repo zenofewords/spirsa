@@ -52,6 +52,12 @@ if CACHE:
             'KEY_PREFIX': 'spirsa_',
         }
     }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
+    }
 
 TEMPLATES = [
     {
