@@ -6,6 +6,7 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 DEBUG = bool(os.getenv('DEBUG', False))
+CACHE = not DEBUG and bool(os.getenv('CACHE', False))
 DEBUG_TOOLBAR = bool(os.getenv('DEBUG_TOOLBAR', False) and DEBUG)
 
 ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS').split(',')]
@@ -42,6 +43,15 @@ MIDDLEWARE = [
 if DEBUG_TOOLBAR:
     INSTALLED_APPS.insert(6, 'debug_toolbar')
     MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+
+if CACHE:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': '127.0.0.1:11211',
+            'KEY_PREFIX': 'spirsa_',
+        }
+    }
 
 TEMPLATES = [
     {

@@ -1,7 +1,6 @@
 from django.apps import apps
 from django.contrib import admin
 from django.db import models
-from django.views.generic import TemplateView
 from django.utils.text import slugify
 
 from spirsa.utils import get_site_url

@@ -8,7 +8,7 @@ from spirsa.mixins import MetaViewMixin
 
 
 class ArtworkDetailView(MetaViewMixin, DetailView):
-    model = Artwork
+    queryset = Artwork.objects.published()
     template_name = 'art/artwork_detail.html'
 
     def get_context_data(self, **kwargs):

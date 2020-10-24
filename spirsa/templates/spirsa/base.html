@@ -1,3 +1,4 @@
+{% load cache %}
 {% load static %}
 {% load spirsa_tags %}
 {% load render_bundle from webpack_loader %}
@@ -9,7 +10,6 @@
       <title>
         {% block title %}{{ meta_title_base }} | {{ meta_title }}{% endblock title %}
       </title>
-
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -93,13 +93,15 @@
       {% endblock main %}
     </main>
 
-    <footer>
-      <a href="/" class="link link-sp-footer" aria-label="Štefica Pirša">
-        {% include 'spirsa/includes/sp_logo.html' with size='25' decoding='async' %}
-      </a>
-      {% include 'spirsa/includes/instagram_link.html' %}
-      {% include 'spirsa/includes/deviant_art_link.html' %}
-    </footer>
+    {% cache 600 footer %}
+      <footer>
+        <a href="/" class="link link-sp-footer" aria-label="Štefica Pirša">
+          {% include 'spirsa/includes/sp_logo.html' with size='25' decoding='async' %}
+        </a>
+        {% include 'spirsa/includes/instagram_link.html' %}
+        {% include 'spirsa/includes/deviant_art_link.html' %}
+      </footer>
+    {% endcache footer %}
 
     {% block body_scripts %}
       {% render_bundle 'base' 'js' %}
