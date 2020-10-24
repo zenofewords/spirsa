@@ -8,7 +8,7 @@ from spirsa.models import (
 
 class AbountContactInformationAdmin(admin.ModelAdmin):
     fields = (
-        'image_title', 'image', 'top_section_title', 'top_section_text',
+        'image_title', 'image', 'top_section_title', 'top_section_text', 'contact_email',
         'bottom_section_title', 'bottom_section_text',
     )
 
