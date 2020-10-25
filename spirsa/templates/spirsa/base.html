@@ -27,12 +27,10 @@
         <meta name="description" content="{{ meta_description }}" />
         <meta name="keywords" content="{{ meta_keywords }}" />
 
-        {% block meta_website_tags %}
-          <meta property="og:url" content="{{ meta_url }}" />
-          <meta property="og:type" content="website" />
-          <meta property="og:title" content="{{ meta_title_base }} | {{ meta_title }}" />
-          <meta property="og:description" content="{{ meta_description }}" />
-        {% endblock meta_website_tags %}
+        <meta property="og:url" content="{{ meta_url }}" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="{{ meta_title_base }} | {{ meta_title }}" />
+        <meta property="og:description" content="{{ meta_description }}" />
 
         <meta property="og:image" content="{{ meta_url }}{{ meta_image.url }}" />
         <meta property="og:image:alt" content="{{ meta_image_title }}" />
