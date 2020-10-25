@@ -1,4 +1,3 @@
-from django.urls import reverse_lazy
 from django.views.generic import (
     DetailView,
     TemplateView,
@@ -15,10 +14,6 @@ class ArtworkDetailView(MetaViewMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
-            'meta_url': '{}{}'.format(
-                context['meta_url'].rstrip('/'),
-                reverse_lazy('art:artwork-detail', kwargs={'slug': self.object.slug})
-            ),
             'meta_title': self.object.title,
         })
         if self.object.image:
