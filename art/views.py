@@ -15,9 +15,14 @@ class ArtworkDetailView(MetaViewMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context.update({
             'meta_title': self.object.title,
-            'meta_image': self.object.image if self.object.image else None,
-            'meta_image_title': self.object.title,
         })
+        if self.object.image:
+            context.update({
+                'meta_image': self.object.image,
+                'meta_image_title': self.object.title,
+                'meta_image_height': self.object.cls_dimension.detail_height,
+                'meta_image_width': self.object.cls_dimension.detail_width,
+            })
         if self.object.short_description:
             context.update({
                 'meta_description': self.object.short_description,

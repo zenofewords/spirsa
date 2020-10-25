@@ -37,7 +37,7 @@ VARIATION_SETS = (
     (SMALL, SMALL_WIDTH, SMALL_WIDTH),
 )
 
-FB_SHARE_URL = 'https://www.facebook.com/sharer.php?='
+FB_SHARE_URL = 'https://www.facebook.com/sharer.php?u='
 TT_SHARE_URL = 'https://twitter.com/intent/tweet?url='
 IN_SHARE_URL = 'https://www.linkedin.com/sharing/share-offsite/?url='
 PT_SHARE_URL = 'https://pinterest.com/pin/create/button/?url='
