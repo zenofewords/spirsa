@@ -17,7 +17,7 @@ class MetaViewMixin():
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
-            'meta_url': get_site_url(self.request),
+            'meta_url': '{}/'.format(get_site_url(self.request)),
         })
 
         MetaInformation = apps.get_model('spirsa', 'MetaInformation')
