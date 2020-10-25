@@ -1,7 +1,7 @@
 CACHE_SECONDS = 600
 HOME_URL_NAME = 'digital'
 
-DEFAULT_QUALITY = 75
+DEFAULT_QUALITY = 80
 DEFAULT_TYPE = 'jpeg'
 LARGE = 'large'
 MEDIUM = 'medium'

@@ -80,7 +80,7 @@ def set_cls_dimension(cls_dimension, ratio, detail_width):
 
 def create_image(resized_image, path, new_width, extension):
     new_path = get_new_path(path, new_width, extension)
-    resized_image.save(new_path, extension, quality=DEFAULT_QUALITY)
+    resized_image.save(new_path, extension, method=6, quality=DEFAULT_QUALITY)
 
     return new_width, extension
 
