@@ -54,15 +54,18 @@ def create_srcsets(path, instance, image, VARIATIONS):
     for variation_set in VARIATIONS:
         new_width = variation_set[2]
 
-        new_height = int(new_width / ratio)
-        resized_image = image.resize((new_width, new_height), resample=Image.BICUBIC)
+        if 0.99 < ratio < 1.01:
+            new_image = image
+        else:
+            new_height = int(new_width / ratio)
+            new_image = image.resize((new_width, new_height), resample=Image.BICUBIC)
 
         for srcset_type in SRCSET_TYPES:
             update_srcset_mapping(
                 srcset_mapping,
                 instance.image.url,
                 variation_set,
-                *create_image(resized_image, path, new_width, srcset_type),
+                *create_image(new_image, path, new_width, srcset_type),
             )
     return srcset_mapping
 
