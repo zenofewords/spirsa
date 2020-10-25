@@ -24,7 +24,7 @@ from spirsa.constants import (
 
 
 def create_image_variations(instance, DEFAULT_WIDTH, VARIATIONS=None):
-    timestamp = os.path.getmtime(instance.image.file.name)
+    timestamp = round(os.path.getctime(instance.image.file.name))
     if instance.image_timestamp == timestamp:
         return
 
@@ -32,7 +32,7 @@ def create_image_variations(instance, DEFAULT_WIDTH, VARIATIONS=None):
     with Image.open(path) as original:
         instance.srcsets = create_srcsets(path, instance, original, VARIATIONS)
         instance.image = get_new_path(instance.image.name, DEFAULT_WIDTH, DEFAULT_TYPE)
-        instance.image_timestamp = os.path.getmtime(instance.image.file.name)
+        instance.image_timestamp = round(os.path.getctime(instance.image.file.name))
         instance.save()
         # remove original image
         os.remove(path)

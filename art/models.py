@@ -22,7 +22,7 @@ class Artwork(PublishedModelMixin, SlugModelMixin, TimeStampModelMixin):
     short_description = models.TextField(max_length=500, blank=True)
     is_traditional = models.BooleanField(default=False)
     image = models.ImageField(upload_to='artwork/%Y/%m/', blank=True, null=True)
-    image_timestamp = models.FloatField(default=0.0)
+    image_timestamp = models.IntegerField(default=0)
     srcsets = models.JSONField(blank=True, null=True)
     ordering = models.IntegerField(
         default=0, help_text='Higher number equals higher position. Leave 0 for default.'
@@ -46,6 +46,9 @@ class Artwork(PublishedModelMixin, SlugModelMixin, TimeStampModelMixin):
         if not self.cls_dimension:
             self.cls_dimension = CLSDimension()
             self.cls_dimension.save()
+        if not self.image:
+            self.image_timestamp = 0
+            self.srcsets = None
         super().save(args, kwargs)
 
         if self.image:
