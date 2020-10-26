@@ -15,6 +15,8 @@ class ArtworkDetailView(MetaViewMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context.update({
             'meta_title': self.object.title,
+            'meta_url': self.object.get_absolute_url(),
+            'meta_type': 'article',
         })
         if self.object.image:
             context.update({

@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 from spirsa.mixins import (
     PublishedModelMixin,
     PublishedQuerySet,
@@ -53,6 +55,9 @@ class Artwork(PublishedModelMixin, SlugModelMixin, TimeStampModelMixin):
 
         if self.image:
             create_image_variations(self, DEFAULT_WIDTH)
+
+    def get_absolute_url(self):
+        return reverse('art:artwork-detail', kwargs={'slug': self.slug})
 
 
 class Keyword(PublishedModelMixin, SlugModelMixin):

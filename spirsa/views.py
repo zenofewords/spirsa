@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView
 
 from spirsa.mixins import MetaViewMixin
 from spirsa.models import AbountContactInformation
