@@ -6,7 +6,12 @@ from django.views.decorators.cache import cache_page
 from django.urls import path
 
 from spirsa.constants import CACHE_SECONDS
-from spirsa.views import AboutContactView
+from spirsa.views import (
+    AboutContactView,
+    BadRequestView,
+    DeniedView,
+    NotFoundView,
+)
 
 
 urlpatterns = [
@@ -21,6 +26,9 @@ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 admin.site.enable_nav_sidebar = False
 
+handler400 = BadRequestView.as_view()
+handler403 = DeniedView.as_view()
+handler404 = NotFoundView.as_view()
 
 if settings.DEBUG_TOOLBAR:
     import debug_toolbar

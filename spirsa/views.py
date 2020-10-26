@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 
 from spirsa.mixins import MetaViewMixin
 from spirsa.models import AbountContactInformation
@@ -21,4 +21,37 @@ class AboutContactView(MetaViewMixin, TemplateView):
 
         if obj and obj.srcsets:
             context.update(**{key: ', '.join(srcsets) for key, srcsets in obj.srcsets.items()})
+        return context
+
+
+class NotFoundView(MetaViewMixin, TemplateView):
+    template_name = 'errors/404.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'meta_title': 'Not found',
+        })
+        return context
+
+
+class DeniedView(MetaViewMixin, TemplateView):
+    template_name = 'errors/403.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'meta_title': 'Error',
+        })
+        return context
+
+
+class BadRequestView(MetaViewMixin, TemplateView):
+    template_name = 'errors/400.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'meta_title': 'Error',
+        })
         return context

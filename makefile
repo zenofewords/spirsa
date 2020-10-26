@@ -11,7 +11,7 @@ restart:
 
 deploy:
 	git pull origin master
-	pip install --upgrade -r requirements.txt
+	pip install --upgrade -r requirements_prod.txt
 	./manage.py migrate
 	./manage.py collectstatic
 	yarn install
