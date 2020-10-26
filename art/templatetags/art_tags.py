@@ -1,10 +1,10 @@
 from django import template
 
 from spirsa.constants import (
-    FB_SHARE_URL,
-    IN_SHARE_URL,
-    PT_SHARE_URL,
-    TT_SHARE_URL,
+    FACEBOOK_SHARE_URL,
+    LINKEDIN_SHARE_URL,
+    PINTEREST_SHARE_URL,
+    TWITTER_SHARE_URL,
 )
 from spirsa.utils import (
     get_site_url,
@@ -21,10 +21,18 @@ def artwork_tag(context, obj, decoding=None, detail=False):
 
     data = {
         'artwork': obj,
-        'facebook_share_url': '{}{}/artwork/{}'.format(FB_SHARE_URL, site_url, obj.slug),
-        'twitter_share_url': '{}{}/artwork/{}'.format(TT_SHARE_URL, site_url, obj.slug),
-        'linkedin_share_url': '{}{}/artwork/{}'.format(IN_SHARE_URL, site_url, obj.slug),
-        'pinterest_share_url': '{}{}/artwork/{}'.format(PT_SHARE_URL, site_url, obj.slug),
+        'facebook_share_url': '{}{}{}'.format(
+            FACEBOOK_SHARE_URL, site_url, obj.get_absolute_url()
+        ),
+        'twitter_share_url': '{}{}{}'.format(
+            TWITTER_SHARE_URL, site_url, obj.get_absolute_url()
+        ),
+        'linkedin_share_url': '{}{}{}'.format(
+            LINKEDIN_SHARE_URL, site_url, obj.get_absolute_url()
+        ),
+        'pinterest_share_url': '{}{}{}'.format(
+            PINTEREST_SHARE_URL, site_url, obj.get_absolute_url()
+        ),
         'decoding': decoding,
         'detail': detail,
     }
