@@ -17,7 +17,7 @@
 <div class="share-link-wrapper">
   {% if facebook_share_url %}
     <a
-      class="share-link share-link-facebook"
+      class="share-link"
       href={{ facebook_share_url }}
       aria-label="share on facebook"
       target="_blank" rel="noopener noreferrer"
@@ -33,27 +33,9 @@
     </a>
   {% endif %}
 
-  {% if pinterest_share_url %}
-    <a
-      class="share-link share-link-pinterest"
-      href={{ pinterest_share_url }}
-      aria-label="share on pinterest"
-      target="_blank" rel="noopener noreferrer"
-    >
-      <img
-        width="30"
-        height="30"
-        src="{% static 'images/pinterest_share_icon.svg' %}"
-        alt="Pinterest share icon"
-        decoding="async"
-        loading="lazy"
-      />
-    </a>
-  {% endif %}
-
   {% if twitter_share_url %}
     <a
-      class="share-link share-link-twitter"
+      class="share-link"
       href={{ twitter_share_url }}
       aria-label="share on twitter"
       target="_blank" rel="noopener noreferrer"
@@ -63,6 +45,42 @@
         height="30"
         src="{% static 'images/twitter_share_icon.svg' %}"
         alt="Twitter share icon"
+        decoding="async"
+        loading="lazy"
+      />
+    </a>
+  {% endif %}
+
+  {% if reddit_share_url %}
+    <a
+      class="share-link"
+      href={{ reddit_share_url }}
+      aria-label="share on reddit"
+      target="_blank" rel="noopener noreferrer"
+    >
+      <img
+        width="30"
+        height="30"
+        src="{% static 'images/reddit_share_icon.svg' %}"
+        alt="Reddit share icon"
+        decoding="async"
+        loading="lazy"
+      />
+    </a>
+  {% endif %}
+
+  {% if pinterest_share_url %}
+    <a
+      class="share-link"
+      href={{ pinterest_share_url }}
+      aria-label="share on pinterest"
+      target="_blank" rel="noopener noreferrer"
+    >
+      <img
+        width="30"
+        height="30"
+        src="{% static 'images/pinterest_share_icon.svg' %}"
+        alt="Pinterest share icon"
         decoding="async"
         loading="lazy"
       />
