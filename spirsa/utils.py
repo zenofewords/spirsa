@@ -12,7 +12,6 @@ from django.utils.safestring import mark_safe
 
 from spirsa.constants import (
     BASE_HEIGHT,
-    DEFAULT_QUALITY,
     DEFAULT_TYPE,
     HOME_URL_NAME,
     LANDSCAPE_VARIATION_SETS,
@@ -54,18 +53,16 @@ def create_srcsets(path, instance, image, VARIATIONS):
     for variation_set in VARIATIONS:
         new_width = variation_set[2]
 
-        if 0.99 < ratio < 1.01:
-            new_image = image
-        else:
+        if ratio != 1 or image.width != new_width:
             new_height = int(new_width / ratio)
-            new_image = image.resize((new_width, new_height), resample=Image.BICUBIC)
+            image = image.resize((new_width, new_height), resample=Image.LANCZOS)
 
         for srcset_type in SRCSET_TYPES:
             update_srcset_mapping(
                 srcset_mapping,
                 instance.image.url,
                 variation_set,
-                *create_image(new_image, path, new_width, srcset_type),
+                *create_image(image, path, new_width, srcset_type),
             )
     return srcset_mapping
 
@@ -80,7 +77,7 @@ def set_cls_dimension(cls_dimension, ratio, detail_width):
 
 def create_image(resized_image, path, new_width, extension):
     new_path = get_new_path(path, new_width, extension)
-    resized_image.save(new_path, extension, method=6, quality=DEFAULT_QUALITY)
+    resized_image.save(new_path, extension, method=6)
 
     return new_width, extension
 
