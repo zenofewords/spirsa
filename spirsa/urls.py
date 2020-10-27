@@ -31,6 +31,7 @@ handler403 = DeniedView.as_view()
 handler404 = NotFoundView.as_view()
 
 if settings.DEBUG_TOOLBAR:
+    print('ajmo')
     import debug_toolbar
     urlpatterns = [
         path('__debug__/', include(debug_toolbar.urls)),

@@ -1,7 +1,7 @@
 from django.urls import reverse
 from django.views.generic import TemplateView
 
-from spirsa.constants import PROFILE_WIDTH
+from spirsa.constants import SMALL_WIDTH
 from spirsa.mixins import MetaViewMixin
 from spirsa.models import AbountContactInformation
 
@@ -28,8 +28,8 @@ class AboutContactView(MetaViewMixin, TemplateView):
             context.update({
                 'meta_image': obj.image,
                 'meta_image_title': obj.image_title,
-                'meta_image_height': PROFILE_WIDTH,
-                'meta_image_width': PROFILE_WIDTH,
+                'meta_image_height': SMALL_WIDTH,
+                'meta_image_width': SMALL_WIDTH,
             })
         if obj and obj.srcsets:
             context.update(**{key: ', '.join(srcsets) for key, srcsets in obj.srcsets.items()})

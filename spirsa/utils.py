@@ -15,6 +15,7 @@ from spirsa.constants import (
     DEFAULT_TYPE,
     HOME_URL_NAME,
     LANDSCAPE_VARIATION_SETS,
+    MEDIUM_WIDTH,
     RATIO_THRESHOLD,
     SRCSET_MAPPING,
     SRCSET_TYPES,
@@ -22,15 +23,15 @@ from spirsa.constants import (
 )
 
 
-def create_image_variations(instance, DEFAULT_WIDTH, VARIATIONS=None):
+def create_image_variations(instance, default_width=MEDIUM_WIDTH, variations=None):
     timestamp = round(os.path.getctime(instance.image.file.name))
     if instance.image_timestamp == timestamp:
         return
 
     path = instance.image.path
     with Image.open(path) as original:
-        instance.srcsets = create_srcsets(path, instance, original, VARIATIONS)
-        instance.image = get_new_path(instance.image.name, DEFAULT_WIDTH, DEFAULT_TYPE)
+        instance.srcsets = create_srcsets(path, instance, original, variations)
+        instance.image = get_new_path(instance.image.name, default_width, DEFAULT_TYPE)
         instance.image_timestamp = round(os.path.getctime(instance.image.file.name))
         instance.save()
         # remove original image
@@ -43,14 +44,14 @@ def get_new_path(path, width, extension):
     )
 
 
-def create_srcsets(path, instance, image, VARIATIONS):
+def create_srcsets(path, instance, image, variations):
     srcset_mapping = copy.deepcopy(SRCSET_MAPPING)
     ratio = image.width / image.height
-    if not VARIATIONS:
-        VARIATIONS = LANDSCAPE_VARIATION_SETS if ratio > RATIO_THRESHOLD else VARIATION_SETS
-        set_cls_dimension(instance.cls_dimension, ratio, VARIATIONS[1][1])
+    if not variations:
+        variations = LANDSCAPE_VARIATION_SETS if ratio > RATIO_THRESHOLD else VARIATION_SETS
+        set_cls_dimension(instance.cls_dimension, ratio, variations[1][1])
 
-    for variation_set in VARIATIONS:
+    for variation_set in variations:
         new_width = variation_set[2]
 
         if ratio != 1 or image.width != new_width:

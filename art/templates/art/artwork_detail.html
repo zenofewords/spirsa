@@ -5,4 +5,9 @@
   <div class="artwork-detail">
     {% artwork_tag artwork detail=True %}
   </div>
+  <div class="artwork-details">
+    {% for artwork_detail in artwork.details.all %}
+      {{ artwork_detail }}
+    {% endfor %}
+  </div>
 {% endblock main %}

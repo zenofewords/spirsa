@@ -8,7 +8,6 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 DEBUG = bool(os.getenv('DEBUG', False))
 CACHE = not DEBUG and bool(os.getenv('CACHE', False))
 DEBUG_TOOLBAR = bool(os.getenv('DEBUG_TOOLBAR', False) and DEBUG)
-
 ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS').split(',')]
 CSRF_COOKIE_HTTPONLY = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
@@ -141,3 +140,6 @@ LOGGING = {
         },
     },
 }
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
