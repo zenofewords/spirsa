@@ -11,7 +11,7 @@ from spirsa.utils import create_image_variations
 class AbountContactInformation(TimeStampModelMixin):
     image = models.ImageField(
         upload_to='spirsa/%Y/%m/', blank=True, null=True,
-        help_text='Use a jpeg or png image (700x700 or larger).'
+        help_text='Use a jpeg or png image (800x800 or larger).'
     )
     image_title = models.CharField(max_length=100, blank=True)
     image_timestamp = models.FloatField(default=0.0)

@@ -12,9 +12,10 @@ from spirsa.utils import get_preview_image
 class ArtworkDetailInline(admin.TabularInline):
     model = ArtworkDetail
     fields = (
-        'image_title', 'image', 'artwork', 'is_published', 'ordering', 'image_preview_thumb',
+        'title', 'image', 'artwork', 'is_published', 'ordering', 'image_preview_thumb',
     )
     readonly_fields = ('image_preview_thumb', )
+    autocomplete_fields = ('artwork', )
 
     def image_preview_thumb(self, obj):
         return get_preview_image(obj.image, 100)
@@ -43,13 +44,13 @@ class ArtworkAdmin(AutoSlugAdminMixin):
 
 
 class ArtworkDetailAdmin(admin.ModelAdmin):
-    search_fields = ('artwork__title', 'artwork__slug', 'image_title', )
+    search_fields = ('title', 'artwork__title', 'artwork__slug', )
     list_display = (
         'artwork', 'is_published', 'ordering', 'created_at', 'image_preview_thumb',
     )
     list_editable = ('is_published', 'ordering', )
     fields = (
-        'image_title', 'image', 'artwork', 'is_published', 'ordering', 'image_preview',
+        'title', 'image', 'artwork', 'is_published', 'ordering', 'image_preview',
     )
     readonly_fields = ('image_preview', )
 

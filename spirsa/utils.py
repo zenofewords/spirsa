@@ -78,6 +78,10 @@ def set_cls_dimension(cls_dimension, ratio, detail_width):
 
 def create_image(resized_image, path, new_width, extension):
     new_path = get_new_path(path, new_width, extension)
+
+    if extension == DEFAULT_TYPE:
+        # jpeg does not support transparency
+        resized_image = resized_image.convert('RGB')
     resized_image.save(new_path, extension, method=6)
 
     return new_width, extension

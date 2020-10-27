@@ -73,6 +73,17 @@
     background-color: $color-black-10
     border-radius: 5px
 
+.artwork-details
+  display: flex
+  flex-wrap: wrap
+
+  .artwork-picture
+    display: flex
+    margin: 0 15px 15px
+
+    img
+      object-fit: cover
+
 
 @media only screen and (min-width: $media-breakpoint-small) and (max-width: $media-breakpoint-medium)
   .artwork-list
@@ -225,3 +236,13 @@
     &::after
       left: 16px
       top: 27px
+
+
+@media only screen and (min-width: $media-breakpoint-large) and (max-height: $media-breakpoint-short)
+  .artwork-detail
+    .artwork-picture
+      img
+        height: auto
+        max-height: 75vh
+        max-width: 100%
+        width: auto

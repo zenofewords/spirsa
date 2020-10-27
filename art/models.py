@@ -67,8 +67,11 @@ class Artwork(PublishedModelMixin, SlugModelMixin, TimeStampModelMixin):
 
 
 class ArtworkDetail(PublishedModelMixin, TimeStampModelMixin):
-    image = models.ImageField(upload_to='artwork/detail/%Y/%m/', blank=True, null=True)
-    image_title = models.CharField(max_length=100, blank=True)
+    title = models.CharField(max_length=100)
+    image = models.ImageField(
+        upload_to='artwork/detail/%Y/%m/', blank=True, null=True,
+        help_text='Use a jpeg or png image (800x800 or larger).'
+    )
     image_timestamp = models.IntegerField(default=0)
     srcsets = models.JSONField(blank=True, null=True)
     ordering = models.IntegerField(
@@ -84,7 +87,7 @@ class ArtworkDetail(PublishedModelMixin, TimeStampModelMixin):
         ordering = ('-ordering', '-created_at', )
 
     def __str__(self):
-        return '{}, {}'.format(self.artwork.title, self.image_title)
+        return '{}, {}'.format(self.title, self.artwork.title)
 
     def save(self, *args, **kwargs):
         if not self.image:
