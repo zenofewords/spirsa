@@ -1,6 +1,11 @@
 {% extends 'art/artwork_list.html' %}
 {% load art_tags %}
 
+
+{% block nav %}
+  {% include 'spirsa/includes/navigation.html' with detail_type=detail_type %}
+{% endblock nav %}
+
 {% block main %}
   <div class="artwork-detail">
     {% artwork_tag artwork detail=True %}

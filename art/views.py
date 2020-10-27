@@ -17,6 +17,7 @@ class ArtworkDetailView(MetaViewMixin, DetailView):
             'meta_title': self.object.title,
             'meta_url': self.object.get_absolute_url(),
             'meta_type': 'article',
+            'detail_type': 'traditional' if self.object.is_traditional else 'digital',
         })
         if self.object.image:
             context.update({
