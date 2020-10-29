@@ -23,7 +23,7 @@
 .artwork-link-next
   height: 100%
   position: absolute
-  width: 50%
+  width: 20%
 
 .artwork-link-back,
 .artwork-link-previous-button,
@@ -53,11 +53,12 @@
   right: 0
 
 .artwork-link-previous-button
+  left: 15px
   transform: translate(0, -50%)
 
 .artwork-link-next-button
   box-shadow: -1px -1px 3px $color-black-70
-  right: 0
+  right: 15px
   transform: rotate(180deg) translate(0, 50%)
 
 .artwork-info
@@ -66,17 +67,17 @@
   position: relative
 
 .artwork-title
-  margin: 10px 30px 15px 0
+  margin: 12px 30px 12px 0
 
 .artwork-picture
+  display: flex
+
   img
     background-color: $color-black-10
     border-radius: 5px
 
 .artwork-details
   .artwork-picture
-    display: flex
-
     img
       height: 100%
       object-fit: cover
