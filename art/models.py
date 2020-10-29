@@ -9,6 +9,7 @@ from spirsa.mixins import (
     PublishedModelMixin,
     PublishedQuerySet,
     SlugModelMixin,
+    SrcsetModelMixin,
     TimeStampModelMixin,
 )
 from spirsa.utils import create_image_variations
@@ -25,20 +26,15 @@ class ArtworkManager(models.Manager):
         return self.get_queryset().filter(is_traditional=True)
 
 
-class Artwork(PublishedModelMixin, SlugModelMixin, TimeStampModelMixin):
+class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampModelMixin):
     title = models.CharField(max_length=50, unique=True)
     short_description = models.TextField(max_length=500, blank=True)
     is_traditional = models.BooleanField(default=False)
     image = models.ImageField(upload_to='artwork/%Y/%m/', blank=True, null=True)
-    image_timestamp = models.IntegerField(default=0)
-    srcsets = models.JSONField(blank=True, null=True)
     ordering = models.IntegerField(
         default=0, help_text='Higher number equals higher position. Leave 0 for default.'
     )
     keywords = models.ManyToManyField('art.Keyword', blank=True)
-    cls_dimension = models.OneToOneField(
-        'art.CLSDimension', on_delete=models.CASCADE, blank=True, null=True
-    )
 
     objects = ArtworkManager.from_queryset(PublishedQuerySet)()
 
@@ -51,12 +47,7 @@ class Artwork(PublishedModelMixin, SlugModelMixin, TimeStampModelMixin):
         return self.title
 
     def save(self, *args, **kwargs):
-        if not self.cls_dimension:
-            self.cls_dimension = CLSDimension()
-            self.cls_dimension.save()
-        if not self.image:
-            self.image_timestamp = 0
-            self.srcsets = None
+        super(SrcsetModelMixin, self).save(args, kwargs)
         super().save(args, kwargs)
 
         if self.image:
@@ -66,16 +57,11 @@ class Artwork(PublishedModelMixin, SlugModelMixin, TimeStampModelMixin):
         return reverse('art:artwork-detail', kwargs={'slug': self.slug})
 
 
-class ArtworkDetail(PublishedModelMixin, TimeStampModelMixin):
-    title = models.CharField(max_length=100)
+class ArtworkDetail(SrcsetModelMixin, PublishedModelMixin, TimeStampModelMixin):
+    title = models.CharField(verbose_name='image title', max_length=100)
     image = models.ImageField(
         upload_to='artwork/detail/%Y/%m/', blank=True, null=True,
         help_text='Use a jpeg or png image (960x960 or larger).'
-    )
-    image_timestamp = models.IntegerField(default=0)
-    srcsets = models.JSONField(blank=True, null=True)
-    cls_dimension = models.OneToOneField(
-        'art.CLSDimension', on_delete=models.CASCADE, blank=True, null=True
     )
     ordering = models.IntegerField(
         default=0, help_text='Higher number equals higher position. Leave 0 for default.'
@@ -93,12 +79,7 @@ class ArtworkDetail(PublishedModelMixin, TimeStampModelMixin):
         return '{}, {}'.format(self.title, self.artwork.title)
 
     def save(self, *args, **kwargs):
-        if not self.cls_dimension:
-            self.cls_dimension = CLSDimension()
-            self.cls_dimension.save()
-        if not self.image:
-            self.image_timestamp = 0
-            self.srcsets = None
+        super(SrcsetModelMixin, self).save(args, kwargs)
         super().save(args, kwargs)
 
         if self.image:

@@ -3,7 +3,10 @@ from django.contrib import admin
 from django.db import models
 from django.utils.text import slugify
 
-from spirsa.utils import get_site_url
+from spirsa.utils import (
+    create_image_variations,
+    get_site_url,
+)
 
 
 class AutoSlugAdminMixin(admin.ModelAdmin):
@@ -64,3 +67,23 @@ class TimeStampModelMixin(models.Model):
 
     class Meta:
         abstract = True
+
+
+class SrcsetModelMixin(models.Model):
+    image_timestamp = models.FloatField(default=0.0)
+    srcsets = models.JSONField(blank=True, null=True)
+    cls_dimension = models.OneToOneField(
+        'art.CLSDimension', on_delete=models.CASCADE, blank=True, null=True
+    )
+
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        if not self.cls_dimension:
+            CLSDimension = apps.get_model('art', 'CLSDimension')
+            self.cls_dimension = CLSDimension()
+            self.cls_dimension.save()
+        if not self.image:
+            self.image_timestamp = 0
+            self.srcsets = None
