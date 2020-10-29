@@ -47,9 +47,10 @@ def get_new_path(path, width, extension):
 def create_srcsets(path, instance, image, variations):
     srcset_mapping = copy.deepcopy(SRCSET_MAPPING)
     ratio = image.width / image.height
+
     if not variations:
         variations = LANDSCAPE_VARIATION_SETS if ratio > RATIO_THRESHOLD else VARIATION_SETS
-        set_cls_dimension(instance.cls_dimension, ratio, variations[1][1])
+    set_cls_dimension(instance.cls_dimension, ratio, variations[1][1])
 
     for variation_set in variations:
         new_width = variation_set[2]

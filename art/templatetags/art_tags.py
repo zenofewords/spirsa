@@ -5,7 +5,6 @@ from spirsa.constants import (
     LINKEDIN_SHARE_URL,
     PINTEREST_SHARE_URL,
     REDDIT_SHARE_URL,
-    SMALL_WIDTH,
     TWITTER_SHARE_URL,
 )
 from spirsa.utils import (
@@ -40,12 +39,10 @@ def artwork_tag(context, obj, decoding=None, detail=False):
 
 
 @register.inclusion_tag('art/tags/artwork_picture_tag.html')
-def artwork_picture_tag(obj, height=SMALL_WIDTH, width=SMALL_WIDTH):
+def artwork_picture_tag(obj):
     data = {
         'artwork': obj,
         'decoding': 'async',
-        'height': height,
-        'width': width,
     }
     if obj.srcsets:
         data.update(**{key: ', '.join(srcsets) for key, srcsets in obj.srcsets.items()})

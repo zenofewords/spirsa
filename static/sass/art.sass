@@ -74,15 +74,13 @@
     border-radius: 5px
 
 .artwork-details
-  display: flex
-  flex-wrap: wrap
-
   .artwork-picture
     display: flex
-    margin: 0 15px 15px
 
     img
+      height: 100%
       object-fit: cover
+      width: 100%
 
 
 @media only screen and (min-width: $media-breakpoint-small) and (max-width: $media-breakpoint-medium)
@@ -134,6 +132,14 @@
   .share-label
     display: none
 
+  .artwork-details
+    display: flex
+    flex-direction: column
+    margin: 0 15px
+
+    .artwork-picture
+      margin: 0 0 10px
+
 
 @media only screen and (min-width: $media-breakpoint-large)
   .share-button,
@@ -177,19 +183,15 @@
 
   .artwork-detail
     .artwork
-      display: flex
-      flex-direction: row
-      flex-wrap: wrap
-      justify-content: flex-start
+      display: grid
+      grid-gap: 30px
+      grid-template-columns: 1fr 200px
 
-    .artwork-info
-      width: 200px
+    .artwork-picture-wrapper
+      margin: 0 0 30px
 
     .artwork-title
       margin: 0 0 15px
-
-    .artwork-picture-wrapper
-      margin: 0 30px 30px 0
 
     .artwork-link-previous,
     .artwork-link-next
@@ -236,6 +238,12 @@
     &::after
       left: 16px
       top: 27px
+
+  .artwork-details
+    display: grid
+    grid-gap: 10px
+    grid-template-columns: repeat(auto-fit, minmax(440px, 1fr))
+    margin: 0 15px
 
 
 @media only screen and (min-width: $media-breakpoint-large) and (max-height: $media-breakpoint-short)

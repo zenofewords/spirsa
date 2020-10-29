@@ -31,13 +31,26 @@
         {% if decoding %}decoding="{{ decoding }}"{% endif %}
       />
     {% else %}
+      {% if webp_thumbnail %}
+        <source
+          srcset="{{ webp_thumbnail }}"
+          type="image/webp"
+        >
+      {% endif %}
       <source
         srcset="{{ webp_small }}"
         type="image/webp"
       >
+
+      {% if jpeg_thumbnail %}
+        <source
+          srcset="{{ jpeg_thumbnail }}"
+        >
+      {% endif %}
       <source
         srcset="{{ jpeg_small }}"
       >
+
       <img
         src="{{ artwork.image.url }}"
         alt="{{ artwork.title }}"

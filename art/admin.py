@@ -15,7 +15,6 @@ class ArtworkDetailInline(admin.TabularInline):
         'title', 'image', 'artwork', 'is_published', 'ordering', 'image_preview_thumb',
     )
     readonly_fields = ('image_preview_thumb', )
-    autocomplete_fields = ('artwork', )
 
     def image_preview_thumb(self, obj):
         return get_preview_image(obj.image, 100)
@@ -52,6 +51,7 @@ class ArtworkDetailAdmin(admin.ModelAdmin):
     fields = (
         'title', 'image', 'artwork', 'is_published', 'ordering', 'image_preview',
     )
+    autocomplete_fields = ('artwork', )
     readonly_fields = ('image_preview', )
 
     def image_preview(self, obj):

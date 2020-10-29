@@ -27,7 +27,7 @@ class AboutContactView(MetaViewMixin, TemplateView):
         if obj.image:
             context.update({
                 'meta_image': obj.image,
-                'meta_image_title': obj.image_title,
+                'meta_image_title': obj.title,
                 'meta_image_height': SMALL_WIDTH,
                 'meta_image_width': SMALL_WIDTH,
             })

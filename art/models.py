@@ -2,8 +2,8 @@ from django.db import models
 from django.urls import reverse
 
 from spirsa.constants import (
-    SMALL_VARIATION_SETS,
-    SMALL_WIDTH,
+    THUMBNAIL_WIDTH,
+    THUMBNAIL_VARIATION_SETS,
 )
 from spirsa.mixins import (
     PublishedModelMixin,
@@ -70,10 +70,13 @@ class ArtworkDetail(PublishedModelMixin, TimeStampModelMixin):
     title = models.CharField(max_length=100)
     image = models.ImageField(
         upload_to='artwork/detail/%Y/%m/', blank=True, null=True,
-        help_text='Use a jpeg or png image (800x800 or larger).'
+        help_text='Use a jpeg or png image (960x960 or larger).'
     )
     image_timestamp = models.IntegerField(default=0)
     srcsets = models.JSONField(blank=True, null=True)
+    cls_dimension = models.OneToOneField(
+        'art.CLSDimension', on_delete=models.CASCADE, blank=True, null=True
+    )
     ordering = models.IntegerField(
         default=0, help_text='Higher number equals higher position. Leave 0 for default.'
     )
@@ -90,13 +93,16 @@ class ArtworkDetail(PublishedModelMixin, TimeStampModelMixin):
         return '{}, {}'.format(self.title, self.artwork.title)
 
     def save(self, *args, **kwargs):
+        if not self.cls_dimension:
+            self.cls_dimension = CLSDimension()
+            self.cls_dimension.save()
         if not self.image:
             self.image_timestamp = 0
             self.srcsets = None
         super().save(args, kwargs)
 
         if self.image:
-            create_image_variations(self, SMALL_WIDTH, SMALL_VARIATION_SETS)
+            create_image_variations(self, THUMBNAIL_WIDTH, THUMBNAIL_VARIATION_SETS)
 
 
 class Keyword(PublishedModelMixin, SlugModelMixin):
