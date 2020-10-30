@@ -19,47 +19,38 @@
 .artwork-picture-wrapper
   position: relative
 
+.artwork-full-size-link
+  display: flex
+
 .artwork-link-previous,
 .artwork-link-next
   height: 100%
+  left: 0
   position: absolute
-  width: 20%
+  top: 50%
+  transform: translate(0, -50%)
+  width: 25%
 
-.artwork-link-back,
-.artwork-link-previous-button,
-.artwork-link-next-button
+.artwork-link-next
+  left: auto
+  right: 0
+  transform: rotate(-180deg) translate(0, 50%)
+
+.artwork-link-back
   border-radius: 50%
   box-shadow: 1px 1px 3px $color-black-70
   height: 30px
   margin: 10px
   padding: 5px
   position: absolute
+  top: 0
   width: 30px
 
   &::before
-    @include arrow($top: 14px, $rotate: -45deg)
+    @include arrow($rotate: -45deg, $top: 14px, $left: 11px, $color: $color-white)
 
   &::after
-    @include arrow($top: 22px, $rotate: 45deg)
-
-.artwork-link-previous-button,
-.artwork-link-next-button
-  top: calc(50% - 12px)
-
-.artwork-link-previous
-  left: 0
-
-.artwork-link-next
-  right: 0
-
-.artwork-link-previous-button
-  left: 15px
-  transform: translate(0, -50%)
-
-.artwork-link-next-button
-  box-shadow: -1px -1px 3px $color-black-70
-  right: 15px
-  transform: rotate(180deg) translate(0, 50%)
+    @include arrow($rotate: 45deg, $top: 22px, $left: 11px, $color: $color-white)
 
 .artwork-info
   display: flex
@@ -121,9 +112,8 @@
   .artwork-link-back
     z-index: 1
 
-  .artwork-link-previous-button,
-  .artwork-link-next-button
-    display: none
+  .artwork-full-size-link
+    pointer-events: none
 
   .artwork-picture
     img
@@ -185,7 +175,7 @@
   .artwork-detail
     .artwork
       display: grid
-      grid-gap: 30px
+      grid-gap: 40px
       grid-template-columns: 1fr 200px
 
     .artwork-picture-wrapper
@@ -194,12 +184,27 @@
     .artwork-title
       margin: 0 0 15px
 
+    .artwork-full-size-link
+      cursor: zoom-in
+
+    .artwork-link-previous
+      left: -25px
+
+    .artwork-link-next
+      right: -25px
+
     .artwork-link-previous,
     .artwork-link-next
+      &::before
+        @include arrow($rotate: -45deg, $top: calc(50% - 6px))
+
+      &::after
+        @include arrow($rotate: 45deg, $top: calc(50% + 2px))
+
       &:hover
-        .artwork-link-previous-button,
-        .artwork-link-next-button
-          opacity: 1
+        &::before,
+        &::after
+          left: 6px
 
     .artwork-picture
       img
@@ -224,21 +229,6 @@
 
   .artwork-link-back
     display: none
-
-  .artwork-link-previous-button,
-  .artwork-link-next-button
-    opacity: 0
-    padding: 10px
-    transition-duration: $transition-duration-short
-    transition-property: opacity
-
-    &::before
-      left: 16px
-      top: 19px
-
-    &::after
-      left: 16px
-      top: 27px
 
   .artwork-details
     display: grid

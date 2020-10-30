@@ -150,3 +150,11 @@ def get_artwork_navigation_urls(data, obj):
             'previous_url': reverse_lazy('art:artwork-detail', kwargs={'slug': previous.slug})
         })
     return data
+
+
+def get_full_size_image(srcsets):
+    full_size_image = srcsets.get('webp_large')
+    if not full_size_image:
+        full_size_image = srcsets.get('webp_medium')
+
+    return {'full_size_image': full_size_image[0][:-3] if full_size_image else None}

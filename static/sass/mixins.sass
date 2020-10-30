@@ -1,13 +1,14 @@
 @import './variables'
 
 
-@mixin arrow($top, $rotate)
-  background-color: $color-white
+@mixin arrow($rotate, $top, $left: 0, $color: $color-black)
+  background-color: $color
   border-radius: 10px
   content: ''
   height: 4px
-  left: 11px
+  left: $left
   position: absolute
   top: $top
   transform: rotate($rotate)
+  transition: left $transition-duration-short
   width: 15px

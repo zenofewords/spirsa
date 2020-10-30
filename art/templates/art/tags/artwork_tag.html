@@ -4,7 +4,18 @@
   {% if detail %}
     <div class="artwork-picture-wrapper">
       {% include 'art/tags/artwork_navigation_tag.html' %}
-      {% include 'art/tags/artwork_picture_tag.html' %}
+
+      {% if full_size_image %}
+        <a
+          class="artwork-full-size-link"
+          href="{{ full_size_image }}"
+          aria-label="view full size image"
+        >
+          {% include 'art/tags/artwork_picture_tag.html' %}
+        </a>
+      {% else %}
+        {% include 'art/tags/artwork_picture_tag.html' %}
+      {% endif %}
     </div>
   {% else %}
     <a class="artwork-detail-link" href="{% url 'art:artwork-detail' artwork.slug %}">

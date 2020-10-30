@@ -8,8 +8,9 @@ from spirsa.constants import (
     TWITTER_SHARE_URL,
 )
 from spirsa.utils import (
-    get_site_url,
     get_artwork_navigation_urls,
+    get_full_size_image,
+    get_site_url,
 )
 
 register = template.Library()
@@ -32,6 +33,7 @@ def artwork_tag(context, obj, decoding=None, detail=False):
     }
     if obj.srcsets:
         data.update(**{key: ', '.join(srcsets) for key, srcsets in obj.srcsets.items()})
+        data.update(get_full_size_image(obj.srcsets))
 
     if detail:
         data = get_artwork_navigation_urls(data, obj)
