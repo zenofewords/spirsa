@@ -4,7 +4,7 @@ const artwork = document.querySelector('.artwork')
 const artworkFullSizeLink = document.querySelector('.artwork-full-size-link')
 const linkNext = document.querySelector('.artwork-link-next')
 const linkPrevious = document.querySelector('.artwork-link-previous')
-const dragThreshold = 100
+const dragThreshold = 75
 let currentModal
 let dragStartY
 let dragStartX
