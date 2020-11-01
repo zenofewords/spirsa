@@ -1,5 +1,6 @@
 {% extends 'art/artwork_list.html' %}
 {% load art_tags %}
+{% load render_bundle from webpack_loader %}
 
 
 {% block nav %}
@@ -17,3 +18,8 @@
     {% endfor %}
   </div>
 {% endblock main %}
+
+{% block body_scripts %}
+  {{ block.super }}
+  {% render_bundle 'art' 'js' %}
+{% endblock body_scripts %}

@@ -75,6 +75,23 @@
       object-fit: cover
       width: 100%
 
+.artwork-full-size-image
+  border-radius: 5px
+  cursor: zoom-out
+  left: 50%
+  margin: 5% 0
+  position: absolute
+  top: 0
+  transform: translate(-50%, 0)
+
+  &::before
+    background-color: $color-black-10
+    height: 100%
+    left: 0
+    position: absolute
+    top: 0
+    width: 100%
+
 
 @media only screen and (min-width: $media-breakpoint-small) and (max-width: $media-breakpoint-medium)
   .artwork-list
