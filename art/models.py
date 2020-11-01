@@ -31,7 +31,7 @@ class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampMo
     short_description = models.TextField(max_length=500, blank=True)
     is_traditional = models.BooleanField(default=False)
     image = models.ImageField(upload_to='artwork/%Y/%m/', blank=True, null=True)
-    ordering = models.IntegerField(
+    ordering = models.PositiveIntegerField(
         default=0, help_text='Higher number equals higher position. Leave 0 for default.'
     )
     keywords = models.ManyToManyField('art.Keyword', blank=True)
@@ -63,7 +63,7 @@ class ArtworkDetail(SrcsetModelMixin, PublishedModelMixin, TimeStampModelMixin):
         upload_to='artwork/detail/%Y/%m/', blank=True, null=True,
         help_text='Use a jpeg or png image (960x960 or larger).'
     )
-    ordering = models.IntegerField(
+    ordering = models.PositiveIntegerField(
         default=0, help_text='Higher number equals higher position. Leave 0 for default.'
     )
     artwork = models.ForeignKey(

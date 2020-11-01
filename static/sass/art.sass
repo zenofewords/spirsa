@@ -21,6 +21,7 @@
 
 .artwork-full-size-link
   display: flex
+  pointer-events: none
 
 .artwork-link-previous,
 .artwork-link-next
@@ -112,9 +113,6 @@
   .artwork-link-back
     z-index: 1
 
-  .artwork-full-size-link
-    pointer-events: none
-
   .artwork-picture
     img
       height: auto
@@ -184,9 +182,6 @@
     .artwork-title
       margin: 0 0 15px
 
-    .artwork-full-size-link
-      cursor: zoom-in
-
     .artwork-link-previous
       left: -25px
 
@@ -204,7 +199,7 @@
       &:hover
         &::before,
         &::after
-          left: 6px
+          left: 5px
 
     .artwork-picture
       img
@@ -245,3 +240,7 @@
         max-height: 75vh
         max-width: 100%
         width: auto
+
+    .artwork-full-size-link
+      cursor: zoom-in
+      pointer-events: initial

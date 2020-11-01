@@ -131,12 +131,12 @@ def get_artwork_navigation_urls(data, obj):
     })
 
     Artwork = apps.get_model('art.Artwork')
-    next_artwork = Artwork.objects.filter(
+    next_artwork = Artwork.objects.published().filter(
         is_traditional=obj.is_traditional,
         ordering__lte=obj.ordering, created_at__lte=obj.created_at
     ).exclude(id=obj.pk).first()
 
-    previous = Artwork.objects.filter(
+    previous = Artwork.objects.published().filter(
         is_traditional=obj.is_traditional,
         ordering__gte=obj.ordering, created_at__gte=obj.created_at
     ).exclude(id=obj.pk).last()
@@ -157,4 +157,4 @@ def get_full_size_image(srcsets):
     if not full_size_image:
         full_size_image = srcsets.get('webp_medium')
 
-    return {'full_size_image': full_size_image[0][:-3] if full_size_image else None}
+    return {'full_size_image': full_size_image[1][:-3] if full_size_image else None}
