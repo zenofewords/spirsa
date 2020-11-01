@@ -1,11 +1,12 @@
 import '../sass/art.sass'
 
+const artwork = document.querySelector('.artwork')
 const artworkFullSizeLink = document.querySelector('.artwork-full-size-link')
-const linkPrevious = document.querySelector('.artwork-link-previous')
 const linkNext = document.querySelector('.artwork-link-next')
+const linkPrevious = document.querySelector('.artwork-link-previous')
+const dragThreshold = 100
 let currentModal
-let dragX
-
+let dragStartX
 
 const createImageNode = (element) => {
   const imageNode = document.createElement('img')
@@ -66,11 +67,13 @@ const unifyTouchEvent = (event) => {
 }
 
 const startDrag = (event) => {
-  dragX = unifyTouchEvent(event).clientX
+  dragStartX = unifyTouchEvent(event).clientX
 }
 
 const endDrag = (event) => {
-  unifyTouchEvent(event).clientX > dragX ? navigateToPrevious() : navigateToNext()
+  let dragStopX = unifyTouchEvent(event).clientX
+  dragStopX = dragStopX > 0 ? dragStopX + dragThreshold : dragStopX - dragThreshold
+  dragStopX > dragStartX ? navigateToPrevious() : navigateToNext()
 }
 
 
@@ -79,5 +82,5 @@ artworkFullSizeLink.addEventListener('click', event => {
   openInModal(createImageNode(event.currentTarget))
 })
 document.addEventListener('keyup', navigateArtwork)
-document.addEventListener('touchstart', startDrag)
-document.addEventListener('touchend', endDrag)
+artwork.addEventListener('touchstart', startDrag)
+artwork.addEventListener('touchend', endDrag)
