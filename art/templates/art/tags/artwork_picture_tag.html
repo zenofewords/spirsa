@@ -11,6 +11,11 @@
       <source
         srcset="{{ webp_medium }}"
         type="image/webp"
+        media="(min-width: 501px)"
+      >
+      <source
+        srcset="{{ webp_small }}"
+        type="image/webp"
       >
 
       {% if jpeg_large %}
@@ -21,6 +26,10 @@
       {% endif %}
       <source
         srcset="{{ jpeg_medium }}"
+        media="(min-width: 501px)"
+      >
+      <source
+        srcset="{{ jpeg_small }}"
       >
 
       <img
