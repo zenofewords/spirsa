@@ -6,6 +6,7 @@ const linkNext = document.querySelector('.artwork-link-next')
 const linkPrevious = document.querySelector('.artwork-link-previous')
 const dragThreshold = 100
 let currentModal
+let dragStartY
 let dragStartX
 
 const createImageNode = (element) => {
@@ -68,12 +69,26 @@ const unifyTouchEvent = (event) => {
 
 const startDrag = (event) => {
   dragStartX = unifyTouchEvent(event).clientX
+  dragStartY = unifyTouchEvent(event).clientY
 }
 
 const endDrag = (event) => {
   let dragStopX = unifyTouchEvent(event).clientX
-  dragStopX = dragStopX > 0 ? dragStopX + dragThreshold : dragStopX - dragThreshold
-  dragStopX > dragStartX ? navigateToPrevious() : navigateToNext()
+  let dragStopY = unifyTouchEvent(event).clientY
+
+  if (dragStopY > dragStartY + dragThreshold) {
+    return
+  }
+  if (dragStopY < dragStartY - dragThreshold) {
+    return
+  }
+
+  if (dragStopX > dragStartX + dragThreshold) {
+    navigateToPrevious()
+  }
+  if (dragStopX < dragStartX - dragThreshold) {
+    navigateToNext()
+  }
 }
 
 
@@ -81,6 +96,6 @@ artworkFullSizeLink.addEventListener('click', event => {
   event.preventDefault()
   openInModal(createImageNode(event.currentTarget))
 })
-document.addEventListener('keyup', navigateArtwork)
 artwork.addEventListener('touchstart', startDrag)
 artwork.addEventListener('touchend', endDrag)
+document.addEventListener('keyup', navigateArtwork)
