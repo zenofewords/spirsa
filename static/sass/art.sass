@@ -16,6 +16,9 @@
   position: absolute
   top: -58px
 
+.artwork-full-size-link
+  pointer-events: none
+
 .artwork-picture-wrapper
   position: relative
 
@@ -125,9 +128,6 @@
 
   .artwork-link-back
     z-index: 1
-
-  .artwork-full-size-link
-    pointer-events: none
 
   .artwork-picture
     img
@@ -253,9 +253,10 @@
     .artwork-picture
       img
         height: auto
-        max-height: 75vh
+        max-height: calc(99vh - 180px)
         max-width: 100%
         width: auto
 
-    .artwork-full-size-link
-      cursor: zoom-in
+  .artwork-full-size-link
+    cursor: zoom-in
+    pointer-events: initial
