@@ -96,6 +96,6 @@ artworkFullSizeLink.addEventListener('click', event => {
   event.preventDefault()
   openInModal(createImageNode(event.currentTarget))
 })
-artwork.addEventListener('touchstart', startDrag)
-artwork.addEventListener('touchend', endDrag)
+artwork.addEventListener('touchstart', startDrag, {passive: true})
+artwork.addEventListener('touchend', endDrag, {passive: true})
 document.addEventListener('keyup', navigateArtwork)

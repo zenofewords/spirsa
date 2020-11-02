@@ -19,10 +19,6 @@
 .artwork-picture-wrapper
   position: relative
 
-.artwork-full-size-link
-  display: flex
-  pointer-events: none
-
 .artwork-link-previous,
 .artwork-link-next
   height: 100%
@@ -129,6 +125,9 @@
 
   .artwork-link-back
     z-index: 1
+
+  .artwork-full-size-link
+    pointer-events: none
 
   .artwork-picture
     img
@@ -260,4 +259,3 @@
 
     .artwork-full-size-link
       cursor: zoom-in
-      pointer-events: initial
