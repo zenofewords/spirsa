@@ -87,24 +87,6 @@
     </a>
   {% endif %}
 
-  {% if pinterest_share_url %}
-    <a
-      class="share-link"
-      href={{ pinterest_share_url }}
-      aria-label="share on pinterest"
-      target="_blank" rel="noopener noreferrer"
-    >
-      <img
-        width="30"
-        height="30"
-        src="{% static 'images/pinterest_share_icon2.svg' %}"
-        alt="Pinterest share icon"
-        decoding="async"
-        loading="lazy"
-      />
-    </a>
-  {% endif %}
-
   {% if linkedin_share_url %}
     <a
       class="share-link share-link-linkedin"
