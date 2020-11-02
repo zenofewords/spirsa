@@ -1,0 +1,16 @@
+
+@font-face {
+  font-display: swap;
+  font-family: 'Poiret One';
+  font-style: normal;
+  font-weight: 400;
+  src: url('poiret_one.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 300;
+  src: url('quicksand.woff2') format('woff2');
+}

@@ -9,6 +9,7 @@
       <title>
         {% block title %}{{ meta_title_base }} | {{ meta_title }}{% endblock title %}
       </title>
+
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -45,7 +46,11 @@
       {% endblock meta_tags %}
     {% endblock head %}
 
+    <link rel="preload" href="{% static 'fonts/poiret_one.woff2' %}" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="{% static 'fonts/quicksand.woff2' %}" as="font" type="font/woff2" crossorigin="anonymous">
+    <link href="{% static 'fonts/font.css' %}" rel="stylesheet" type="text/css">
     {% render_bundle 'base' 'css' %}
+
     {% block scripts %}
     {% endblock scripts %}
   </head>
