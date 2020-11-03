@@ -57,22 +57,22 @@ class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampMo
         return reverse('art:artwork-detail', kwargs={'slug': self.slug})
 
 
-class ArtworkDetail(SrcsetModelMixin, PublishedModelMixin, TimeStampModelMixin):
+class ArtworkThumbnail(SrcsetModelMixin, PublishedModelMixin, TimeStampModelMixin):
     title = models.CharField(verbose_name='image title', max_length=100)
     image = models.ImageField(
-        upload_to='artwork/detail/%Y/%m/', blank=True, null=True,
+        upload_to='artwork/thumbnail/%Y/%m/', blank=True, null=True,
         help_text='Use a jpeg or png image (960x960 or larger).'
     )
     ordering = models.PositiveIntegerField(
         default=0, help_text='Higher number equals higher position. Leave 0 for default.'
     )
     artwork = models.ForeignKey(
-        'art.Artwork', on_delete=models.CASCADE, related_name='details'
+        'art.Artwork', on_delete=models.CASCADE, related_name='thumbnails'
     )
 
     class Meta:
-        verbose_name = 'Artwork detail'
-        verbose_name_plural = 'Artwork details'
+        verbose_name = 'Artwork thumbnail'
+        verbose_name_plural = 'Artwork thumbnails'
         ordering = ('-ordering', '-created_at', )
 
     def __str__(self):

@@ -45,20 +45,22 @@
           srcset="{{ webp_thumbnail }}"
           type="image/webp"
         >
+      {% else %}
+        <source
+          srcset="{{ webp_small }}"
+          type="image/webp"
+        >
       {% endif %}
-      <source
-        srcset="{{ webp_small }}"
-        type="image/webp"
-      >
 
       {% if jpeg_thumbnail %}
         <source
           srcset="{{ jpeg_thumbnail }}"
         >
+      {% else %}
+        <source
+          srcset="{{ jpeg_small }}"
+        >
       {% endif %}
-      <source
-        srcset="{{ jpeg_small }}"
-      >
 
       <img
         src="{{ artwork.image.url }}"

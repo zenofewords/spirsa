@@ -2,15 +2,15 @@ from django.contrib import admin
 
 from art.models import (
     Artwork,
-    ArtworkDetail,
+    ArtworkThumbnail,
     Keyword,
 )
 from spirsa.mixins import AutoSlugAdminMixin
 from spirsa.utils import get_preview_image
 
 
-class ArtworkDetailInline(admin.TabularInline):
-    model = ArtworkDetail
+class ArtworkThumbnailInline(admin.TabularInline):
+    model = ArtworkThumbnail
     fields = (
         'title', 'image', 'artwork', 'is_published', 'ordering', 'image_preview_thumb',
     )
@@ -33,7 +33,7 @@ class ArtworkAdmin(AutoSlugAdminMixin):
     )
     autocomplete_fields = ('keywords', )
     readonly_fields = ('image_preview', )
-    inlines = [ArtworkDetailInline, ]
+    inlines = [ArtworkThumbnailInline, ]
 
     def image_preview(self, obj):
         return get_preview_image(obj.image, 500)
@@ -42,7 +42,7 @@ class ArtworkAdmin(AutoSlugAdminMixin):
         return get_preview_image(obj.image, 100)
 
 
-class ArtworkDetailAdmin(admin.ModelAdmin):
+class ArtworkThumbnailAdmin(admin.ModelAdmin):
     search_fields = ('title', 'artwork__title', 'artwork__slug', )
     list_display = (
         'artwork', 'is_published', 'ordering', 'created_at', 'image_preview_thumb',
@@ -77,6 +77,6 @@ class KeywordAdmin(AutoSlugAdminMixin):
     )
 
 
-admin.site.register(ArtworkDetail, ArtworkDetailAdmin)
+admin.site.register(ArtworkThumbnail, ArtworkThumbnailAdmin)
 admin.site.register(Artwork, ArtworkAdmin)
 admin.site.register(Keyword, KeywordAdmin)

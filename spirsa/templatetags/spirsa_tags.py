@@ -6,8 +6,8 @@ register = template.Library()
 
 
 @register.inclusion_tag('spirsa/tags/menu_link_tag.html')
-def menu_link_tag(name, path, base='', detail_type=None):
-    detail = name == detail_type
+def menu_link_tag(name, path, base='', detail_type=''):
+    detail = name == detail_type.lower()
 
     url = name.replace('/', '-')
     return {

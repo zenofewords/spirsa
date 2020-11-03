@@ -13,11 +13,14 @@ class ArtworkDetailView(MetaViewMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        detail_type = 'Traditional' if self.object.is_traditional else 'Digital'
+        meta_title = '{} | {}'.format(detail_type, self.object.title)
+
         context.update({
-            'meta_title': self.object.title,
+            'meta_title': meta_title if self.object.is_traditional else self.object.title,
             'meta_url': self.object.get_absolute_url(),
             'meta_type': 'article',
-            'detail_type': 'traditional' if self.object.is_traditional else 'digital',
+            'detail_type': detail_type,
         })
         if self.object.image:
             context.update({
@@ -44,7 +47,7 @@ class ArtworkListView(MetaViewMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context.update({
             'artworks': Artwork.objects.digital().published(),
-            'meta_title': 'Digital Art',
+            'meta_title': 'Digital',
         })
         return context
 
@@ -56,6 +59,6 @@ class ArtworTraditionalkListView(MetaViewMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context.update({
             'artworks': Artwork.objects.traditional().published(),
-            'meta_title': 'Traditional Art',
+            'meta_title': 'Traditional',
         })
         return context
