@@ -11,7 +11,7 @@ from spirsa.mixins import (
 from spirsa.utils import create_image_variations
 
 
-class AbountContactInformation(SrcsetModelMixin, TimeStampModelMixin):
+class AboutContactInformation(SrcsetModelMixin, TimeStampModelMixin):
     title = models.CharField(verbose_name='image title', max_length=100, blank=True)
     image = models.ImageField(
         upload_to='spirsa/%Y/%m/', blank=True, null=True,

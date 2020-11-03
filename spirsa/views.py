@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 
 from spirsa.constants import SMALL_WIDTH
 from spirsa.mixins import MetaViewMixin
-from spirsa.models import AbountContactInformation
+from spirsa.models import AboutContactInformation
 
 
 class BaseView(MetaViewMixin):
@@ -15,7 +15,7 @@ class AboutContactView(MetaViewMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        obj = AbountContactInformation.objects.first()
+        obj = AboutContactInformation.objects.first()
         context.update({
             'meta_title': 'About / Contact',
             'meta_url': reverse('about-contact'),
