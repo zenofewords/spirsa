@@ -10,5 +10,5 @@ pluggy==0.13.1
 pycodestyle==2.6.0
 pyflakes==2.2.0
 pyparsing==2.4.7
-toml==0.10.1
+toml==0.10.2
 zipp==3.4.0
