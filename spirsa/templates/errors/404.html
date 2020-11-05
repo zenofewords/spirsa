@@ -1,5 +1,25 @@
 {% extends 'spirsa/base.html' %}
+{% load static %}
 
 {% block main %}
-  404
+  <div class="not-found-wrapper">
+    <h1 class="not-found-title">
+      404 - not found
+    </h1>
+    <picture class="not-found-picture">
+      <source
+        srcset="{% static 'images/404.webp' %}"
+        type="image/webp"
+      >
+      <source
+        srcset="{% static 'images/404.jpeg' %}"
+      >
+      <img
+        src="{% static 'images/404.jpeg' %}"
+        alt="404 image"
+        height="640"
+        width="800"
+      />
+    </picture>
+  </div>
 {% endblock main %}

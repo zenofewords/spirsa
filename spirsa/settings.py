@@ -46,7 +46,7 @@ if DEBUG_TOOLBAR:
 if CACHE:
     CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
             'LOCATION': '127.0.0.1:11211',
             'KEY_PREFIX': 'spirsa_',
         }
