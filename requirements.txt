@@ -1,9 +1,9 @@
 asgiref==3.3.0
-attrs==20.2.0
+attrs==20.3.0
 Django==3.1.3
 django-webpack-loader==0.7.0
 factory-boy==3.1.0
-Faker==4.14.0
+Faker==4.14.1
 more-itertools==8.6.0
 packaging==20.4
 Pillow==8.0.1
