@@ -28,7 +28,7 @@ class ArtworkManager(models.Manager):
 
 class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampModelMixin):
     title = models.CharField(max_length=50, unique=True)
-    short_description = models.TextField(max_length=500, blank=True)
+    short_description = models.TextField(max_length=1000, blank=True)
     is_traditional = models.BooleanField(default=False)
     image = models.ImageField(upload_to='artwork/%Y/%m/', blank=True, null=True)
     ordering = models.PositiveIntegerField(

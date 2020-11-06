@@ -31,7 +31,7 @@
 
     {% if detail %}
       <p class="artwork-short-description">
-        {{ artwork.short_description|linebreaksbr }}
+        {{ artwork.short_description|safe|linebreaksbr }}
       </p>
     {% endif %}
     {% include 'art/tags/artwork_share_tag.html' with id=artwork.pk %}
