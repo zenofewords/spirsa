@@ -3,10 +3,7 @@ from django.contrib import admin
 from django.db import models
 from django.utils.text import slugify
 
-from spirsa.utils import (
-    create_image_variations,
-    get_site_url,
-)
+from spirsa.utils import get_site_url
 
 
 class AutoSlugAdminMixin(admin.ModelAdmin):
@@ -43,7 +40,7 @@ class PublishedQuerySet(models.QuerySet):
 
 
 class PublishedModelMixin(models.Model):
-    is_published = models.BooleanField(default=False)
+    is_published = models.BooleanField(default=True)
 
     objects = PublishedQuerySet.as_manager()
 
