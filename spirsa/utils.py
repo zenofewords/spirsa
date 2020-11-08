@@ -9,6 +9,7 @@ from django.apps import apps
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
+from django.utils.text import slugify
 
 from spirsa.constants import (
     BASE_HEIGHT,
@@ -40,7 +41,7 @@ def create_image_variations(instance, default_width=MEDIUM_WIDTH, variations=Non
 
 def get_new_path(path, width, extension):
     return path.replace(
-        os.path.basename(path), '{}_{}.{}'.format(Path(path).stem, width, extension)
+        os.path.basename(path), '{}_{}.{}'.format(slugify(Path(path).stem), width, extension)
     )
 
 
