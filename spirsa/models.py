@@ -8,13 +8,16 @@ from spirsa.mixins import (
     SrcsetModelMixin,
     TimeStampModelMixin,
 )
-from spirsa.utils import create_image_variations
+from spirsa.utils import (
+    create_image_variations,
+    get_contact_image_path,
+)
 
 
 class AboutContactInformation(SrcsetModelMixin, TimeStampModelMixin):
     title = models.CharField(verbose_name='image title', max_length=100, blank=True)
     image = models.ImageField(
-        upload_to='spirsa/%Y/%m/', blank=True, null=True,
+        upload_to=get_contact_image_path, blank=True, null=True,
         help_text='Use a jpeg or png image (760x760 or larger).'
     )
     contact_email = models.EmailField(max_length=100, blank=True)

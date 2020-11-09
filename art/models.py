@@ -12,7 +12,11 @@ from spirsa.mixins import (
     SrcsetModelMixin,
     TimeStampModelMixin,
 )
-from spirsa.utils import create_image_variations
+from spirsa.utils import (
+    create_image_variations,
+    get_artwork_image_path,
+    get_artwork_thumbnail_path,
+)
 
 
 class ArtworkManager(models.Manager):
@@ -30,7 +34,7 @@ class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampMo
     title = models.CharField(max_length=50, unique=True)
     short_description = models.TextField(max_length=1000, blank=True)
     is_traditional = models.BooleanField(default=False)
-    image = models.ImageField(upload_to='artwork/%Y/%m/', blank=True, null=True)
+    image = models.ImageField(upload_to=get_artwork_image_path, blank=True, null=True)
     ordering = models.PositiveIntegerField(
         default=0, help_text='Higher number equals higher position. Leave 0 for default.'
     )
@@ -60,7 +64,7 @@ class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampMo
 class ArtworkThumbnail(SrcsetModelMixin, PublishedModelMixin, TimeStampModelMixin):
     title = models.CharField(verbose_name='image title', max_length=100)
     image = models.ImageField(
-        upload_to='artwork/thumbnail/%Y/%m/', blank=True, null=True,
+        upload_to=get_artwork_thumbnail_path, blank=True, null=True,
         help_text='Use a jpeg or png image (960x960 or larger).'
     )
     ordering = models.PositiveIntegerField(
