@@ -10,7 +10,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
-from django.utils import timezone
+from django.utils import timezone, dateformat
 
 from spirsa.constants import (
     BASE_HEIGHT,
@@ -162,23 +162,24 @@ def get_full_size_image(srcsets):
     return {'full_size_image': full_size_image[1][:-3] if full_size_image else None}
 
 
-def get_date_partitioned_path(filename):
+def get_upload_path(filename):
     name, dot, extension = filename.rpartition('.')
 
-    return '{}/{}/{}'.format(
+    return '{}/{}/{}_{}'.format(
         timezone.now().year,
         timezone.now().month,
-        slugify(name)
+        slugify(name),
+        dateformat.format(timezone.now(), 'His')
     )
 
 
 def get_artwork_image_path(instance, filename):
-    return 'artwork/{}'.format(get_date_partitioned_path(filename))
+    return 'artwork/{}'.format(get_upload_path(filename))
 
 
 def get_artwork_thumbnail_path(instance, filename):
-    return 'artwork/thumbnail/{}'.format(get_date_partitioned_path(filename))
+    return 'artwork/thumbnail/{}'.format(get_upload_path(filename))
 
 
 def get_contact_image_path(instance, filename):
-    return 'spirsa/{}'.format(get_date_partitioned_path(filename))
+    return 'spirsa/{}'.format(get_upload_path(filename))
