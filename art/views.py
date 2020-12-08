@@ -4,7 +4,10 @@ from django.views.generic import (
 )
 
 from art.models import Artwork
-from spirsa.mixins import MetaViewMixin
+from spirsa.mixins import (
+    MetaViewMixin,
+    StaffPreViewMixin,
+)
 
 
 class ArtworkDetailView(MetaViewMixin, DetailView):
@@ -52,7 +55,7 @@ class ArtworkListView(MetaViewMixin, TemplateView):
         return context
 
 
-class ArtworTraditionalkListView(MetaViewMixin, TemplateView):
+class ArtworkTraditionalListView(MetaViewMixin, TemplateView):
     template_name = 'art/artwork_list.html'
 
     def get_context_data(self, **kwargs):
@@ -62,3 +65,25 @@ class ArtworTraditionalkListView(MetaViewMixin, TemplateView):
             'meta_title': 'Traditional',
         })
         return context
+
+
+class ArtworkListPreView(StaffPreViewMixin, ArtworkListView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'artworks': Artwork.objects.digital().all(),
+        })
+        return context
+
+
+class ArtworkTraditionalListPreView(StaffPreViewMixin, ArtworkTraditionalListView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'artworks': Artwork.objects.traditional().all(),
+        })
+        return context
+
+
+class ArtworkDetailPreView(StaffPreViewMixin, ArtworkDetailView):
+    queryset = Artwork.objects.all()

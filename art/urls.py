@@ -4,7 +4,10 @@ from django.urls import path
 from art.views import (
     ArtworkDetailView,
     ArtworkListView,
-    ArtworTraditionalkListView,
+    ArtworkTraditionalListView,
+    ArtworkDetailPreView,
+    ArtworkListPreView,
+    ArtworkTraditionalListPreView,
 )
 from spirsa.constants import (
     CACHE_SECONDS,
@@ -20,12 +23,27 @@ urlpatterns = [
     ),
     path(
         'traditional/',
-        cache_page(CACHE_SECONDS)(ArtworTraditionalkListView.as_view()),
+        cache_page(CACHE_SECONDS)(ArtworkTraditionalListView.as_view()),
         name='traditional'
     ),
     path(
         'artwork/<slug:slug>/',
         cache_page(CACHE_SECONDS)(ArtworkDetailView.as_view()),
         name='artwork-detail'
+    ),
+    path(
+        'preview/',
+        cache_page(CACHE_SECONDS)(ArtworkListPreView.as_view()),
+        name='{}-preview'.format(HOME_URL_NAME)
+    ),
+    path(
+        'traditional/preview/',
+        cache_page(CACHE_SECONDS)(ArtworkTraditionalListPreView.as_view()),
+        name='traditional-preview'
+    ),
+    path(
+        'artwork/<slug:slug>/preview/',
+        cache_page(CACHE_SECONDS)(ArtworkDetailPreView.as_view()),
+        name='artwork-detail-preview'
     ),
 ]

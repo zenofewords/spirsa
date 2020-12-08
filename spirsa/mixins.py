@@ -1,6 +1,7 @@
 from django.apps import apps
 from django.contrib import admin
 from django.db import models
+from django.http import Http404
 from django.utils.text import slugify
 
 from spirsa.utils import get_site_url
@@ -32,6 +33,13 @@ class MetaViewMixin():
                 'meta_image_title': info.meta_image_title,
             })
         return context
+
+
+class StaffPreViewMixin():
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.is_staff:
+            return super().dispatch(request, *args, **kwargs)
+        raise Http404
 
 
 class PublishedQuerySet(models.QuerySet):
