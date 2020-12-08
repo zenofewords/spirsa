@@ -18,7 +18,7 @@
       {% endif %}
     </div>
   {% else %}
-    {% if artwork.published %}
+    {% if artwork.is_published %}
       {% url 'art:artwork-detail' artwork.slug as url %}
     {% else %}
       {% url 'art:artwork-detail-preview' artwork.slug as url %}
