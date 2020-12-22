@@ -1,4 +1,3 @@
-CACHE_SECONDS = 180
 HOME_URL_NAME = 'digital'
 
 DEFAULT_TYPE = 'jpeg'

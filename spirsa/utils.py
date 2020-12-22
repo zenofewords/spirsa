@@ -133,23 +133,35 @@ def get_artwork_navigation_urls(data, obj):
     })
 
     Artwork = apps.get_model('art.Artwork')
-    next_artwork = Artwork.objects.published().filter(
-        is_traditional=obj.is_traditional,
-        ordering__lte=obj.ordering, created_at__lte=obj.created_at
-    ).exclude(id=obj.pk).first()
+    next_artwork_ids = Artwork.objects.published().filter(
+        is_traditional=obj.is_traditional
+    ).values_list('pk', flat=True)
+    next_artwork_index = list(next_artwork_ids).index(obj.pk)
 
-    previous = Artwork.objects.published().filter(
+    next_artwork_id = 0
+    if next_artwork_index < len(next_artwork_ids) - 1:
+        next_artwork_id = next_artwork_ids[next_artwork_index + 1]
+    next_artwork = Artwork.objects.filter(pk=next_artwork_id).first()
+
+    previous_artwork_ids = Artwork.objects.published().filter(
         is_traditional=obj.is_traditional,
-        ordering__gte=obj.ordering, created_at__gte=obj.created_at
-    ).exclude(id=obj.pk).last()
+    ).values_list('pk', flat=True)
+    previous_artwork_index = list(previous_artwork_ids).index(obj.pk)
+
+    previous_artwork_id = 0
+    if previous_artwork_index - 1 >= 0:
+        previous_artwork_id = previous_artwork_ids[previous_artwork_index - 1]
+    previous_artwork = Artwork.objects.filter(pk=previous_artwork_id).first()
 
     if next_artwork:
         data.update({
             'next_url': reverse_lazy('art:artwork-detail', kwargs={'slug': next_artwork.slug})
         })
-    if previous:
+    if previous_artwork:
         data.update({
-            'previous_url': reverse_lazy('art:artwork-detail', kwargs={'slug': previous.slug})
+            'previous_url': reverse_lazy(
+                'art:artwork-detail', kwargs={'slug': previous_artwork.slug}
+            )
         })
     return data
 
