@@ -19,7 +19,7 @@ const createImageNode = (element) => {
 
 const openInModal = (element) => {
   if (!currentModal) {
-    currentModal = document.createElement('modal')
+    currentModal = document.createElement('div')
     currentModal.classList.add('modal-wrapper')
   }
   currentModal.addEventListener('click', event => closeModal())
