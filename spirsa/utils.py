@@ -167,9 +167,9 @@ def get_artwork_navigation_urls(data, obj):
 
 
 def get_full_size_image(srcsets):
-    full_size_image = srcsets.get('webp_large')
+    full_size_image = srcsets.get('jpeg_large')
     if not full_size_image:
-        full_size_image = srcsets.get('webp_medium')
+        full_size_image = srcsets.get('jpeg_medium')
 
     return {'full_size_image': full_size_image[1][:-3] if full_size_image else None}
 
