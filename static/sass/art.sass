@@ -71,6 +71,7 @@
   img
     background-color: $color-black-10
     border-radius: 5px
+    object-fit: cover
 
 .artwork-thumbnails
   .artwork-picture
@@ -182,21 +183,22 @@
 
   .artwork-detail
     .artwork
-      display: grid
-      grid-gap: 40px
-      grid-template-columns: 1fr 250px
+      display: flex
+      flex-direction: row
+      flex-wrap: wrap
+      margin: 0 25px 20px
 
     .artwork-picture-wrapper
-      margin: 0 0 30px
+      margin: 0 40px 30px 0
 
     .artwork-title
       margin: 0 0 15px
 
     .artwork-link-previous
-      left: -25px
+      left: -20px
 
     .artwork-link-next
-      right: -25px
+      right: -20px
 
     .artwork-link-previous,
     .artwork-link-next
@@ -215,6 +217,9 @@
       img
         height: auto
         max-width: 100%
+
+    .artwork-info
+      max-width: 250px
 
     .share-label
       font-size: 12px
@@ -239,10 +244,21 @@
     display: grid
     grid-gap: 10px
     grid-template-columns: repeat(auto-fit, minmax(450px, .5fr))
-    margin: 0 15px
+    margin: 0 25px
 
 
-@media only screen and (min-width: $media-breakpoint-large) and (max-height: $media-breakpoint-short)
+@media only screen and (min-width: $media-breakpoint-extra-large)
+  .artwork-detail
+    .artwork
+      display: grid
+      grid-gap: 40px
+      grid-template-columns: 1fr 250px
+
+    .artwork-picture-wrapper
+      margin: 0 0 30px
+
+
+@media only screen and (min-width: $media-breakpoint-large) and (max-height: $media-breakpoint-vertical)
   .artwork-detail
     .artwork-title
       font-size: 20px
