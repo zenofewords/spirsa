@@ -69,11 +69,13 @@
 
     {% cache 600 footer %}
       <footer>
-        <a href="/" class="link link-sp-footer" aria-label="Štefica Pirša">
-          {% include 'spirsa/includes/sp_logo.html' with size='25' decoding='async' %}
-        </a>
-        {% include 'spirsa/includes/instagram_link.html' %}
-        {% include 'spirsa/includes/deviant_art_link.html' %}
+        <div class="footer-wrapper">
+          <a href="/" class="link link-sp-footer" aria-label="Štefica Pirša">
+            {% include 'spirsa/includes/sp_logo.html' with size='25' decoding='async' %}
+          </a>
+          {% include 'spirsa/includes/instagram_link.html' %}
+          {% include 'spirsa/includes/deviant_art_link.html' %}
+        </div>
       </footer>
     {% endcache footer %}
 
