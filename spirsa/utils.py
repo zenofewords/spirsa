@@ -140,15 +140,15 @@ def get_artwork_navigation_urls(data, obj):
     try:
         artwork_index = list(artwork_ids).index(obj.pk)
     except ValueError:
-        artwork_index = None
+        artwork_index = -1
 
     next_artwork_id = 0
-    if artwork_index and artwork_index < len(artwork_ids) - 1:
+    if artwork_index >= 0 and artwork_index < len(artwork_ids) - 1:
         next_artwork_id = artwork_ids[artwork_index + 1]
     next_artwork = Artwork.objects.filter(pk=next_artwork_id).first()
 
     previous_artwork_id = 0
-    if artwork_index and artwork_index - 1 >= 0:
+    if artwork_index - 1 >= 0:
         previous_artwork_id = artwork_ids[artwork_index - 1]
     previous_artwork = Artwork.objects.filter(pk=previous_artwork_id).first()
 
