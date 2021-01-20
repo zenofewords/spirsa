@@ -133,24 +133,23 @@ def get_artwork_navigation_urls(data, obj):
     })
 
     Artwork = apps.get_model('art.Artwork')
-    next_artwork_ids = Artwork.objects.published().filter(
+    artwork_ids = Artwork.objects.published().filter(
         is_traditional=obj.is_traditional
     ).values_list('pk', flat=True)
-    next_artwork_index = list(next_artwork_ids).index(obj.pk)
+
+    try:
+        artwork_index = list(artwork_ids).index(obj.pk)
+    except ValueError:
+        artwork_index = None
 
     next_artwork_id = 0
-    if next_artwork_index < len(next_artwork_ids) - 1:
-        next_artwork_id = next_artwork_ids[next_artwork_index + 1]
+    if artwork_index and artwork_index < len(artwork_ids) - 1:
+        next_artwork_id = artwork_ids[artwork_index + 1]
     next_artwork = Artwork.objects.filter(pk=next_artwork_id).first()
 
-    previous_artwork_ids = Artwork.objects.published().filter(
-        is_traditional=obj.is_traditional,
-    ).values_list('pk', flat=True)
-    previous_artwork_index = list(previous_artwork_ids).index(obj.pk)
-
     previous_artwork_id = 0
-    if previous_artwork_index - 1 >= 0:
-        previous_artwork_id = previous_artwork_ids[previous_artwork_index - 1]
+    if artwork_index and artwork_index - 1 >= 0:
+        previous_artwork_id = artwork_ids[artwork_index - 1]
     previous_artwork = Artwork.objects.filter(pk=previous_artwork_id).first()
 
     if next_artwork:
