@@ -2,7 +2,7 @@
 
 django-debug-toolbar==3.2
 flake8==3.8.4
-importlib-metadata==3.3.0
+importlib-metadata==3.4.0
 iniconfig==1.1.1
 isort==5.7.0
 lazy-object-proxy==1.5.2
