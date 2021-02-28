@@ -22,7 +22,7 @@ const openInModal = (element) => {
     currentModal = document.createElement('div')
     currentModal.classList.add('modal-wrapper')
   }
-  currentModal.addEventListener('click', event => closeModal())
+  currentModal.addEventListener('click', () => closeModal())
   currentModal.appendChild(element)
   document.body.appendChild(currentModal)
   document.body.classList.add('scroll-lock')
@@ -73,8 +73,8 @@ const startDrag = (event) => {
 }
 
 const endDrag = (event) => {
-  let dragStopX = unifyTouchEvent(event).clientX
-  let dragStopY = unifyTouchEvent(event).clientY
+  const dragStopX = unifyTouchEvent(event).clientX
+  const dragStopY = unifyTouchEvent(event).clientY
 
   if (dragStopY > dragStartY + dragThreshold) {
     return
