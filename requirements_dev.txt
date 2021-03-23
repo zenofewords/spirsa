@@ -2,14 +2,14 @@
 
 django-debug-toolbar==3.2
 flake8==3.8.4
-importlib-metadata==3.4.0
+importlib-metadata==3.7.3
 iniconfig==1.1.1
-isort==5.7.0
-lazy-object-proxy==1.5.2
+isort==5.8.0
+lazy-object-proxy==1.6.0
 mccabe==0.6.1
 pluggy==0.13.1
-pycodestyle==2.6.0
-pyflakes==2.2.0
+pycodestyle==2.7.0
+pyflakes==2.3.0
 pyparsing==2.4.7
 toml==0.10.2
-zipp==3.4.0
+zipp==3.4.1
