@@ -80,7 +80,7 @@
     {% endcache footer %}
 
     {% block body_scripts %}
-      {% render_bundle 'base' 'js' %}
+      {% render_bundle 'base' 'js' attrs='defer' %}
     {% endblock body_scripts %}
   </body>
 </html>

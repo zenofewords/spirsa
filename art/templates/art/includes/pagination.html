@@ -1,0 +1,17 @@
+<div class="pagination">
+  <span>
+    {% if page_obj.has_previous %}
+      <a aria-label="first page" href="?page=1">&laquo;</a>
+      <a aria-label="previous page" href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+    {% endif %}
+
+    <span>
+      {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    </span>
+
+    {% if page_obj.has_next %}
+      <a aria-label="next page" href="?page={{ page_obj.next_page_number }}">&gt;</a>
+      <a aria-label="last page" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+    {% endif %}
+  </span>
+</div>

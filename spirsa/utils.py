@@ -1,6 +1,7 @@
 import copy
 import math
 import os
+import re
 
 from pathlib import Path
 from PIL import Image
@@ -194,3 +195,7 @@ def get_artwork_thumbnail_path(instance, filename):
 
 def get_contact_image_path(instance, filename):
     return 'spirsa/{}'.format(get_upload_path(filename))
+
+
+def clean_meta_description(text):
+    return re.sub(re.compile('<.*?>'), '', text)

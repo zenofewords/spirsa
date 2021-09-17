@@ -1,6 +1,8 @@
+import math
+
 from django.views.generic import (
     DetailView,
-    TemplateView,
+    ListView,
 )
 
 from art.models import Artwork
@@ -8,6 +10,7 @@ from spirsa.mixins import (
     MetaViewMixin,
     StaffPreViewMixin,
 )
+from spirsa.utils import clean_meta_description
 
 
 class ArtworkDetailView(MetaViewMixin, DetailView):
@@ -34,7 +37,7 @@ class ArtworkDetailView(MetaViewMixin, DetailView):
             })
         if self.object.short_description:
             context.update({
-                'meta_description': self.object.short_description,
+                'meta_description': clean_meta_description(self.object.short_description),
             })
         if self.object.keywords.exists():
             context.update({
@@ -43,47 +46,43 @@ class ArtworkDetailView(MetaViewMixin, DetailView):
         return context
 
 
-class ArtworkListView(MetaViewMixin, TemplateView):
+class ArtworkListView(MetaViewMixin, ListView):
+    context_object_name = 'artworks'
+    meta_title = 'Digital'
+    paginate_by = 6
+    queryset = Artwork.objects.digital().published()
     template_name = 'art/artwork_list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         context.update({
-            'artworks': Artwork.objects.digital().published(),
-            'meta_title': 'Digital',
+            'meta_title': self.meta_title,
+            'page_count': math.ceil(self.queryset.count() / self.paginate_by),
         })
         return context
 
 
-class ArtworkTraditionalListView(MetaViewMixin, TemplateView):
-    template_name = 'art/artwork_list.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({
-            'artworks': Artwork.objects.traditional().published(),
-            'meta_title': 'Traditional',
-        })
-        return context
+class ArtworkTraditionalListView(ArtworkListView):
+    meta_title = 'Traditional'
+    queryset = Artwork.objects.traditional().published()
 
 
 class ArtworkListPreView(StaffPreViewMixin, ArtworkListView):
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({
-            'artworks': Artwork.objects.digital().all(),
-        })
-        return context
+    queryset = Artwork.objects.digital().all()
 
 
 class ArtworkTraditionalListPreView(StaffPreViewMixin, ArtworkTraditionalListView):
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({
-            'artworks': Artwork.objects.traditional().all(),
-        })
-        return context
+    queryset = Artwork.objects.traditional().all()
 
 
 class ArtworkDetailPreView(StaffPreViewMixin, ArtworkDetailView):
     queryset = Artwork.objects.all()
+
+
+class AsyncArtworkListView(ArtworkListView):
+    template_name = 'art/includes/artworks.html'
+
+
+class AsyncArtworkTraditionalListView(ArtworkTraditionalListView):
+    template_name = 'art/includes/artworks.html'

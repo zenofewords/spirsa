@@ -4,7 +4,10 @@ from django.db import models
 from django.http import Http404
 from django.utils.text import slugify
 
-from spirsa.utils import get_site_url
+from spirsa.utils import (
+    clean_meta_description,
+    get_site_url
+)
 
 
 class AutoSlugAdminMixin(admin.ModelAdmin):
@@ -27,7 +30,7 @@ class MetaViewMixin():
         if info:
             context.update({
                 'meta_title_base': info.meta_title,
-                'meta_description': info.meta_description,
+                'meta_description': clean_meta_description(info.meta_description),
                 'meta_keywords': info.meta_keywords,
                 'meta_image': info.meta_image if info.meta_image else None,
                 'meta_image_title': info.meta_image_title,

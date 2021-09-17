@@ -1,5 +1,4 @@
 {% extends 'spirsa/base.html' %}
-{% load art_tags %}
 {% load render_bundle from webpack_loader %}
 
 {% block scripts %}
@@ -7,19 +6,20 @@
 {% endblock scripts %}
 
 {% block main %}
-  <div class="artwork-list">
-    {% for artwork in artworks %}
-
-      {% if forloop.counter < 4 %}
-        {% artwork_tag artwork decoding='sync' %}
-      {% else %}
-        {% artwork_tag artwork %}
-      {% endif %}
-
-    {% empty %}
-      <p class="artwork-list-no-art">
-        No art here.
-      </p>
-    {% endfor %}
+  <div
+    class="artwork-list"
+    data-page-count="{{ page_count }}"
+    data-current-page="{{ current_page }}"
+  >
+    {% include 'art/includes/artworks.html' %}
   </div>
+
+  <noscript>
+    {% include 'art/includes/pagination.html' %}
+  </noscript>
 {% endblock main %}
+
+{% block body_scripts %}
+  {{ block.super }}
+  {% render_bundle 'art' 'js' attrs='defer' %}
+{% endblock body_scripts %}

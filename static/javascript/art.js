@@ -1,7 +1,9 @@
 import '../sass/art.sass'
 
 const artwork = document.querySelector('.artwork')
+const artworkList = document.querySelector('.artwork-list')
 const artworkFullSizeLink = document.querySelector('.artwork-full-size-link')
+const footer = document.querySelector('footer')
 const linkNext = document.querySelector('.artwork-link-next')
 const linkPrevious = document.querySelector('.artwork-link-previous')
 const dragThreshold = 75
@@ -92,10 +94,61 @@ const endDrag = (event) => {
 }
 
 
-artworkFullSizeLink.addEventListener('click', event => {
+artworkFullSizeLink && artworkFullSizeLink.addEventListener('click', event => {
   event.preventDefault()
   openInModal(createImageNode(event.currentTarget))
 })
-artwork.addEventListener('touchstart', startDrag, {passive: true})
-artwork.addEventListener('touchend', endDrag, {passive: true})
+artwork && artwork.addEventListener('touchstart', startDrag, {passive: true})
+artwork && artwork.addEventListener('touchend', endDrag, {passive: true})
 document.addEventListener('keyup', navigateArtwork)
+
+
+const startInfiniteScroll = () => {
+  if (!artworkList) {
+    return;
+  }
+  const parser = new DOMParser()
+  let page = 1
+
+  const appendArtwork = (data) => {
+    if (!data) {
+      return
+    }
+    for (const node of parser.parseFromString(data, 'text/html').body.childNodes) {
+      artworkList.append(node)
+    }
+  }
+
+  const refreshObserver = () => {
+    observer.unobserve(footer)
+    observer.observe(footer)
+  }
+
+  const loadMoreArtwork = () => {
+    page += 1
+
+    fetch(`async-artworks?page=${page}`).then(
+      response => response.text()
+    ).then(
+      data => appendArtwork(data)
+    ).then(
+      () => refreshObserver()
+    )
+  }
+
+  const handleIntersection = (entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && page < artworkList.dataset.pageCount) {
+        loadMoreArtwork()
+      }
+    })
+  }
+
+  const observer = new IntersectionObserver(handleIntersection, {
+    root: null,
+    rootMargin: '0px',
+    threshold: .1
+  })
+  observer.observe(footer)
+}
+startInfiniteScroll()

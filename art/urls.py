@@ -1,6 +1,8 @@
 from django.urls import path
 
 from art.views import (
+    AsyncArtworkListView,
+    AsyncArtworkTraditionalListView,
     ArtworkDetailView,
     ArtworkListView,
     ArtworkTraditionalListView,
@@ -25,5 +27,13 @@ urlpatterns = [
     path(
         'artwork/<slug:slug>/preview/', ArtworkDetailPreView.as_view(),
         name='artwork-detail-preview'
+    ),
+    path(
+        'async-artworks', AsyncArtworkListView.as_view(),
+        name='async-artwork-list'
+    ),
+    path(
+        'traditional/async-artworks', AsyncArtworkTraditionalListView.as_view(),
+        name='async-artwork-traditional-list'
     ),
 ]
