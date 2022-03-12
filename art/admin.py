@@ -23,13 +23,13 @@ class ArtworkThumbnailInline(admin.TabularInline):
 class ArtworkAdmin(AutoSlugAdminMixin):
     search_fields = ('title', 'slug', )
     list_display = (
-        'title', 'slug', 'is_traditional', 'is_published', 'ordering', 'created_at',
+        'title', 'slug', 'is_traditional', 'is_featured', 'is_published', 'ordering', 'created_at',
         'image_preview_thumb',
     )
-    list_editable = ('is_traditional', 'is_published', 'ordering', )
+    list_editable = ('is_traditional', 'is_featured', 'is_published', 'ordering', )
     fields = (
-        'title', 'slug', 'is_traditional', 'is_published', 'ordering', 'short_description',
-        'image', 'image_preview', 'keywords',
+        'title', 'slug', 'is_traditional', 'is_featured', 'is_published', 'ordering',
+        'short_description', 'image', 'image_preview', 'keywords',
     )
     autocomplete_fields = ('keywords', )
     readonly_fields = ('image_preview', )

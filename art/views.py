@@ -8,7 +8,7 @@ from django.views.generic import (
 from art.models import Artwork
 from spirsa.mixins import (
     MetaViewMixin,
-    StaffPreViewMixin,
+    StaffPreviewMixin,
 )
 from spirsa.utils import clean_meta_description
 
@@ -48,9 +48,9 @@ class ArtworkDetailView(MetaViewMixin, DetailView):
 
 class ArtworkListView(MetaViewMixin, ListView):
     context_object_name = 'artworks'
-    meta_title = 'Digital'
+    meta_title = 'Featured'
     paginate_by = 6
-    queryset = Artwork.objects.digital().published()
+    queryset = Artwork.objects.featured().published()
     template_name = 'art/artwork_list.html'
 
     def get_context_data(self, **kwargs):
@@ -63,24 +63,37 @@ class ArtworkListView(MetaViewMixin, ListView):
         return context
 
 
+class ArtworkDigitalListView(ArtworkListView):
+    meta_title = 'Digital'
+    queryset = Artwork.objects.digital().published()
+
+
 class ArtworkTraditionalListView(ArtworkListView):
     meta_title = 'Traditional'
     queryset = Artwork.objects.traditional().published()
 
 
-class ArtworkListPreView(StaffPreViewMixin, ArtworkListView):
+class ArtworkListPreview(StaffPreviewMixin, ArtworkListView):
     queryset = Artwork.objects.digital().all()
 
 
-class ArtworkTraditionalListPreView(StaffPreViewMixin, ArtworkTraditionalListView):
+class ArtworkDigitalListPreview(StaffPreviewMixin, ArtworkListView):
+    queryset = Artwork.objects.digital().all()
+
+
+class ArtworkTraditionalListPreview(StaffPreviewMixin, ArtworkTraditionalListView):
     queryset = Artwork.objects.traditional().all()
 
 
-class ArtworkDetailPreView(StaffPreViewMixin, ArtworkDetailView):
+class ArtworkDetailPreview(StaffPreviewMixin, ArtworkDetailView):
     queryset = Artwork.objects.all()
 
 
 class AsyncArtworkListView(ArtworkListView):
+    template_name = 'art/includes/artworks.html'
+
+
+class AsyncArtworkDigitalListView(ArtworkDigitalListView):
     template_name = 'art/includes/artworks.html'
 
 

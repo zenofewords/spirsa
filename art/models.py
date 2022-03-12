@@ -26,6 +26,9 @@ class ArtworkManager(models.Manager):
     def digital(self):
         return self.get_queryset().filter(is_traditional=False)
 
+    def featured(self):
+        return self.get_queryset().filter(is_featured=True)
+
     def traditional(self):
         return self.get_queryset().filter(is_traditional=True)
 
@@ -33,6 +36,7 @@ class ArtworkManager(models.Manager):
 class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampModelMixin):
     title = models.CharField(max_length=50, unique=True)
     short_description = models.TextField(max_length=1000, blank=True)
+    is_featured = models.BooleanField(default=False)
     is_traditional = models.BooleanField(default=False)
     image = models.ImageField(upload_to=get_artwork_image_path, blank=True, null=True)
     ordering = models.PositiveIntegerField(

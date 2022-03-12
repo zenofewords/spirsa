@@ -13,5 +13,5 @@ def menu_link_tag(name, path, base='', detail_type=''):
     return {
         'name': name,
         'reverse_url': '{}:{}'.format(base, url) if base else url,
-        'current': url in path or detail or url == HOME_URL_NAME and '/' == path,
+        'current': url in path or detail,
     }
