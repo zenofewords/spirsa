@@ -16,10 +16,19 @@ from spirsa.utils import (
 register = template.Library()
 
 
+def get_type(request):
+    if 'digital' in request.path:
+        return 'digital'
+    if 'traditional' in request.path:
+        return 'traditional'
+    return request.GET.get('type', '')
+
+
 @register.inclusion_tag('art/tags/artwork_tag.html', takes_context=True)
 def artwork_tag(context, obj, decoding=None, detail=False):
     request = context.get('request')
     object_url = '{}{}'.format(get_site_url(request), obj.get_absolute_url())
+    art_type = get_type(request)
 
     data = {
         'artwork': obj,
@@ -30,13 +39,14 @@ def artwork_tag(context, obj, decoding=None, detail=False):
         'twitter_share_url': '{}{}'.format(TWITTER_SHARE_URL, object_url),
         'decoding': decoding,
         'detail': detail,
+        'art_type': '?type={}'.format(art_type) if art_type else '',
     }
     if obj.srcsets:
         data.update(**{key: ', '.join(srcsets) for key, srcsets in obj.srcsets.items()})
         data.update(get_full_size_image(obj.srcsets))
 
     if detail:
-        data = get_artwork_navigation_urls(data, obj)
+        data = get_artwork_navigation_urls(data, obj, art_type)
     return data
 
 

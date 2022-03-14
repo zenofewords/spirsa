@@ -23,7 +23,7 @@
     {% else %}
       {% url 'art:artwork-detail-preview' artwork.slug as url %}
     {% endif %}
-    <a class="artwork-detail-link" href="{{ url }}">
+    <a class="artwork-detail-link" href="{{ url }}{{ art_type }}">
       <span id="{{ artwork.slug }}" class="artwork-anchor"></span>
       {% include 'art/tags/artwork_picture_tag.html' %}
     </a>

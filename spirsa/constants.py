@@ -1,4 +1,4 @@
-HOME_URL_NAME = 'digital'
+HOME_URL_NAME = ''
 
 DEFAULT_TYPE = 'jpeg'
 LARGE = 'large'
