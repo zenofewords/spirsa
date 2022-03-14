@@ -39,9 +39,7 @@ class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampMo
     is_featured = models.BooleanField(default=False)
     is_traditional = models.BooleanField(default=False)
     image = models.ImageField(upload_to=get_artwork_image_path, blank=True, null=True)
-    ordering = models.PositiveIntegerField(
-        default=0, help_text='Higher number equals higher position. Leave 0 for default.'
-    )
+    ordering = models.PositiveIntegerField(default=1, help_text='Ascending (smallest to largest)')
     keywords = models.ManyToManyField('art.Keyword', blank=True)
 
     objects = ArtworkManager.from_queryset(PublishedQuerySet)()
@@ -49,7 +47,7 @@ class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampMo
     class Meta:
         verbose_name = 'Artwork'
         verbose_name_plural = 'Artworks'
-        ordering = ('-ordering', '-created_at', )
+        ordering = ('ordering', '-created_at', )
 
     def __str__(self):
         return self.title
