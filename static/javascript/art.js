@@ -146,7 +146,7 @@ const startInfiniteScroll = () => {
 
   const observer = new IntersectionObserver(handleIntersection, {
     root: null,
-    rootMargin: '0px',
+    rootMargin: '500px',
     threshold: .1
   })
   observer.observe(footer)
