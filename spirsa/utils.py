@@ -193,3 +193,11 @@ def get_contact_image_path(instance, filename):
 
 def clean_meta_description(text):
     return re.sub(re.compile('<.*?>'), '', text)
+
+
+def show_preview(request):
+    return (
+        request.user.is_authenticated and
+        request.user.is_staff and
+        'preview' in request.GET
+    )

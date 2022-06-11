@@ -12,7 +12,7 @@ from art.models import (
 from spirsa.mixins import (
     MetaViewMixin,
 )
-from spirsa.utils import clean_meta_description
+from spirsa.utils import clean_meta_description, show_preview
 
 
 class ArtworkDetailView(MetaViewMixin, DetailView):
@@ -23,7 +23,7 @@ class ArtworkDetailView(MetaViewMixin, DetailView):
         self.slug = self.kwargs.get('slug')
         self.artwork_slug = self.kwargs.get('artwork_slug')
 
-        if 'preview' in self.request.GET:
+        if show_preview(self.request):
             return Artwork.objects.get(slug=self.artwork_slug)
         return Artwork.objects.published().get(slug=self.artwork_slug)
 
@@ -65,7 +65,7 @@ class ArtworkListView(MetaViewMixin, ListView):
         if self.path:
             self.queryset = Artwork.objects.filter(collection__slug=self.path)
 
-        if 'preview' in self.request.GET:
+        if show_preview(self.request):
             return self.queryset
         return self.queryset.published()
 
