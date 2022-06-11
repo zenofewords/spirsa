@@ -47,11 +47,11 @@ class StaffPreviewMixin():
 
 class PublishedQuerySet(models.QuerySet):
     def published(self):
-        return self.filter(is_published=True)
+        return self.filter(published=True)
 
 
 class PublishedModelMixin(models.Model):
-    is_published = models.BooleanField(default=True)
+    published = models.BooleanField(default=True)
 
     objects = PublishedQuerySet.as_manager()
 

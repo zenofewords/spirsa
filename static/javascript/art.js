@@ -127,7 +127,7 @@ const startInfiniteScroll = () => {
   const loadMoreArtwork = () => {
     page += 1;
 
-    fetch(`async-artworks?page=${page}`).then(
+    fetch(`async-artworks?page=${page}&path=${window.location.pathname}`).then(
       response => response.text()
     ).then(
       data => appendArtwork(data)

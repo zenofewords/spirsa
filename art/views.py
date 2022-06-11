@@ -4,11 +4,13 @@ from django.views.generic import (
     DetailView,
     ListView,
 )
+from django.utils.text import slugify
 
-from art.models import Artwork
+from art.models import (
+    Artwork,
+)
 from spirsa.mixins import (
     MetaViewMixin,
-    StaffPreviewMixin,
 )
 from spirsa.utils import clean_meta_description
 
@@ -17,16 +19,21 @@ class ArtworkDetailView(MetaViewMixin, DetailView):
     queryset = Artwork.objects.published()
     template_name = 'art/artwork_detail.html'
 
+    def get_object(self):
+        self.slug = self.kwargs.get('slug')
+        self.artwork_slug = self.kwargs.get('artwork_slug')
+
+        if 'preview' in self.request.GET:
+            return Artwork.objects.get(slug=self.artwork_slug)
+        return Artwork.objects.published().get(slug=self.artwork_slug)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        detail_type = 'Traditional' if self.object.is_traditional else 'Digital'
-        meta_title = '{} | {}'.format(detail_type, self.object.title)
 
         context.update({
-            'meta_title': meta_title if self.object.is_traditional else self.object.title,
-            'meta_url': self.object.get_absolute_url(),
+            'meta_title': '{} | {}'.format(self.slug.title(), self.object.title),
+            'meta_url': self.object.get_absolute_url(self.slug),
             'meta_type': 'article',
-            'detail_type': detail_type,
         })
         if self.object.image:
             context.update({
@@ -50,52 +57,27 @@ class ArtworkListView(MetaViewMixin, ListView):
     context_object_name = 'artworks'
     meta_title = 'Featured'
     paginate_by = 6
-    queryset = Artwork.objects.featured().published()
+    queryset = Artwork.objects.featured()
     template_name = 'art/artwork_list.html'
+
+    def get_queryset(self):
+        self.path = slugify(self.request.GET.get('path') or self.request.path)
+        if self.path:
+            self.queryset = Artwork.objects.filter(collection__slug=self.path)
+
+        if 'preview' in self.request.GET:
+            return self.queryset
+        return self.queryset.published()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context.update({
-            'meta_title': self.meta_title,
+            'meta_title': self.path.title() or self.meta_title,
             'page_count': math.ceil(self.queryset.count() / self.paginate_by),
         })
         return context
 
 
-class ArtworkDigitalListView(ArtworkListView):
-    meta_title = 'Digital'
-    queryset = Artwork.objects.digital().published()
-
-
-class ArtworkTraditionalListView(ArtworkListView):
-    meta_title = 'Traditional'
-    queryset = Artwork.objects.traditional().published()
-
-
-class ArtworkListPreview(StaffPreviewMixin, ArtworkListView):
-    queryset = Artwork.objects.digital().all()
-
-
-class ArtworkDigitalListPreview(StaffPreviewMixin, ArtworkListView):
-    queryset = Artwork.objects.digital().all()
-
-
-class ArtworkTraditionalListPreview(StaffPreviewMixin, ArtworkTraditionalListView):
-    queryset = Artwork.objects.traditional().all()
-
-
-class ArtworkDetailPreview(StaffPreviewMixin, ArtworkDetailView):
-    queryset = Artwork.objects.all()
-
-
 class AsyncArtworkListView(ArtworkListView):
-    template_name = 'art/includes/artworks.html'
-
-
-class AsyncArtworkDigitalListView(ArtworkDigitalListView):
-    template_name = 'art/includes/artworks.html'
-
-
-class AsyncArtworkTraditionalListView(ArtworkTraditionalListView):
     template_name = 'art/includes/artworks.html'

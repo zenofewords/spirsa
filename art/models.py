@@ -23,23 +23,29 @@ class ArtworkManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().select_related('cls_dimension')
 
-    def digital(self):
-        return self.get_queryset().filter(is_traditional=False)
-
     def featured(self):
-        return self.get_queryset().filter(is_featured=True)
+        return self.get_queryset().filter(collection__slug='featured')
 
-    def traditional(self):
-        return self.get_queryset().filter(is_traditional=True)
+
+class Collection(SlugModelMixin, TimeStampModelMixin):
+    title = models.CharField(max_length=50, unique=True)
+    artworks = models.ManyToManyField('art.Artwork', blank=True)
+
+    class Meta:
+        verbose_name = 'Collection'
+        verbose_name_plural = 'Collections'
+        ordering = ('-created_at', )
+
+    def __str__(self):
+        return self.title
 
 
 class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampModelMixin):
     title = models.CharField(max_length=50, unique=True)
     short_description = models.TextField(max_length=1000, blank=True)
-    is_featured = models.BooleanField(default=False)
-    is_traditional = models.BooleanField(default=False)
     image = models.ImageField(upload_to=get_artwork_image_path, blank=True, null=True)
-    ordering = models.PositiveIntegerField(default=1, help_text='Ascending (smallest to largest)')
+    ordering = models.PositiveIntegerField(
+        default=1, help_text='Ascending (smallest to largest)')
     keywords = models.ManyToManyField('art.Keyword', blank=True)
 
     objects = ArtworkManager.from_queryset(PublishedQuerySet)()
@@ -59,8 +65,8 @@ class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampMo
         if self.image:
             create_image_variations(self)
 
-    def get_absolute_url(self):
-        return reverse('art:artwork-detail', kwargs={'slug': self.slug})
+    def get_absolute_url(self, slug):
+        return reverse('art:artwork-detail', kwargs={'slug': slug, 'artwork_slug': self.slug})
 
 
 class ArtworkThumbnail(SrcsetModelMixin, PublishedModelMixin, TimeStampModelMixin):

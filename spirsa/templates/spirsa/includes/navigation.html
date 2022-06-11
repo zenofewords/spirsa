@@ -1,31 +1,45 @@
 {% load spirsa_tags %}
 
 <nav>
-  <a href="/" class="sp-link">
+  <a
+    href="/"
+    class="sp-link"
+  >
     {% include 'spirsa/includes/sp_logo.html' with size='32' decoding='sync' %}
     Štefica Pirša
   </a>
   <div class="desktop-nav">
-    {% menu_link_tag 'digital' request.path 'art' detail_type %}
-    {% menu_link_tag 'traditional' request.path 'art' detail_type %}
-    {% menu_link_tag 'about/contact' request.path %}
+    {% menu_link_tag 'digital' request.path %}
+    {% menu_link_tag 'traditional' request.path %}
+    {% menu_link_tag 'about/contact' request.path True %}
   </div>
   <div class="mobile-nav">
-    <label for="mobile-nav-toggle" class="screen-reader">
+    <label
+      for="mobile-nav-toggle"
+      class="screen-reader"
+    >
       Menu toggle
     </label>
-    <input id="mobile-nav-toggle" class="mobile-nav-toggle" type="checkbox" autocomplete="off" />
+    <input
+      id="mobile-nav-toggle"
+      class="mobile-nav-toggle"
+      type="checkbox"
+      autocomplete="off"
+    />
     <span class="mobile-nav-button"></span>
 
-    <ul style="opacity: 0;" class="mobile-nav-list">
+    <ul
+      style="opacity: 0;"
+      class="mobile-nav-list"
+    >
       <li>
-        {% menu_link_tag 'digital' request.path 'art' detail_type %}
+        {% menu_link_tag 'digital' request.path %}
       </li>
       <li>
-        {% menu_link_tag 'traditional' request.path 'art' detail_type %}
+        {% menu_link_tag 'traditional' request.path %}
       </li>
       <li>
-        {% menu_link_tag 'about/contact' request.path %}
+        {% menu_link_tag 'about/contact' request.path True %}
       </li>
       <li class="menu-item-follow">
         {% include 'spirsa/includes/instagram_link.html' %}
