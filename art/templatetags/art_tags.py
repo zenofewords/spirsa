@@ -16,19 +16,13 @@ from spirsa.utils import (
 register = template.Library()
 
 
-def get_type(request):
-    if 'digital' in request.path:
-        return 'digital'
-    if 'traditional' in request.path:
-        return 'traditional'
-    return request.GET.get('type', '')
-
-
 @register.inclusion_tag('art/tags/artwork_tag.html', takes_context=True)
-def artwork_tag(context, obj, decoding=None, detail=False):
+def artwork_tag(context, obj):
     request = context.get('request')
-    object_url = '{}{}'.format(get_site_url(request), obj.get_absolute_url())
-    art_type = get_type(request)
+    params = request.path.split('/')
+    slug = params[1] if len(params) > 1 and params[1] != '' else 'featured'
+    detail = len(params) > 2
+    object_url = '{}{}'.format(get_site_url(request), obj.get_absolute_url(slug))
 
     data = {
         'artwork': obj,
@@ -37,16 +31,16 @@ def artwork_tag(context, obj, decoding=None, detail=False):
         'pinterest_share_url': '{}{}'.format(PINTEREST_SHARE_URL, object_url),
         'reddit_share_url': '{}{}'.format(REDDIT_SHARE_URL, object_url),
         'twitter_share_url': '{}{}'.format(TWITTER_SHARE_URL, object_url),
-        'decoding': decoding,
         'detail': detail,
-        'art_type': '?type={}'.format(art_type) if art_type else '',
+        'slug': slug,
+        'preview': 'preview' in request.GET,
     }
     if obj.srcsets:
         data.update(**{key: ', '.join(srcsets) for key, srcsets in obj.srcsets.items()})
         data.update(get_full_size_image(obj.srcsets))
 
     if detail:
-        data = get_artwork_navigation_urls(data, obj, art_type)
+        data = get_artwork_navigation_urls(data, slug, obj)
     return data
 
 

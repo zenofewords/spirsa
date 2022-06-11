@@ -18,12 +18,8 @@
       {% endif %}
     </div>
   {% else %}
-    {% if artwork.is_published %}
-      {% url 'art:artwork-detail' artwork.slug as url %}
-    {% else %}
-      {% url 'art:artwork-detail-preview' artwork.slug as url %}
-    {% endif %}
-    <a class="artwork-detail-link" href="{{ url }}{{ art_type }}">
+  {% url 'art:artwork-detail' slug artwork.slug as url %}
+  <a class="artwork-detail-link" href="{{ url }}{% if preview %}?preview{% endif %}">
       <span id="{{ artwork.slug }}" class="artwork-anchor"></span>
       {% include 'art/tags/artwork_picture_tag.html' %}
     </a>

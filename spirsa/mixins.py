@@ -1,7 +1,6 @@
 from django.apps import apps
 from django.contrib import admin
 from django.db import models
-from django.http import Http404
 from django.utils.text import slugify
 
 from spirsa.utils import (
@@ -38,20 +37,13 @@ class MetaViewMixin():
         return context
 
 
-class StaffPreviewMixin():
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated and request.user.is_staff:
-            return super().dispatch(request, *args, **kwargs)
-        raise Http404
-
-
 class PublishedQuerySet(models.QuerySet):
     def published(self):
-        return self.filter(is_published=True)
+        return self.filter(published=True)
 
 
 class PublishedModelMixin(models.Model):
-    is_published = models.BooleanField(default=True)
+    published = models.BooleanField(default=True)
 
     objects = PublishedQuerySet.as_manager()
 

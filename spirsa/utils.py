@@ -16,7 +16,6 @@ from django.utils import timezone, dateformat
 from spirsa.constants import (
     BASE_HEIGHT,
     DEFAULT_TYPE,
-    HOME_URL_NAME,
     LANDSCAPE_VARIATION_SETS,
     MEDIUM_WIDTH,
     RATIO_THRESHOLD,
@@ -127,18 +126,13 @@ def get_site_url(request):
     return '{}://{}'.format(request.scheme, get_current_site(request))
 
 
-def get_artwork_navigation_urls(data, obj, art_type):
+def get_artwork_navigation_urls(data, slug, obj):
     data.update({
-        'back_url': reverse_lazy('art:{}'.format(art_type)) if art_type else '/'
+        'back_url': '/' + slug,
     })
     Artwork = apps.get_model('art.Artwork')
-
-    if not art_type:
-        artwork_ids = Artwork.objects.featured().values_list('pk', flat=True)
-    else:
-        artwork_ids = Artwork.objects.published().filter(
-            is_traditional=obj.is_traditional
-        ).values_list('pk', flat=True)
+    artwork_ids = Artwork.objects.published().filter(
+        collection__slug=slug).values_list('pk', flat=True)
 
     try:
         artwork_index = list(artwork_ids).index(obj.pk)
@@ -148,22 +142,21 @@ def get_artwork_navigation_urls(data, obj, art_type):
     next_artwork_id = 0
     if artwork_index >= 0 and artwork_index < len(artwork_ids) - 1:
         next_artwork_id = artwork_ids[artwork_index + 1]
-    next_artwork = Artwork.objects.filter(pk=next_artwork_id).first()
+    next_artwork = Artwork.objects.published().filter(pk=next_artwork_id).first()
 
     previous_artwork_id = 0
     if artwork_index - 1 >= 0:
         previous_artwork_id = artwork_ids[artwork_index - 1]
-    previous_artwork = Artwork.objects.filter(pk=previous_artwork_id).first()
+    previous_artwork = Artwork.objects.published().filter(pk=previous_artwork_id).first()
 
-    q_param = '?type={}'.format(art_type) if art_type else ''
     if next_artwork:
-        next = reverse_lazy('art:artwork-detail', kwargs={'slug': next_artwork.slug})
-        data.update({'next_url': '{}{}'.format(next, q_param)})
+        next = reverse_lazy('art:artwork-detail',
+                            kwargs={'slug': slug, 'artwork_slug': next_artwork.slug})
+        data.update({'next_url': next})
     if previous_artwork:
-        previous = reverse_lazy(
-            'art:artwork-detail', kwargs={'slug': previous_artwork.slug}
-        )
-        data.update({'previous_url': '{}{}'.format(previous, q_param)})
+        previous = reverse_lazy('art:artwork-detail',
+                                kwargs={'slug': slug, 'artwork_slug': previous_artwork.slug})
+        data.update({'previous_url': previous})
     return data
 
 
@@ -200,3 +193,11 @@ def get_contact_image_path(instance, filename):
 
 def clean_meta_description(text):
     return re.sub(re.compile('<.*?>'), '', text)
+
+
+def show_preview(request):
+    return (
+        request.user.is_authenticated and
+        request.user.is_staff and
+        'preview' in request.GET
+    )

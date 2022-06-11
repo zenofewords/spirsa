@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from art.models import (
+    Collection,
     Artwork,
     ArtworkThumbnail,
     Keyword,
@@ -12,7 +13,7 @@ from spirsa.utils import get_preview_image
 class ArtworkThumbnailInline(admin.TabularInline):
     model = ArtworkThumbnail
     fields = (
-        'title', 'image', 'artwork', 'is_published', 'ordering', 'image_preview_thumb',
+        'title', 'image', 'artwork', 'published', 'ordering', 'image_preview_thumb',
     )
     readonly_fields = ('image_preview_thumb', )
 
@@ -20,15 +21,21 @@ class ArtworkThumbnailInline(admin.TabularInline):
         return get_preview_image(obj.image, 100)
 
 
+class CollectionAdmin(AutoSlugAdminMixin):
+    search_fields = ('title', 'slug', )
+    list_display = ('title', 'slug', )
+    fields = ('title', 'slug', 'artworks', )
+
+
 class ArtworkAdmin(AutoSlugAdminMixin):
     search_fields = ('title', 'slug', )
     list_display = (
-        'title', 'slug', 'is_traditional', 'is_featured', 'is_published', 'ordering', 'created_at',
+        'title', 'slug', 'published', 'ordering', 'created_at',
         'image_preview_thumb',
     )
-    list_editable = ('is_traditional', 'is_featured', 'is_published', 'ordering', )
+    list_editable = ('published', 'ordering', )
     fields = (
-        'title', 'slug', 'is_traditional', 'is_featured', 'is_published', 'ordering',
+        'title', 'slug', 'published', 'ordering',
         'short_description', 'image', 'image_preview', 'keywords',
     )
     autocomplete_fields = ('keywords', )
@@ -45,11 +52,11 @@ class ArtworkAdmin(AutoSlugAdminMixin):
 class ArtworkThumbnailAdmin(admin.ModelAdmin):
     search_fields = ('title', 'artwork__title', 'artwork__slug', )
     list_display = (
-        'artwork', 'is_published', 'ordering', 'created_at', 'image_preview_thumb',
+        'artwork', 'published', 'ordering', 'created_at', 'image_preview_thumb',
     )
-    list_editable = ('is_published', 'ordering', )
+    list_editable = ('published', 'ordering', )
     fields = (
-        'title', 'image', 'artwork', 'is_published', 'ordering', 'image_preview',
+        'title', 'image', 'artwork', 'published', 'ordering', 'image_preview',
     )
     autocomplete_fields = ('artwork', )
     readonly_fields = ('image_preview', )
@@ -67,16 +74,17 @@ class KeywordAdmin(AutoSlugAdminMixin):
         '__str__',
     )
     list_display = (
-        '__str__', 'is_published', 'name', 'slug',
+        '__str__', 'published', 'name', 'slug',
     )
     list_editable = (
-        'is_published', 'name', 'slug',
+        'published', 'name', 'slug',
     )
     fields = (
-        'name', 'is_published', 'slug',
+        'name', 'published', 'slug',
     )
 
 
 admin.site.register(ArtworkThumbnail, ArtworkThumbnailAdmin)
+admin.site.register(Collection, CollectionAdmin)
 admin.site.register(Artwork, ArtworkAdmin)
 admin.site.register(Keyword, KeywordAdmin)
