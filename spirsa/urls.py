@@ -13,9 +13,9 @@ from spirsa.views import (
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin', admin.site.urls),
+    path('about-contact', AboutContactView.as_view(), name='about-contact'),
     path('', include(('art.urls', 'art'), namespace='art')),
-    path('about-contact/', AboutContactView.as_view(), name='about-contact'),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
