@@ -17,11 +17,10 @@ register = template.Library()
 
 
 @register.inclusion_tag('art/tags/artwork_tag.html', takes_context=True)
-def artwork_tag(context, obj):
+def artwork_tag(context, obj, detail=False):
     request = context.get('request')
     params = request.path.split('/')
     slug = params[1] if len(params) > 1 and params[1] != '' else 'featured'
-    detail = len(params) > 2
     object_url = '{}{}'.format(get_site_url(request), obj.get_absolute_url(slug))
 
     data = {
