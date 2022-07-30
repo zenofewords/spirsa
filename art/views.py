@@ -1,5 +1,6 @@
 import math
 
+from django.shortcuts import get_object_or_404
 from django.views.generic import (
     DetailView,
     ListView,
@@ -24,8 +25,8 @@ class ArtworkDetailView(MetaViewMixin, DetailView):
         self.artwork_slug = self.kwargs.get('artwork_slug')
 
         if show_preview(self.request):
-            return Artwork.objects.get(slug=self.artwork_slug)
-        return Artwork.objects.published().get(slug=self.artwork_slug)
+            return get_object_or_404(Artwork, slug=self.artwork_slug)
+        return get_object_or_404(Artwork.objects.published(), slug=self.artwork_slug)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
