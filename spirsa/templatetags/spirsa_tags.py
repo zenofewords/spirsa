@@ -1,7 +1,7 @@
 from django import template
 from django.urls import reverse
 
-from spirsa.constants import HOME_URL_NAME
+from art.models import Collection
 
 register = template.Library()
 
@@ -13,4 +13,16 @@ def menu_link_tag(name, path, dynamic=False):
         'name': name,
         'url': reverse(url) if dynamic else '/{}'.format(url),
         'current': url in path,
+    }
+
+
+@register.inclusion_tag('spirsa/tags/navigation_tag.html', takes_context=True)
+def navigation_tag(context, mobile=False):
+    request = context.get('request')
+    collections = Collection.objects.for_navigation()
+
+    return {
+        'mobile': mobile,
+        'request_path': request.path,
+        'navigation_slugs': [collection.slug for collection in collections]
     }
