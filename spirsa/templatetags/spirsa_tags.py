@@ -10,7 +10,7 @@ register = template.Library()
 def menu_link_tag(name, path, dynamic=False):
     url = name.replace('/', '-')
     return {
-        'name': name,
+        'name': name.replace('-', ' '),
         'url': reverse(url) if dynamic else '/{}'.format(url),
         'current': url in path,
     }
