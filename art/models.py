@@ -40,14 +40,14 @@ class Collection(SlugModelMixin, TimeStampModelMixin):
     artworks = models.ManyToManyField('art.Artwork', blank=True)
     show_in_navigation = models.BooleanField(default=False)
     ordering = models.PositiveIntegerField(
-        default=1, help_text='Ascending (smallest to largest)')
+        default=1, help_text='Descending (largest to smallest)')
 
     objects = CollectionManager.from_queryset(models.QuerySet)()
 
     class Meta:
         verbose_name = 'Collection'
         verbose_name_plural = 'Collections'
-        ordering = ('ordering', 'show_in_navigation', )
+        ordering = ('-ordering', 'show_in_navigation', )
 
     def __str__(self):
         return self.title
@@ -58,7 +58,7 @@ class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampMo
     short_description = models.TextField(max_length=1000, blank=True)
     image = models.ImageField(upload_to=get_artwork_image_path, blank=True, null=True)
     ordering = models.PositiveIntegerField(
-        default=1, help_text='Ascending (smallest to largest)')
+        default=1, help_text='Descending (largest to smallest)')
     keywords = models.ManyToManyField('art.Keyword', blank=True)
 
     objects = ArtworkManager.from_queryset(PublishedQuerySet)()
@@ -66,7 +66,7 @@ class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampMo
     class Meta:
         verbose_name = 'Artwork'
         verbose_name_plural = 'Artworks'
-        ordering = ('ordering', '-created_at', )
+        ordering = ('-ordering', '-created_at', )
 
     def __str__(self):
         return self.title
