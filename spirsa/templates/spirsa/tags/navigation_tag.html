@@ -1,0 +1,7 @@
+{% load spirsa_tags %}
+
+{% for slug in navigation_slugs %}
+  {% if mobile %}<li>{% endif %}
+    {% menu_link_tag slug request.path %}
+  {% if mobile %}</li>{% endif %}
+{% endfor %}

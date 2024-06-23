@@ -19,6 +19,14 @@ from spirsa.utils import (
 )
 
 
+class CollectionManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset()
+
+    def for_navigation(self):
+        return self.get_queryset().filter(show_in_navigation=True)
+
+
 class ArtworkManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().select_related('cls_dimension')
@@ -30,11 +38,16 @@ class ArtworkManager(models.Manager):
 class Collection(SlugModelMixin, TimeStampModelMixin):
     title = models.CharField(max_length=50, unique=True)
     artworks = models.ManyToManyField('art.Artwork', blank=True)
+    show_in_navigation = models.BooleanField(default=False)
+    ordering = models.PositiveIntegerField(
+        default=1, help_text='Ascending (smallest to largest)')
+
+    objects = CollectionManager.from_queryset(models.QuerySet)()
 
     class Meta:
         verbose_name = 'Collection'
         verbose_name_plural = 'Collections'
-        ordering = ('-created_at', )
+        ordering = ('ordering', 'show_in_navigation', )
 
     def __str__(self):
         return self.title

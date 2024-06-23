@@ -9,8 +9,7 @@
     Štefica Pirša
   </a>
   <div class="desktop-nav">
-    {% menu_link_tag 'digital' request.path %}
-    {% menu_link_tag 'traditional' request.path %}
+    {% navigation_tag %}
     {% menu_link_tag 'about/contact' request.path True %}
   </div>
   <div class="mobile-nav">
@@ -32,12 +31,7 @@
       style="opacity: 0;"
       class="mobile-nav-list"
     >
-      <li>
-        {% menu_link_tag 'digital' request.path %}
-      </li>
-      <li>
-        {% menu_link_tag 'traditional' request.path %}
-      </li>
+      {% navigation_tag True %}
       <li>
         {% menu_link_tag 'about/contact' request.path True %}
       </li>

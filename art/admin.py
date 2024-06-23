@@ -23,8 +23,9 @@ class ArtworkThumbnailInline(admin.TabularInline):
 
 class CollectionAdmin(AutoSlugAdminMixin):
     search_fields = ('title', 'slug', )
-    list_display = ('title', 'slug', )
-    fields = ('title', 'slug', 'artworks', )
+    list_display = ('title', 'slug', 'ordering', 'show_in_navigation', )
+    fields = ('title', 'slug', 'artworks', 'ordering', 'show_in_navigation', )
+    list_editable = ('ordering', 'show_in_navigation', )
 
 
 class ArtworkAdmin(AutoSlugAdminMixin):
