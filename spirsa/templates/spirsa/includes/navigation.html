@@ -10,7 +10,6 @@
   </a>
   <div class="desktop-nav">
     {% navigation_tag %}
-    {% menu_link_tag 'about/contact' request.path True %}
   </div>
   <div class="mobile-nav">
     <label
@@ -32,9 +31,6 @@
       class="mobile-nav-list"
     >
       {% navigation_tag True %}
-      <li>
-        {% menu_link_tag 'about/contact' request.path True %}
-      </li>
       <li class="menu-item-follow">
         {% include 'spirsa/includes/instagram_link.html' %}
         {% include 'spirsa/includes/deviant_art_link.html' %}

@@ -1,7 +1,11 @@
 {% load spirsa_tags %}
 
-{% for slug in navigation_slugs %}
+{% for collection in collections %}
   {% if mobile %}<li>{% endif %}
-    {% menu_link_tag slug request.path %}
+    {% menu_link_tag collection.title collection.slug request.path %}
   {% if mobile %}</li>{% endif %}
 {% endfor %}
+
+{% if mobile %}<li>{% endif %}
+  {% menu_link_tag 'about/contact' 'about-contact' request.path True %}
+{% if mobile %}</li>{% endif %}
