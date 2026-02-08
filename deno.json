@@ -1,0 +1,12 @@
+{
+  "tasks": {
+    "build": "deno bundle --platform browser --output static/js/main.js static/ts/main.ts",
+    "build:watch": "deno bundle --platform browser --output static/js/main.js --watch static/ts/main.ts",
+    "build:prod": "deno bundle --platform browser --minify --output static/js/main.js static/ts/main.ts",
+    "test": "deno test static/ts/"
+  },
+  "compilerOptions": {
+    "strict": true,
+    "lib": ["ES2020", "dom", "deno.ns"]
+  }
+}

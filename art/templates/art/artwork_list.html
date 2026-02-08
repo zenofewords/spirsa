@@ -1,9 +1,4 @@
 {% extends 'spirsa/base.html' %}
-{% load render_bundle from webpack_loader %}
-
-{% block scripts %}
-  {% render_bundle 'art' 'css' %}
-{% endblock scripts %}
 
 {% block main %}
   <div
@@ -18,7 +13,3 @@
   </noscript>
 {% endblock main %}
 
-{% block body_scripts %}
-  {{ block.super }}
-  {% render_bundle 'art' 'js' attrs='defer' %}
-{% endblock body_scripts %}

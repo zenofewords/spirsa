@@ -1,9 +1,9 @@
 from django.contrib import admin
 
 from art.models import (
-    Collection,
     Artwork,
     ArtworkThumbnail,
+    Collection,
     Keyword,
 )
 from spirsa.mixins import AutoSlugAdminMixin
@@ -13,35 +13,75 @@ from spirsa.utils import get_preview_image
 class ArtworkThumbnailInline(admin.TabularInline):
     model = ArtworkThumbnail
     fields = (
-        'title', 'image', 'artwork', 'published', 'ordering', 'image_preview_thumb',
+        "title",
+        "image",
+        "artwork",
+        "published",
+        "ordering",
+        "image_preview_thumb",
     )
-    readonly_fields = ('image_preview_thumb', )
+    readonly_fields = ("image_preview_thumb",)
 
     def image_preview_thumb(self, obj):
         return get_preview_image(obj.image, 100)
 
 
 class CollectionAdmin(AutoSlugAdminMixin):
-    search_fields = ('title', 'slug', )
-    list_display = ('title', 'slug', 'ordering', 'show_in_navigation', )
-    fields = ('title', 'slug', 'artworks', 'ordering', 'show_in_navigation', )
-    list_editable = ('ordering', 'show_in_navigation', )
+    search_fields = (
+        "title",
+        "slug",
+    )
+    list_display = (
+        "title",
+        "slug",
+        "ordering",
+        "show_in_navigation",
+    )
+    fields = (
+        "title",
+        "slug",
+        "artworks",
+        "ordering",
+        "show_in_navigation",
+    )
+    list_editable = (
+        "ordering",
+        "show_in_navigation",
+    )
 
 
 class ArtworkAdmin(AutoSlugAdminMixin):
-    search_fields = ('title', 'slug', )
+    search_fields = (
+        "title",
+        "slug",
+    )
     list_display = (
-        'title', 'slug', 'published', 'ordering', 'created_at',
-        'image_preview_thumb',
+        "title",
+        "slug",
+        "published",
+        "ordering",
+        "created_at",
+        "image_preview_thumb",
     )
-    list_editable = ('published', 'ordering', )
+    list_editable = (
+        "published",
+        "ordering",
+    )
     fields = (
-        'title', 'slug', 'published', 'ordering',
-        'short_description', 'image', 'image_preview', 'keywords',
+        "title",
+        "slug",
+        "published",
+        "ordering",
+        "short_description",
+        "image",
+        "image_preview",
+        "keywords",
     )
-    autocomplete_fields = ('keywords', )
-    readonly_fields = ('image_preview', )
-    inlines = [ArtworkThumbnailInline, ]
+    autocomplete_fields = ("keywords",)
+    readonly_fields = ("image_preview",)
+    inlines = [
+        ArtworkThumbnailInline,
+    ]
 
     def image_preview(self, obj):
         return get_preview_image(obj.image, 500)
@@ -51,16 +91,32 @@ class ArtworkAdmin(AutoSlugAdminMixin):
 
 
 class ArtworkThumbnailAdmin(admin.ModelAdmin):
-    search_fields = ('title', 'artwork__title', 'artwork__slug', )
+    search_fields = (
+        "title",
+        "artwork__title",
+        "artwork__slug",
+    )
     list_display = (
-        'artwork', 'published', 'ordering', 'created_at', 'image_preview_thumb',
+        "artwork",
+        "published",
+        "ordering",
+        "created_at",
+        "image_preview_thumb",
     )
-    list_editable = ('published', 'ordering', )
+    list_editable = (
+        "published",
+        "ordering",
+    )
     fields = (
-        'title', 'image', 'artwork', 'published', 'ordering', 'image_preview',
+        "title",
+        "image",
+        "artwork",
+        "published",
+        "ordering",
+        "image_preview",
     )
-    autocomplete_fields = ('artwork', )
-    readonly_fields = ('image_preview', )
+    autocomplete_fields = ("artwork",)
+    readonly_fields = ("image_preview",)
 
     def image_preview(self, obj):
         return get_preview_image(obj.image, 500)
@@ -70,18 +126,26 @@ class ArtworkThumbnailAdmin(admin.ModelAdmin):
 
 
 class KeywordAdmin(AutoSlugAdminMixin):
-    search_fields = ('name', 'slug', )
-    list_display_links = (
-        '__str__',
+    search_fields = (
+        "name",
+        "slug",
     )
+    list_display_links = ("__str__",)
     list_display = (
-        '__str__', 'published', 'name', 'slug',
+        "__str__",
+        "published",
+        "name",
+        "slug",
     )
     list_editable = (
-        'published', 'name', 'slug',
+        "published",
+        "name",
+        "slug",
     )
     fields = (
-        'name', 'published', 'slug',
+        "name",
+        "published",
+        "slug",
     )
 
 

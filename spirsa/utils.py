@@ -2,16 +2,15 @@ import copy
 import math
 import os
 import re
-
 from pathlib import Path
-from PIL import Image
 
 from django.apps import apps
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse_lazy
+from django.utils import dateformat, timezone
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
-from django.utils import timezone, dateformat
+from PIL import Image
 
 from spirsa.constants import (
     BASE_HEIGHT,
@@ -41,9 +40,7 @@ def create_image_variations(instance, default_width=MEDIUM_WIDTH, variations=Non
 
 
 def get_new_path(path, width, extension):
-    return path.replace(
-        os.path.basename(path), '{}_{}.{}'.format(Path(path).stem, width, extension)
-    )
+    return path.replace(os.path.basename(path), f"{Path(path).stem}_{width}.{extension}")
 
 
 def create_srcsets(path, instance, image, variations):
@@ -84,25 +81,22 @@ def create_image(resized_image, path, new_width, extension):
 
     if extension == DEFAULT_TYPE:
         # jpeg does not support transparency
-        resized_image = resized_image.convert('RGB')
+        resized_image = resized_image.convert("RGB")
     resized_image.save(new_path, extension, method=6)
 
     return new_width, extension
 
 
 def update_srcset_mapping(srcset_mapping, relative_path, variation_set, width, extension):
-    srcset_mapping['{}_{}'.format(extension, variation_set[0])].append(
-        '{} {}x'.format(
-            get_new_path(relative_path, width, extension),
-            width // variation_set[1]
-        )
+    srcset_mapping[f"{extension}_{variation_set[0]}"].append(
+        f"{get_new_path(relative_path, width, extension)} {width // variation_set[1]}x"
     )
 
 
 def get_preview_image(image, max_width):
     try:
         if not image:
-            return ''
+            return ""
 
         original_width = image.width
         original_height = image.height
@@ -111,28 +105,25 @@ def get_preview_image(image, max_width):
         slot_ratio = original_width / width
         height = original_height / slot_ratio
 
-        return mark_safe(
-            '<img src={url} width={width} height={height} />'.format(
-                url=image.url,
-                width=width,
-                height=height,
-            )
-        )
+        return mark_safe(f"<img src={image.url} width={width} height={height} />")
     except FileNotFoundError:  # noqa
-        return ''
+        return ""
 
 
 def get_site_url(request):
-    return '{}://{}'.format(request.scheme, get_current_site(request))
+    return f"{request.scheme}://{get_current_site(request)}"
 
 
 def get_artwork_navigation_urls(data, slug, obj):
-    data.update({
-        'back_url': '/' + slug,
-    })
-    Artwork = apps.get_model('art.Artwork')
-    artwork_ids = Artwork.objects.published().filter(
-        collection__slug=slug).values_list('pk', flat=True)
+    data.update(
+        {
+            "back_url": "/" + slug,
+        }
+    )
+    Artwork = apps.get_model("art.Artwork")
+    artwork_ids = (
+        Artwork.objects.published().filter(collection__slug=slug).values_list("pk", flat=True)
+    )
 
     try:
         artwork_index = list(artwork_ids).index(obj.pk)
@@ -150,54 +141,52 @@ def get_artwork_navigation_urls(data, slug, obj):
     previous_artwork = Artwork.objects.published().filter(pk=previous_artwork_id).first()
 
     if next_artwork:
-        next = reverse_lazy('art:artwork-detail',
-                            kwargs={'slug': slug, 'artwork_slug': next_artwork.slug})
-        data.update({'next_url': next})
+        next = reverse_lazy(
+            "art:artwork-detail", kwargs={"slug": slug, "artwork_slug": next_artwork.slug}
+        )
+        data.update({"next_url": next})
     if previous_artwork:
-        previous = reverse_lazy('art:artwork-detail',
-                                kwargs={'slug': slug, 'artwork_slug': previous_artwork.slug})
-        data.update({'previous_url': previous})
+        previous = reverse_lazy(
+            "art:artwork-detail", kwargs={"slug": slug, "artwork_slug": previous_artwork.slug}
+        )
+        data.update({"previous_url": previous})
     return data
 
 
 def get_full_size_image(srcsets):
-    full_size_image = srcsets.get('jpeg_large')
+    full_size_image = srcsets.get("jpeg_large")
     if not full_size_image:
-        full_size_image = srcsets.get('jpeg_medium')
+        full_size_image = srcsets.get("jpeg_medium")
 
-    return {'full_size_image': full_size_image[1][:-3] if full_size_image else None}
+    return {"full_size_image": full_size_image[1][:-3] if full_size_image else None}
 
 
 def get_upload_path(filename):
-    name, dot, extension = filename.rpartition('.')
+    name, dot, extension = filename.rpartition(".")
 
-    return '{}/{}/{}_{}'.format(
+    return "{}/{}/{}_{}".format(
         timezone.now().year,
         timezone.now().month,
         slugify(name),
-        dateformat.format(timezone.now(), 'His')
+        dateformat.format(timezone.now(), "His"),
     )
 
 
 def get_artwork_image_path(instance, filename):
-    return 'artwork/{}'.format(get_upload_path(filename))
+    return f"artwork/{get_upload_path(filename)}"
 
 
 def get_artwork_thumbnail_path(instance, filename):
-    return 'artwork/thumbnail/{}'.format(get_upload_path(filename))
+    return f"artwork/thumbnail/{get_upload_path(filename)}"
 
 
 def get_contact_image_path(instance, filename):
-    return 'spirsa/{}'.format(get_upload_path(filename))
+    return f"spirsa/{get_upload_path(filename)}"
 
 
 def clean_meta_description(text):
-    return re.sub(re.compile('<.*?>'), '', text)
+    return re.sub(re.compile("<.*?>"), "", text)
 
 
 def show_preview(request):
-    return (
-        request.user.is_authenticated and
-        request.user.is_staff and
-        'preview' in request.GET
-    )
+    return request.user.is_authenticated and request.user.is_staff and "preview" in request.GET

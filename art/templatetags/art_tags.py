@@ -16,26 +16,26 @@ from spirsa.utils import (
 register = template.Library()
 
 
-@register.inclusion_tag('art/tags/artwork_tag.html', takes_context=True)
+@register.inclusion_tag("art/tags/artwork_tag.html", takes_context=True)
 def artwork_tag(context, obj, detail=False):
-    request = context.get('request')
-    params = request.path.split('/')
-    slug = params[1] if len(params) > 1 and params[1] != '' else 'featured'
-    object_url = '{}{}'.format(get_site_url(request), obj.get_absolute_url(slug))
+    request = context.get("request")
+    params = request.path.split("/")
+    slug = params[1] if len(params) > 1 and params[1] != "" else "featured"
+    object_url = f"{get_site_url(request)}{obj.get_absolute_url(slug)}"
 
     data = {
-        'artwork': obj,
-        'facebook_share_url': '{}{}'.format(FACEBOOK_SHARE_URL, object_url),
-        'linkedin_share_url': '{}{}'.format(LINKEDIN_SHARE_URL, object_url),
-        'pinterest_share_url': '{}{}'.format(PINTEREST_SHARE_URL, object_url),
-        'reddit_share_url': '{}{}'.format(REDDIT_SHARE_URL, object_url),
-        'twitter_share_url': '{}{}'.format(TWITTER_SHARE_URL, object_url),
-        'detail': detail,
-        'slug': slug,
-        'preview': 'preview' in request.GET,
+        "artwork": obj,
+        "facebook_share_url": f"{FACEBOOK_SHARE_URL}{object_url}",
+        "linkedin_share_url": f"{LINKEDIN_SHARE_URL}{object_url}",
+        "pinterest_share_url": f"{PINTEREST_SHARE_URL}{object_url}",
+        "reddit_share_url": f"{REDDIT_SHARE_URL}{object_url}",
+        "twitter_share_url": f"{TWITTER_SHARE_URL}{object_url}",
+        "detail": detail,
+        "slug": slug,
+        "preview": "preview" in request.GET,
     }
     if obj.srcsets:
-        data.update(**{key: ', '.join(srcsets) for key, srcsets in obj.srcsets.items()})
+        data.update(**{key: ", ".join(srcsets) for key, srcsets in obj.srcsets.items()})
         data.update(get_full_size_image(obj.srcsets))
 
     if detail:
@@ -43,13 +43,13 @@ def artwork_tag(context, obj, detail=False):
     return data
 
 
-@register.inclusion_tag('art/tags/artwork_picture_tag.html')
+@register.inclusion_tag("art/tags/artwork_picture_tag.html")
 def artwork_picture_tag(obj):
     data = {
-        'artwork': obj,
-        'decoding': 'async',
+        "artwork": obj,
+        "decoding": "async",
     }
     if obj.srcsets:
-        data.update(**{key: ', '.join(srcsets) for key, srcsets in obj.srcsets.items()})
+        data.update(**{key: ", ".join(srcsets) for key, srcsets in obj.srcsets.items()})
 
     return data

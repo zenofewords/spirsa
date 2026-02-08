@@ -1,10 +1,10 @@
-HOME_URL_NAME = ''
+HOME_URL_NAME = ""
 
-DEFAULT_TYPE = 'jpeg'
-LARGE = 'large'
-MEDIUM = 'medium'
-SMALL = 'small'
-THUMBNAIL = 'thumbnail'
+DEFAULT_TYPE = "jpeg"
+LARGE = "large"
+MEDIUM = "medium"
+SMALL = "small"
+THUMBNAIL = "thumbnail"
 SMALL_WIDTH = 380
 THUMBNAIL_WIDTH = 480
 MEDIUM_WIDTH = SMALL_WIDTH * 2
@@ -12,9 +12,22 @@ LARGE_WIDTH = SMALL_WIDTH * 3
 RATIO_THRESHOLD = 1.2
 BASE_HEIGHT = 400
 
-SRCSET_TYPES = ('webp', DEFAULT_TYPE, )
-SRCSET_MAPPING = {srcset: [] for srcset in [
-    '{}_{}'.format(t, s) for t in SRCSET_TYPES for s in (LARGE, MEDIUM, THUMBNAIL, SMALL, )]
+SRCSET_TYPES = (
+    "webp",
+    DEFAULT_TYPE,
+)
+SRCSET_MAPPING = {
+    srcset: []
+    for srcset in [
+        f"{t}_{s}"
+        for t in SRCSET_TYPES
+        for s in (
+            LARGE,
+            MEDIUM,
+            THUMBNAIL,
+            SMALL,
+        )
+    ]
 }
 LANDSCAPE_VARIATION_SETS = (
     (LARGE, LARGE_WIDTH, LARGE_WIDTH * 2),
@@ -39,8 +52,8 @@ VARIATION_SETS = (
     (SMALL, SMALL_WIDTH, SMALL_WIDTH),
 )
 
-FACEBOOK_SHARE_URL = 'https://www.facebook.com/sharer.php?u='
-LINKEDIN_SHARE_URL = 'https://www.linkedin.com/sharing/share-offsite/?url='
-PINTEREST_SHARE_URL = 'https://pinterest.com/pin/create/button/?url='
-REDDIT_SHARE_URL = 'https://reddit.com/submit?url='
-TWITTER_SHARE_URL = 'https://twitter.com/intent/tweet?url='
+FACEBOOK_SHARE_URL = "https://www.facebook.com/sharer.php?u="
+LINKEDIN_SHARE_URL = "https://www.linkedin.com/sharing/share-offsite/?url="
+PINTEREST_SHARE_URL = "https://pinterest.com/pin/create/button/?url="
+REDDIT_SHARE_URL = "https://reddit.com/submit?url="
+TWITTER_SHARE_URL = "https://twitter.com/intent/tweet?url="

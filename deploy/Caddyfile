@@ -1,0 +1,9 @@
+spirsa.art {
+    reverse_proxy 127.0.0.1:8002
+
+    @static path /static/* /media/*
+    handle @static {
+        root * /home/deploy/spirsa
+        file_server
+    }
+}

@@ -1,11 +1,6 @@
 {% extends 'spirsa/base.html' %}
 {% load cache %}
 {% load static %}
-{% load render_bundle from webpack_loader %}
-
-{% block scripts %}
-  {% render_bundle 'contact' 'css' %}
-{% endblock scripts %}
 
 {% block main %}
   {% cache 600 about_contact %}

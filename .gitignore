@@ -70,8 +70,8 @@ target/
 # IPython Notebook
 .ipynb_checkpoints
 
-# pyenv
-.python-version
+# uv
+.venv/
 
 # celery beat schedule file
 celerybeat-schedule
@@ -93,14 +93,8 @@ ENV/
 init.json
 /staticfiles/
 
-# NPM / webpack
-node_modules/
-webpack-stats.json
-webpack-stats-prod.json
-server.js
-
-*.eslintrc
-*.flake8
+# Deno output
+static/js/
 
 # OSX
 .DS_Store
