@@ -8,11 +8,13 @@ from spirsa.views import (
     BadRequestView,
     DeniedView,
     NotFoundView,
+    RobotsTxtView,
 )
 
 urlpatterns = [
     path("admin", admin.site.urls),
     path("about-contact", AboutContactView.as_view(), name="about-contact"),
+    path("robots.txt", RobotsTxtView.as_view(), name="robots-txt"),
     path("", include(("art.urls", "art"), namespace="art")),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

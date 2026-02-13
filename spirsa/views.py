@@ -1,9 +1,19 @@
+from django.http import HttpResponse
 from django.urls import reverse
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 
 from spirsa.constants import SMALL_WIDTH
 from spirsa.mixins import MetaViewMixin
 from spirsa.models import AboutContactInformation
+
+
+class RobotsTxtView(View):
+    def get(self, request):
+        lines = [
+            "User-agent: *",
+            "Allow: /",
+        ]
+        return HttpResponse("\n".join(lines), content_type="text/plain")
 
 
 class BaseView(MetaViewMixin):
