@@ -1,4 +1,6 @@
 spirsa.art, www.spirsa.art {
+    encode gzip zstd
+
     handle /static/* {
         uri strip_prefix /static
         root * /home/deploy/spirsa/staticfiles
