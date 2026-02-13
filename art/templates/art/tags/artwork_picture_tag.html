@@ -37,6 +37,7 @@
         alt="{{ artwork.title }}"
         height="{{ artwork.cls_dimension.detail_height }}"
         width="{{ artwork.cls_dimension.detail_width }}"
+        {% if is_lcp %}fetchpriority="high"{% endif %}
         {% if decoding %}decoding="{{ decoding }}"{% endif %}
       />
     {% else %}
@@ -67,6 +68,7 @@
         alt="{{ artwork.title }}"
         height="{{ artwork.cls_dimension.list_height }}"
         width="{{ artwork.cls_dimension.list_width }}"
+        {% if is_lcp %}fetchpriority="high"{% endif %}
         {% if decoding %}decoding="{{ decoding }}"{% endif %}
       />
     {% endif %}

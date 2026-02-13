@@ -1,7 +1,7 @@
 {% load art_tags %}
 
 {% for artwork in artworks %}
-  {% artwork_tag artwork %}
+  {% artwork_tag artwork is_lcp=forloop.first %}
 {% empty %}
   <p class="artwork-list-no-art">
     No art here.

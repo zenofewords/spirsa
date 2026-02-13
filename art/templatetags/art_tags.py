@@ -17,7 +17,7 @@ register = template.Library()
 
 
 @register.inclusion_tag("art/tags/artwork_tag.html", takes_context=True)
-def artwork_tag(context, obj, detail=False):
+def artwork_tag(context, obj, detail=False, is_lcp=False):
     request = context.get("request")
     params = request.path.split("/")
     slug = params[1] if len(params) > 1 and params[1] != "" else "featured"
@@ -31,6 +31,7 @@ def artwork_tag(context, obj, detail=False):
         "reddit_share_url": f"{REDDIT_SHARE_URL}{object_url}",
         "twitter_share_url": f"{TWITTER_SHARE_URL}{object_url}",
         "detail": detail,
+        "is_lcp": is_lcp or detail,
         "slug": slug,
         "preview": "preview" in request.GET,
     }
