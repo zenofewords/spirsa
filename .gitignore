@@ -18,6 +18,7 @@ media/
 
 # Deno output
 static/js/
+*.min.css
 
 # dotenv
 *.env
