@@ -36,8 +36,7 @@ class AboutContactInformation(SrcsetModelMixin, TimeStampModelMixin):
         return "About and contact page information"
 
     def save(self, *args, **kwargs):
-        super(SrcsetModelMixin, self).save(args, kwargs)
-        super().save(args, kwargs)
+        super().save(*args, **kwargs)
 
         if self.image:
             create_image_variations(self, SMALL_WIDTH, SMALL_VARIATION_SETS)

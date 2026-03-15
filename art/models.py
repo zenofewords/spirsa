@@ -76,8 +76,7 @@ class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampMo
         return self.title
 
     def save(self, *args, **kwargs):
-        super(SrcsetModelMixin, self).save(args, kwargs)
-        super().save(args, kwargs)
+        super().save(*args, **kwargs)
 
         if self.image:
             create_image_variations(self)
@@ -111,8 +110,7 @@ class ArtworkThumbnail(SrcsetModelMixin, PublishedModelMixin, TimeStampModelMixi
         return f"{self.title}, {self.artwork.title}"
 
     def save(self, *args, **kwargs):
-        super(SrcsetModelMixin, self).save(args, kwargs)
-        super().save(args, kwargs)
+        super().save(*args, **kwargs)
 
         if self.image:
             create_image_variations(self, THUMBNAIL_WIDTH, THUMBNAIL_VARIATION_SETS)
