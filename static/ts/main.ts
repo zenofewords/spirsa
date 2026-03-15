@@ -133,8 +133,8 @@ const startInfiniteScroll = (): void => {
 
   const loadMoreArtwork = (): void => {
     page += 1;
-    let path = window.location.pathname;
-    path = path !== "/" ? path : "featured";
+    let path = window.location.pathname.replace(/\/+$/, "");
+    path = path !== "" ? path : "featured";
 
     fetch(`${path}/async-artworks?page=${page}&path=${path}`)
       .then((response) => response.text())
