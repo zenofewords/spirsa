@@ -39,17 +39,14 @@ class Collection(SlugModelMixin, TimeStampModelMixin):
     title = models.CharField(max_length=50, unique=True)
     artworks = models.ManyToManyField("art.Artwork", blank=True)
     show_in_navigation = models.BooleanField(default=False)
-    ordering = models.PositiveIntegerField(default=1, help_text="Descending (largest to smallest)")
+    ordering = models.PositiveIntegerField(default=0, db_index=True)
 
     objects = CollectionManager.from_queryset(models.QuerySet)()
 
     class Meta:
         verbose_name = "Collection"
         verbose_name_plural = "Collections"
-        ordering = (
-            "-ordering",
-            "show_in_navigation",
-        )
+        ordering = ("ordering",)
 
     def __str__(self):
         return self.title
@@ -59,7 +56,7 @@ class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampMo
     title = models.CharField(max_length=50, unique=True)
     short_description = models.TextField(max_length=1000, blank=True)
     image = models.ImageField(upload_to=get_artwork_image_path, blank=True, null=True)
-    ordering = models.PositiveIntegerField(default=1, help_text="Descending (largest to smallest)")
+    ordering = models.PositiveIntegerField(default=0, db_index=True)
     keywords = models.ManyToManyField("art.Keyword", blank=True)
 
     objects = ArtworkManager.from_queryset(PublishedQuerySet)()
@@ -67,10 +64,7 @@ class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampMo
     class Meta:
         verbose_name = "Artwork"
         verbose_name_plural = "Artworks"
-        ordering = (
-            "-ordering",
-            "-created_at",
-        )
+        ordering = ("ordering",)
 
     def __str__(self):
         return self.title
@@ -81,7 +75,13 @@ class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampMo
         if self.image:
             create_image_variations(self)
 
-    def get_absolute_url(self, slug):
+    def get_absolute_url(self, slug=None):
+        if slug is None:
+            collection = self.collection_set.first()
+            if collection:
+                slug = collection.slug
+            else:
+                return "/"
         return reverse("art:artwork-detail", kwargs={"slug": slug, "artwork_slug": self.slug})
 
 
@@ -93,18 +93,13 @@ class ArtworkThumbnail(SrcsetModelMixin, PublishedModelMixin, TimeStampModelMixi
         null=True,
         help_text="Use a jpeg or png image (960x960 or larger).",
     )
-    ordering = models.PositiveIntegerField(
-        default=0, help_text="Higher number equals higher position. Leave 0 for default."
-    )
+    ordering = models.PositiveIntegerField(default=0, db_index=True)
     artwork = models.ForeignKey("art.Artwork", on_delete=models.CASCADE, related_name="thumbnails")
 
     class Meta:
         verbose_name = "Artwork thumbnail"
         verbose_name_plural = "Artwork thumbnails"
-        ordering = (
-            "-ordering",
-            "-created_at",
-        )
+        ordering = ("ordering",)
 
     def __str__(self):
         return f"{self.title}, {self.artwork.title}"

@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "spirsa.apps.SpirsaConfig",
     "art.apps.ArtConfig",
+    "adminsortable2",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
