@@ -50,8 +50,17 @@ class AboutContactView(MetaViewMixin, TemplateView):
         return context
 
 
-class NotFoundView(MetaViewMixin, TemplateView):
+class ErrorView(MetaViewMixin, TemplateView):
+    error_status = 500
+
+    def render_to_response(self, context, **response_kwargs):
+        response_kwargs["status"] = self.error_status
+        return super().render_to_response(context, **response_kwargs)
+
+
+class NotFoundView(ErrorView):
     template_name = "errors/404.html"
+    error_status = 404
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -63,8 +72,9 @@ class NotFoundView(MetaViewMixin, TemplateView):
         return context
 
 
-class DeniedView(MetaViewMixin, TemplateView):
+class DeniedView(ErrorView):
     template_name = "errors/403.html"
+    error_status = 403
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -76,8 +86,9 @@ class DeniedView(MetaViewMixin, TemplateView):
         return context
 
 
-class BadRequestView(MetaViewMixin, TemplateView):
+class BadRequestView(ErrorView):
     template_name = "errors/400.html"
+    error_status = 400
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
