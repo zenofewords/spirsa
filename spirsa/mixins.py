@@ -87,3 +87,4 @@ class SrcsetModelMixin(models.Model):
         if not self.image:
             self.image_timestamp = 0
             self.srcsets = None
+        super().save(*args, **kwargs)
