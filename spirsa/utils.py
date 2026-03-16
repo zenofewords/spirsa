@@ -10,7 +10,7 @@ from django.urls import reverse_lazy
 from django.utils import dateformat, timezone
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
-from PIL import Image
+from PIL import Image, ImageOps
 
 from spirsa.constants import (
     BASE_HEIGHT,
@@ -31,6 +31,7 @@ def create_image_variations(instance, default_width=MEDIUM_WIDTH, variations=Non
 
     path = instance.image.path
     with Image.open(path) as original:
+        original = ImageOps.exif_transpose(original)
         instance.srcsets = create_srcsets(path, instance, original, variations)
         instance.image = get_new_path(instance.image.name, default_width, DEFAULT_TYPE)
         instance.image_timestamp = round(os.path.getctime(instance.image.file.name))

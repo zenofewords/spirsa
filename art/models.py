@@ -70,6 +70,9 @@ class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampMo
         return self.title
 
     def save(self, *args, **kwargs):
+        if self._state.adding:
+            Artwork.objects.update(ordering=models.F("ordering") + 1)
+            self.ordering = 0
         super().save(*args, **kwargs)
 
         if self.image:
