@@ -89,7 +89,7 @@ class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampMo
 
 
 class ArtworkThumbnail(SrcsetModelMixin, PublishedModelMixin, TimeStampModelMixin):
-    title = models.CharField(verbose_name="image title", max_length=100)
+    label = models.ForeignKey("art.Label", on_delete=models.PROTECT, related_name="thumbnails", null=True, blank=True)
     image = models.ImageField(
         upload_to=get_artwork_thumbnail_path,
         blank=True,
@@ -105,13 +105,25 @@ class ArtworkThumbnail(SrcsetModelMixin, PublishedModelMixin, TimeStampModelMixi
         ordering = ("ordering",)
 
     def __str__(self):
-        return f"{self.title}, {self.artwork.title}"
+        return f"{self.label}, {self.artwork.title}"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
         if self.image:
             create_image_variations(self, THUMBNAIL_WIDTH, THUMBNAIL_VARIATION_SETS)
+
+
+class Label(SlugModelMixin):
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name = "Label"
+        verbose_name_plural = "Labels"
+        ordering = ("name",)
+
+    def __str__(self):
+        return self.name
 
 
 class Keyword(PublishedModelMixin, SlugModelMixin):

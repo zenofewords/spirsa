@@ -1,16 +1,21 @@
 import copy
+import logging
 import math
 import os
 import re
+import threading
 from pathlib import Path
 
 from django.apps import apps
 from django.contrib.sites.shortcuts import get_current_site
+from django.db import close_old_connections
 from django.urls import reverse_lazy
 from django.utils import dateformat, timezone
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from PIL import Image, ImageOps
+
+logger = logging.getLogger(__name__)
 
 from spirsa.constants import (
     BASE_HEIGHT,
@@ -29,15 +34,28 @@ def create_image_variations(instance, default_width=MEDIUM_WIDTH, variations=Non
     if instance.image_timestamp == timestamp:
         return
 
-    path = instance.image.path
-    with Image.open(path) as original:
-        original = ImageOps.exif_transpose(original)
-        instance.srcsets = create_srcsets(path, instance, original, variations)
-        instance.image = get_new_path(instance.image.name, default_width, DEFAULT_TYPE)
-        instance.image_timestamp = round(os.path.getctime(instance.image.file.name))
-        instance.save()
-        # remove original image
-        os.remove(path)
+    thread = threading.Thread(
+        target=_process_image_variations,
+        args=(instance, default_width, variations),
+    )
+    thread.start()
+
+
+def _process_image_variations(instance, default_width, variations):
+    try:
+        path = instance.image.path
+        with Image.open(path) as original:
+            original = ImageOps.exif_transpose(original)
+            instance.srcsets = create_srcsets(path, instance, original, variations)
+            instance.image = get_new_path(instance.image.name, default_width, DEFAULT_TYPE)
+            instance.image_timestamp = round(os.path.getctime(instance.image.file.name))
+            instance.save()
+            # remove original image
+            os.remove(path)
+    except Exception:
+        logger.exception("Failed to create image variations for %s (pk=%s)", type(instance).__name__, instance.pk)
+    finally:
+        close_old_connections()
 
 
 def get_new_path(path, width, extension):

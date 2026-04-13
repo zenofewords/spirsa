@@ -15,6 +15,7 @@ from art.models import (
     ArtworkThumbnail,
     Collection,
     Keyword,
+    Label,
 )
 from spirsa.mixins import AutoSlugAdminMixin
 from spirsa.utils import get_preview_image
@@ -113,16 +114,25 @@ class ArtworkForm(forms.ModelForm):
         return instance
 
 
+class ArtworkThumbnailForm(forms.ModelForm):
+    class Meta:
+        model = ArtworkThumbnail
+        fields = "__all__"
+        widgets = {"image": CachedFileInput}
+
+
 class ArtworkThumbnailInline(SortableInlineAdminMixin, admin.TabularInline):
     model = ArtworkThumbnail
+    form = ArtworkThumbnailForm
     fields = (
         "ordering",
-        "title",
+        "label",
         "image",
         "artwork",
         "published",
         "image_preview_thumb",
     )
+    autocomplete_fields = ("label",)
     readonly_fields = ("image_preview_thumb",)
 
     def image_preview_thumb(self, obj):
@@ -186,8 +196,9 @@ class ArtworkAdmin(SortableAdminMixin, AutoSlugAdminMixin):
 
 
 class ArtworkThumbnailAdmin(SortableAdminMixin, admin.ModelAdmin):
+    form = ArtworkThumbnailForm
     search_fields = (
-        "title",
+        "label__name",
         "artwork__title",
         "artwork__slug",
     )
@@ -199,13 +210,13 @@ class ArtworkThumbnailAdmin(SortableAdminMixin, admin.ModelAdmin):
     )
     list_editable = ("published",)
     fields = (
-        "title",
+        "label",
         "image",
         "artwork",
         "published",
         "image_preview",
     )
-    autocomplete_fields = ("artwork",)
+    autocomplete_fields = ("artwork", "label")
     readonly_fields = ("image_preview",)
 
     def image_preview(self, obj):
@@ -239,6 +250,22 @@ class KeywordAdmin(AutoSlugAdminMixin):
     )
 
 
+class LabelAdmin(AutoSlugAdminMixin):
+    search_fields = (
+        "name",
+        "slug",
+    )
+    list_display = (
+        "name",
+        "slug",
+    )
+    fields = (
+        "name",
+        "slug",
+    )
+
+
+admin.site.register(Label, LabelAdmin)
 admin.site.register(ArtworkThumbnail, ArtworkThumbnailAdmin)
 admin.site.register(Collection, CollectionAdmin)
 admin.site.register(Artwork, ArtworkAdmin)
