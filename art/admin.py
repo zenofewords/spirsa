@@ -250,19 +250,10 @@ class KeywordAdmin(AutoSlugAdminMixin):
     )
 
 
-class LabelAdmin(AutoSlugAdminMixin):
-    search_fields = (
-        "name",
-        "slug",
-    )
-    list_display = (
-        "name",
-        "slug",
-    )
-    fields = (
-        "name",
-        "slug",
-    )
+class LabelAdmin(admin.ModelAdmin):
+    search_fields = ("name",)
+    list_display = ("name",)
+    fields = ("name",)
 
 
 admin.site.register(Label, LabelAdmin)

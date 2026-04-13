@@ -15,8 +15,7 @@ class Migration(migrations.Migration):
             name="Label",
             fields=[
                 ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
-                ("slug", models.SlugField(blank=True, help_text="Leave empty to use title or name", unique=True)),
-                ("name", models.CharField(max_length=100)),
+                ("name", models.CharField(max_length=100, unique=True)),
             ],
             options={
                 "verbose_name": "Label",

@@ -116,8 +116,8 @@ class ArtworkThumbnail(SrcsetModelMixin, PublishedModelMixin, TimeStampModelMixi
             create_image_variations(self, THUMBNAIL_WIDTH, THUMBNAIL_VARIATION_SETS)
 
 
-class Label(SlugModelMixin):
-    name = models.CharField(max_length=100)
+class Label(models.Model):
+    name = models.CharField(max_length=100, unique=True)
 
     class Meta:
         verbose_name = "Label"

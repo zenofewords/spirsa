@@ -8,8 +8,7 @@ def migrate_titles_to_labels(apps, schema_editor):
     titles = ArtworkThumbnail.objects.values_list("title", flat=True).distinct()
     for title in titles:
         if title:
-            slug = title.lower().replace(" ", "-")[:50]
-            label, _ = Label.objects.get_or_create(name=title, defaults={"slug": slug})
+            label, _ = Label.objects.get_or_create(name=title)
             ArtworkThumbnail.objects.filter(title=title).update(label=label)
 
 
