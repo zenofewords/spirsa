@@ -15,8 +15,6 @@ from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from PIL import Image, ImageOps
 
-logger = logging.getLogger(__name__)
-
 from spirsa.constants import (
     BASE_HEIGHT,
     DEFAULT_TYPE,
@@ -27,6 +25,8 @@ from spirsa.constants import (
     SRCSET_TYPES,
     VARIATION_SETS,
 )
+
+logger = logging.getLogger(__name__)
 
 
 def create_image_variations(instance, default_width=MEDIUM_WIDTH, variations=None):
@@ -53,7 +53,9 @@ def _process_image_variations(instance, default_width, variations):
             # remove original image
             os.remove(path)
     except Exception:
-        logger.exception("Failed to create image variations for %s (pk=%s)", type(instance).__name__, instance.pk)
+        logger.exception(
+            "Failed to create image variations for %s (pk=%s)", type(instance).__name__, instance.pk
+        )
     finally:
         close_old_connections()
 

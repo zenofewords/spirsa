@@ -89,7 +89,9 @@ class Artwork(SrcsetModelMixin, PublishedModelMixin, SlugModelMixin, TimeStampMo
 
 
 class ArtworkThumbnail(SrcsetModelMixin, PublishedModelMixin, TimeStampModelMixin):
-    label = models.ForeignKey("art.Label", on_delete=models.PROTECT, related_name="thumbnails", null=True, blank=True)
+    label = models.ForeignKey(
+        "art.Label", on_delete=models.PROTECT, related_name="thumbnails", null=True, blank=True
+    )
     image = models.ImageField(
         upload_to=get_artwork_thumbnail_path,
         blank=True,
