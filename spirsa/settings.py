@@ -10,7 +10,7 @@ DEBUG = os.getenv("DEBUG", "").lower() in ("true", "1", "yes")
 ALLOWED_HOSTS = [host.strip() for host in os.getenv("ALLOWED_HOSTS").split(",")]
 CSRF_COOKIE_HTTPONLY = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
-SECURE_SSL_REDIRECT = not DEBUG and bool(os.getenv("SECURE_SSL_REDIRECT", False))
+SECURE_SSL_REDIRECT = not DEBUG and bool(os.getenv("SECURE_SSL_REDIRECT", ""))
 SESSION_COOKIE_SECURE = not DEBUG
 SECRET_KEY = os.getenv("SECRET_KEY")
 
@@ -62,7 +62,7 @@ DATABASES = {
         "PASSWORD": os.getenv("DB_PASSWORD"),
         "HOST": os.getenv("DB_HOST"),
         "PORT": os.getenv("DB_PORT"),
-        "CONN_MAX_AGE": int(os.getenv("CONN_MAX_AGE", 0)),
+        "CONN_MAX_AGE": int(os.getenv("CONN_MAX_AGE", "0")),
     }
 }
 AUTH_PASSWORD_VALIDATORS = [

@@ -122,12 +122,12 @@ def get_preview_image(image, max_width):
         original_width = image.width
         original_height = image.height
 
-        width = original_width if original_width < max_width else max_width
+        width = min(max_width, original_width)
         slot_ratio = original_width / width
         height = original_height / slot_ratio
 
         return mark_safe(f"<img src={image.url} width={width} height={height} />")
-    except FileNotFoundError:  # noqa
+    except FileNotFoundError:
         return ""
 
 
@@ -183,7 +183,7 @@ def get_full_size_image(srcsets):
 
 
 def get_upload_path(filename):
-    name, dot, extension = filename.rpartition(".")
+    name = filename.rpartition(".")[0]
 
     return "{}/{}/{}_{}".format(
         timezone.now().year,

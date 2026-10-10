@@ -2,6 +2,7 @@ import re
 import tempfile
 import uuid
 from pathlib import Path
+from typing import ClassVar
 
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from django import forms
@@ -37,8 +38,7 @@ class CachedFileInput(AdminFileWidget):
             cache_dir = UPLOAD_CACHE_DIR / key
             cache_dir.mkdir(parents=True, exist_ok=True)
             with open(cache_dir / upload.name, "wb") as f:
-                for chunk in upload.chunks():
-                    f.write(chunk)
+                f.writelines(upload.chunks())
             upload.seek(0)
             self._cache_key = key
             self._cache_name = upload.name
@@ -89,7 +89,7 @@ class ArtworkForm(forms.ModelForm):
     class Meta:
         model = Artwork
         fields = "__all__"
-        widgets = {"image": CachedFileInput}
+        widgets: ClassVar = {"image": CachedFileInput}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -118,7 +118,7 @@ class ArtworkThumbnailForm(forms.ModelForm):
     class Meta:
         model = ArtworkThumbnail
         fields = "__all__"
-        widgets = {"image": CachedFileInput}
+        widgets: ClassVar = {"image": CachedFileInput}
 
 
 class ArtworkThumbnailInline(SortableInlineAdminMixin, admin.TabularInline):
@@ -184,9 +184,7 @@ class ArtworkAdmin(SortableAdminMixin, AutoSlugAdminMixin):
     )
     autocomplete_fields = ("keywords",)
     readonly_fields = ("image_preview",)
-    inlines = [
-        ArtworkThumbnailInline,
-    ]
+    inlines = (ArtworkThumbnailInline,)
 
     def image_preview(self, obj):
         return get_preview_image(obj.image, 500)

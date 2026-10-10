@@ -9,7 +9,7 @@ from spirsa.utils import clean_meta_description, get_site_url
 class AutoSlugAdminMixin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if obj.slug == "":
-            obj.slug = slugify(getattr(obj, "title", None) or getattr(obj, "name"), "")
+            obj.slug = slugify(getattr(obj, "title", None) or obj.name, "")
         obj.save()
 
 
