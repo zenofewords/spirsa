@@ -7,7 +7,7 @@ User=deploy
 Group=deploy
 WorkingDirectory=/home/deploy/spirsa
 EnvironmentFile=/home/deploy/spirsa/.env
-ExecStart=/home/deploy/spirsa/.venv/bin/gunicorn spirsa.wsgi:application --bind 127.0.0.1:8002 --workers 2
+ExecStart=/home/deploy/spirsa/.venv/bin/gunicorn spirsa.wsgi:application --bind 127.0.0.1:8002 --workers 2 --no-control-socket
 Restart=on-failure
 RestartSec=5
 
