@@ -10,7 +10,6 @@ dependencies = [
     "gunicorn>=23.0",
     "pillow>=11.0",
     "psycopg[binary]>=3.2",
-    "python-dotenv>=1.2.1",
 ]
 
 [dependency-groups]
