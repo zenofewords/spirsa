@@ -35,7 +35,7 @@ jobs:
             git checkout deno.lock
             git pull origin main
             ~/.local/bin/uv sync --no-dev
-            ~/.local/bin/uv run --no-dev --env-file .env python manage.py migrate --noinput
+            ~/.local/bin/uv run --no-dev python manage.py migrate --noinput
             ~/.deno/bin/deno task build:prod
-            ~/.local/bin/uv run --no-dev --env-file .env python manage.py collectstatic --noinput
+            ~/.local/bin/uv run --no-dev python manage.py collectstatic --noinput
             sudo systemctl restart spirsa
