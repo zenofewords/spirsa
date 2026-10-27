@@ -15,7 +15,7 @@ register = template.Library()
 def menu_link_tag(title, slug, path, dynamic=False):
     return {
         "title": title,
-        "url": reverse(slug) if dynamic else f"/{slug}",
+        "url": reverse(slug) if dynamic else f"/{slug}/",
         "current": slug in path,
     }
 

@@ -136,7 +136,7 @@ const startInfiniteScroll = (): void => {
     let path = window.location.pathname.replace(/\/+$/, "");
     path = path !== "" ? path : "featured";
 
-    fetch(`${path}/async-artworks?page=${page}&path=${path}`)
+    fetch(`${path}/async-artworks/?page=${page}&path=${path}`)
       .then((response) => response.text())
       .then((data) => appendArtwork(data))
       .then(() => refreshObserver());
