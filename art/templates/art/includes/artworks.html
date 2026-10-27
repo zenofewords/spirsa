@@ -1,10 +1,12 @@
 {% load art_tags %}
 
 {% for artwork in artworks %}
-  {% if forloop.counter <= 3 %}
+  {% if forloop.first %}
     {% artwork_tag artwork is_lcp=True %}
-  {% else %}
+  {% elif forloop.counter <= 3 %}
     {% artwork_tag artwork %}
+  {% else %}
+    {% artwork_tag artwork lazy=True %}
   {% endif %}
 {% empty %}
   <p class="artwork-list-no-art">
