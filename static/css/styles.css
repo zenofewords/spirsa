@@ -1,3 +1,19 @@
+@font-face {
+  font-display: swap;
+  font-family: 'Poiret One';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/poiret_one.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/static/fonts/quicksand.woff2') format('woff2');
+}
+
 :root {
   --color-black-10: rgba(21, 21, 21, 0.1);
   --color-black-70: rgba(21, 21, 21, 0.7);
