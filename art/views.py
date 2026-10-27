@@ -1,5 +1,6 @@
 import math
 
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.utils.text import slugify
 from django.views.generic import (
@@ -9,6 +10,7 @@ from django.views.generic import (
 
 from art.models import (
     Artwork,
+    Collection,
 )
 from spirsa.mixins import (
     MetaViewMixin,
@@ -23,6 +25,7 @@ class ArtworkDetailView(MetaViewMixin, DetailView):
     def get_object(self):
         self.slug = self.kwargs.get("slug")
         self.artwork_slug = self.kwargs.get("artwork_slug")
+        get_object_or_404(Collection, slug=self.slug)
 
         if show_preview(self.request):
             return get_object_or_404(Artwork, slug=self.artwork_slug)
@@ -72,6 +75,8 @@ class ArtworkListView(MetaViewMixin, ListView):
     def get_queryset(self):
         self.path = slugify(self.request.GET.get("path") or self.request.path)
         if self.path:
+            if not Collection.objects.filter(slug=self.path).exists():
+                raise Http404
             self.queryset = Artwork.objects.filter(collection__slug=self.path)
 
         if show_preview(self.request):
